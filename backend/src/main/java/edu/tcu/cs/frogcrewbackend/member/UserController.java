@@ -1,4 +1,4 @@
 package edu.tcu.cs.frogcrewbackend.member;
 
-public class MemberController {
+public class UserController {
 }
