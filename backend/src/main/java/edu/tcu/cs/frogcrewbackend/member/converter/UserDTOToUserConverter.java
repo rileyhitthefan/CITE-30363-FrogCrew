@@ -15,7 +15,6 @@ public class UserDTOToUserConverter implements Converter<UserDTO, Member> {
         member.setLastName(source.lastName());
         member.setEmail(source.email());
         member.setPhoneNumber(source.phoneNumber());
-        member.setPassword(source.password());
         member.setRole(source.role());
         member.setPositions(source.positions());
         return member;

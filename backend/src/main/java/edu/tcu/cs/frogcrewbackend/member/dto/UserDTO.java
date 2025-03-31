@@ -22,9 +22,6 @@ public record UserDTO(
         )
         String phoneNumber,
 
-        @NotEmpty(message = "Password is required")
-        String password,
-
         @NotEmpty(message = "Role is required")
         String role,
 
