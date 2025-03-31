@@ -7,10 +7,10 @@ import edu.tcu.cs.frogcrewbackend.system.Result;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("${api.endpoint.base-url}/crewMember")
@@ -26,10 +26,29 @@ public class UserController {
     }
 
     @PostMapping
-    public Result createMember(@RequestBody @Valid UserDTO userDTO) {
-        Member newMember = this.userDTOToUserConverter.convert(userDTO);
+    public Result createMember(@RequestBody @Valid Member newMember) {
         Member savedMember = this.userService.createMember(newMember);
         UserDTO savedMemberDTO = this.userToUserDTOConverter.convert(savedMember);
         return new Result(true, StatusCode.SUCCESS, "Member created", savedMemberDTO);
+    }
+
+    @GetMapping
+    public Result findAllMembers() {
+        List<Member> foundMembers = this.userService.findAllMembers();
+
+        // Convert foundMembers to a list of UserDTO
+        List<UserDTO> userDTOS = foundMembers.stream()
+                .map(this.userToUserDTOConverter::convert)
+                .collect(Collectors.toList());
+
+        // no password field
+        return new Result(true, StatusCode.SUCCESS, "Found all members", userDTOS);
+    }
+
+    @GetMapping("/{userId}")
+    public Result findMemberById(@PathVariable Integer userId) {
+        Member foundMember = this.userService.findMemberById(userId);
+        UserDTO userDTO = this.userToUserDTOConverter.convert(foundMember);
+        return new Result(true, StatusCode.SUCCESS, "Found member with id: " + userId, userDTO);
     }
 }

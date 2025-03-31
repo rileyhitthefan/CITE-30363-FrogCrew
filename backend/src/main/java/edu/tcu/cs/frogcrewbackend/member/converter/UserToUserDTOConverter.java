@@ -16,7 +16,6 @@ public class UserToUserDTOConverter implements Converter<Member, UserDTO> {
                 source.getLastName(),
                 source.getEmail(),
                 source.getPhoneNumber(),
-                source.getPassword(),
                 source.getRole(),
                 source.getPositions()
         );

@@ -88,4 +88,19 @@ public class UserServiceTest {
         assertThat(returnedMember.getPositions()).isEqualTo(newMember.getPositions());
         verify(this.userRepository, times(1)).save(newMember);
     }
+
+    @Test
+    void testFindAllMembersSuccess(){
+        // Given
+        given(this.userRepository.findAll()).willReturn(this.members);
+
+        // When
+        List<Member> returnedMembers = this.userService.findAllMembers();
+
+        // Then
+        assertThat(returnedMembers.size()).isEqualTo(this.members.size());
+
+        // Verify
+        verify(this.userRepository, times(1)).findAll();
+    }
 }
