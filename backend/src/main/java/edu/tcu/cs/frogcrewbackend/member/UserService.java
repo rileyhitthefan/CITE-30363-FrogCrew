@@ -1,18 +1,18 @@
 package edu.tcu.cs.frogcrewbackend.member;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-public class UserService implements UserDetailsService {
+@Service
+@Transactional
+public class UserService {
     private final UserRepository userRepository;
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public Member createMember(Member newMember) {
+        return this.userRepository.save(newMember);
     }
 }
