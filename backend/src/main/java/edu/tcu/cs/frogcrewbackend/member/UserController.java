@@ -6,7 +6,6 @@ import edu.tcu.cs.frogcrewbackend.member.dto.UserDTO;
 import edu.tcu.cs.frogcrewbackend.system.Result;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
 import jakarta.validation.Valid;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +49,19 @@ public class UserController {
         Member foundMember = this.userService.findMemberById(userId);
         UserDTO userDTO = this.userToUserDTOConverter.convert(foundMember);
         return new Result(true, StatusCode.SUCCESS, "Found member with id: " + userId, userDTO);
+    }
+
+    @PutMapping("/{userId}")
+    public Result updateMember(@PathVariable Integer userId, @RequestBody @Valid UserDTO userDTO) {
+        Member update = this.userDTOToUserConverter.convert(userDTO);
+        Member updatedMember = this.userService.updateMember(userId, update);
+        UserDTO savedUserDTO = this.userToUserDTOConverter.convert(updatedMember);
+        return new Result(true, StatusCode.SUCCESS, "Member updated", savedUserDTO);
+    }
+
+    @DeleteMapping("/{userId}")
+    public Result deleteMember(@PathVariable Integer userId) {
+        this.userService.deleteMember(userId);
+        return new Result(true, StatusCode.SUCCESS, "Member deleted");
     }
 }

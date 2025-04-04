@@ -1,8 +1,9 @@
 package edu.tcu.cs.frogcrewbackend.member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.tcu.cs.frogcrewbackend.member.dto.UserDTO;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
-import org.hibernate.ObjectNotFoundException;
+import edu.tcu.cs.frogcrewbackend.system.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,9 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.mockito.BDDMockito.given;
@@ -135,14 +134,14 @@ public class UserControllerTest {
     @Test
     void testFindMemberByIdNotFound() throws Exception {
         // Given
-        given(this.userService.findMemberById(3)).willThrow(new ObjectNotFoundException("Member ", 5));
+        given(this.userService.findMemberById(3)).willThrow(new ObjectNotFoundException("member", 3));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember/3")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("No found member with id 3"))
+                .andExpect(jsonPath("$.message").value("Could not find member with Id 3"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 }

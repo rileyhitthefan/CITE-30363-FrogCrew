@@ -21,7 +21,7 @@ import java.util.Map;
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
-    @ExceptionHandler(ObjectNotFoundException.class)
+    @ExceptionHandler(edu.tcu.cs.frogcrewbackend.system.exception.ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     Result handleObjectNotFoundException(ObjectNotFoundException ex) {
         return new Result(false, StatusCode.NOT_FOUND, ex.getMessage());
