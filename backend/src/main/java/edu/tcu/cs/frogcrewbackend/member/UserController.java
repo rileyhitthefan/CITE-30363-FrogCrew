@@ -48,7 +48,7 @@ public class UserController {
     public Result findMemberById(@PathVariable Integer userId) {
         Member foundMember = this.userService.findMemberById(userId);
         UserDTO userDTO = this.userToUserDTOConverter.convert(foundMember);
-        return new Result(true, StatusCode.SUCCESS, "Found member with id: " + userId, userDTO);
+        return new Result(true, StatusCode.SUCCESS, "Found member with Id: " + userId, userDTO);
     }
 
     @PutMapping("/{userId}")
@@ -56,12 +56,12 @@ public class UserController {
         Member update = this.userDTOToUserConverter.convert(userDTO);
         Member updatedMember = this.userService.updateMember(userId, update);
         UserDTO savedUserDTO = this.userToUserDTOConverter.convert(updatedMember);
-        return new Result(true, StatusCode.SUCCESS, "Member updated", savedUserDTO);
+        return new Result(true, StatusCode.SUCCESS, "Member updated with Id: " + userId, savedUserDTO);
     }
 
     @DeleteMapping("/{userId}")
     public Result deleteMember(@PathVariable Integer userId) {
         this.userService.deleteMember(userId);
-        return new Result(true, StatusCode.SUCCESS, "Member deleted");
+        return new Result(true, StatusCode.SUCCESS, "Member deleted with Id: " + userId);
     }
 }

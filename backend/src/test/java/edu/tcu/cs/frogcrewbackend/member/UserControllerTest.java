@@ -17,9 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -126,7 +128,7 @@ public class UserControllerTest {
                     .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Found member with id: 1"))
+                .andExpect(jsonPath("$.message").value("Found member with Id: 1"))
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.firstName").value("Jack"));
     }
@@ -139,6 +141,79 @@ public class UserControllerTest {
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember/3")
                         .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(false))
+                .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
+                .andExpect(jsonPath("$.message").value("Could not find member with Id 3"))
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+    @Test
+    void testUpdateMemberSuccess() throws Exception {
+        UserDTO userDTO = new UserDTO(3, "jane", "smith", "js@gmail.com", "1234567890", "MEMBER", "Producer");
+
+        Member update = new Member();
+        update.setId(3);
+        update.setFirstName("Jane");
+        update.setLastName("Nguyen");
+        update.setEmail("js@gmail.com");
+        update.setPhoneNumber("1234567890");
+        update.setPassword("password");
+        update.setRole("MEMBER");
+        update.setPositions("Producer");
+
+        String json = this.objectMapper.writeValueAsString(userDTO);
+
+        // Given
+        given(this.userService.updateMember(eq(3), Mockito.any(Member.class))).willReturn(update);
+
+        // When and Then
+        this.mockMvc.perform(put(this.baseUrl + "/crewMember/3")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(true))
+                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                .andExpect(jsonPath("$.message").value("Member updated with Id: 3"))
+                .andExpect(jsonPath("$.data.id").value(3))
+                .andExpect(jsonPath("$.data.lastName").value("Nguyen"));
+    }
+
+    @Test
+    void testUpdateMemberNotFound() throws Exception {
+        // Given
+        given(this.userService.updateMember(eq(3), Mockito.any(Member.class))).willThrow(new ObjectNotFoundException("member", 3));
+
+        UserDTO userDTO = new UserDTO(3, "jane", "smith", "js@gmail.com", "1234567890", "MEMBER", "Producer");
+
+        String json = this.objectMapper.writeValueAsString(userDTO);
+
+        // When and then
+        this.mockMvc.perform(put(this.baseUrl + "/crewMember/3").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(false))
+                .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
+                .andExpect(jsonPath("$.message").value("Could not find member with Id 3"))
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+    @Test
+    void testDeleteMemberSuccess() throws Exception {
+        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        doNothing().when(this.userService).deleteMember(2);
+
+        // When and then
+        this.mockMvc.perform(delete(this.baseUrl + "/crewMember/2").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(true))
+                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                .andExpect(jsonPath("$.message").value("Member deleted with Id: 2"));
+    }
+
+    @Test
+    void testDeleteUserErrorWithNonExistentId() throws Exception {
+        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        doThrow(new ObjectNotFoundException("member", 3)).when(this.userService).deleteMember(3);
+
+        // When and then
+        this.mockMvc.perform(delete(this.baseUrl + "/crewMember/3").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
                 .andExpect(jsonPath("$.message").value("Could not find member with Id 3"))
