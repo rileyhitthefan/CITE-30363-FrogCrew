@@ -1,5 +1,6 @@
-.idea
-.vscode
 
-backend/.idea
-backend/.vscode
+.idea/
+.vscode/
+
+backend/.idea/
+backend/.vscode/

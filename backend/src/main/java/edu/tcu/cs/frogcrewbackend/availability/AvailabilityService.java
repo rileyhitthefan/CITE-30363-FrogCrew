@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class AvailabilityService {
     private AvailabilityRepository availRepository;
-
+g
     public AvailabilityService(AvailabilityRepository availRepository) {
         this.availRepository = availRepository;
     }
