@@ -1,4 +1,4 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
-public class GameRepository {
+public interface GameRepository {
 }
