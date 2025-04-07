@@ -4,6 +4,8 @@ import edu.tcu.cs.frogcrewbackend.availability.converter.AvailabilityDTOToAvaila
 import edu.tcu.cs.frogcrewbackend.availability.converter.AvailabilityToAvailabilityDTOConverter;
 import edu.tcu.cs.frogcrewbackend.availability.dto.AvailabilityDTO;
 import edu.tcu.cs.frogcrewbackend.system.Result;
+import edu.tcu.cs.frogcrewbackend.system.StatusCode;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +22,9 @@ public class AvailabilityController {
     }
 
     @PostMapping
-    public Result addAvailability(@RequestBody AvailabilityDTO availabilityDTO) {
-        return null;
+    public Result addAvailability(@RequestBody @Valid Availability newAvailability) {
+        Availability savedAvailability = this.availService.addAvailability(newAvailability);
+        AvailabilityDTO savedAvailabilityDTO = this.availabilityToAvailabilityDTOConverter.convert(savedAvailability);
+        return new Result(true, StatusCode.SUCCESS, "New availability added", savedAvailabilityDTO);
     }
 }
