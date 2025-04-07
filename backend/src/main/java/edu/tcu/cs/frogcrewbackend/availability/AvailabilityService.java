@@ -15,8 +15,4 @@ public class AvailabilityService {
     public Availability addAvailability(Availability avail) {
         return this.availRepository.save(avail);
     }
-
-    public Availability updateAvailability(Availability avail) {
-        return null;
-    }
 }
