@@ -4,3 +4,5 @@
 
 backend/.idea/*
 backend/.vscode/*
+
+frontend/.vscode/*

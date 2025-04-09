@@ -1,4 +1,4 @@
-package edu.tcu.cs.frogcrewbackend.schedule;
+package edu.tcu.cs.frogcrewbackend.game;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
