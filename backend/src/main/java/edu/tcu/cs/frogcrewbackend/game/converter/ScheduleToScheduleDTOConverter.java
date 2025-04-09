@@ -1,7 +1,7 @@
-package edu.tcu.cs.frogcrewbackend.schedule.converter;
+package edu.tcu.cs.frogcrewbackend.game.converter;
 
-import edu.tcu.cs.frogcrewbackend.schedule.GameSchedule;
-import edu.tcu.cs.frogcrewbackend.schedule.dto.GameScheduleDTO;
+import edu.tcu.cs.frogcrewbackend.game.GameSchedule;
+import edu.tcu.cs.frogcrewbackend.game.dto.GameScheduleDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

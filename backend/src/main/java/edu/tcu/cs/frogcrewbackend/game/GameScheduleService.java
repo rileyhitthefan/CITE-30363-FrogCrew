@@ -1,4 +1,4 @@
-package edu.tcu.cs.frogcrewbackend.schedule;
+package edu.tcu.cs.frogcrewbackend.game;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package edu.tcu.cs.frogcrewbackend.schedule.dto;
+package edu.tcu.cs.frogcrewbackend.game.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 
