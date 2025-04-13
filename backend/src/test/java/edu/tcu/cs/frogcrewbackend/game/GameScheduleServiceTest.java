@@ -64,4 +64,34 @@ public class GameScheduleServiceTest {
         assertThat(returnedSchedule.getSeason()).isEqualTo(gameSchedule.getSeason());
         verify(this.gameScheduleRepository, times(1)).save(gameSchedule);
     }
+
+    @Test
+    void testAddGameToScheduleSuccess() {
+        // Given
+        GameSchedule schedule = new GameSchedule();
+        schedule.setId(1);
+        schedule.setSport("Football");
+        schedule.setSeason("2024-2025");
+
+        Game newGame = new Game();
+        newGame.setGameId(10);
+//        newGame.setScheduleId(1);
+        newGame.setGameDate("2024-01-01");
+        newGame.setVenue("Carter");
+        newGame.setOpponent("SMU");
+        newGame.setFinalized(true);
+
+        given(this.gameScheduleRepository.findById(1)).willReturn(java.util.Optional.of(schedule));
+        given(this.gameScheduleRepository.save(schedule)).willReturn(schedule);
+
+        // When
+        Game savedGame = this.gameScheduleService.addGameToSchedule(1, newGame);
+
+        // Then
+        assertThat(savedGame.getSchedule()).isEqualTo(schedule);
+        assertThat(schedule.getGames()).contains(savedGame);
+        verify(this.gameScheduleRepository, times(1)).findById(1);
+        verify(this.gameScheduleRepository, times(1)).save(schedule);
+    }
+
 }

@@ -1,15 +1,18 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+@Entity
 public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer gameId;
+
+    @ManyToOne
+    @JoinColumn(name = "scheduleId")
+    private GameSchedule schedule;
 
     private Integer scheduleId;
     private String gameDate;
@@ -63,5 +66,13 @@ public class Game implements Serializable {
 
     public void setFinalized(Boolean finalized) {
         isFinalized = finalized;
+    }
+
+    public GameSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(GameSchedule schedule) {
+        this.schedule = schedule;
     }
 }

@@ -1,11 +1,10 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class GameSchedule implements Serializable {
@@ -15,6 +14,9 @@ public class GameSchedule implements Serializable {
 
     private String sport;
     private String season;
+
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Game> games = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -38,5 +40,13 @@ public class GameSchedule implements Serializable {
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 }
