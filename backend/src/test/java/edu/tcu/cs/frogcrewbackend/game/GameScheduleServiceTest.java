@@ -75,7 +75,6 @@ public class GameScheduleServiceTest {
 
         Game newGame = new Game();
         newGame.setGameId(10);
-//        newGame.setScheduleId(1);
         newGame.setGameDate("2024-01-01");
         newGame.setVenue("Carter");
         newGame.setOpponent("SMU");

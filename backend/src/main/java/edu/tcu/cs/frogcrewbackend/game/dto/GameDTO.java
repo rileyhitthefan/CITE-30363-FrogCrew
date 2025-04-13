@@ -1,12 +1,13 @@
 package edu.tcu.cs.frogcrewbackend.game.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record GameDTO (
-        @NotEmpty(message = "Game id is required")
+        @NotNull(message = "Game id is required")
         Integer gameId,
 
-        @NotEmpty(message = "Schedule id is required")
+        @NotNull(message = "Schedule id is required")
         Integer scheduleId,
 
         @NotEmpty(message = "Game date is required")
@@ -18,6 +19,6 @@ public record GameDTO (
         @NotEmpty(message = "Opponent is required")
         String opponent,
 
-        @NotEmpty(message = "Venue is required")
+        @NotNull(message = "Venue is required")
         Boolean isFinalized
 ) {}

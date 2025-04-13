@@ -15,6 +15,7 @@ public class Game implements Serializable {
     private GameSchedule schedule;
 
     private Integer scheduleId;
+
     private String gameDate;
     private String venue;
     private String opponent;
@@ -29,11 +30,11 @@ public class Game implements Serializable {
     }
 
     public Integer getScheduleId() {
-        return scheduleId;
+        return (this.schedule != null) ? this.schedule.getId() : this.scheduleId;
     }
 
     public void setScheduleId(Integer scheduleId) {
-        this.scheduleId = scheduleId;
+        this.scheduleId = scheduleId;;
     }
 
     public String getGameDate() {

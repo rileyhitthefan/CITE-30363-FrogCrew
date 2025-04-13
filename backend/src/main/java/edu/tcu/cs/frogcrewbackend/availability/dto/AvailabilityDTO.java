@@ -1,15 +1,16 @@
 package edu.tcu.cs.frogcrewbackend.availability.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record AvailabilityDTO(
-        @NotEmpty(message = "User id is required")
+        @NotNull(message = "User id is required")
         Integer userId,
 
-        @NotEmpty(message = "Game id is required")
+        @NotNull(message = "Game id is required")
         Integer gameId,
 
-        @NotEmpty(message = "Availability is required")
+        @NotNull(message = "Availability is required")
         Boolean availability,
 
         String comment
