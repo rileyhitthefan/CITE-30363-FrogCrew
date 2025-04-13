@@ -1,11 +1,15 @@
-
-.idea
-*.iwsg
-*.iml
-*.ipr
+.DS_Store
+.idea/
 .vscode/*
 
-backend/.idea/*
-backend/.vscode/*
+backend/HELP.md
+backend/target/
+!backend/.mvn/wrapper/maven-wrapper.jar
+!backend/**/src/main/**/target/
+!backend/**/src/test/**/target/
 
-frontend/.vscode/*
+### IntelliJ IDEA ###
+backend/.idea/
+backend/*.iws
+backend/*.iml
+backend/*.ipr
