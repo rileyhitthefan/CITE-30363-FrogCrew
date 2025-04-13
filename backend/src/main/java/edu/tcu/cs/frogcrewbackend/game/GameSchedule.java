@@ -1,6 +1,7 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +13,13 @@ public class GameSchedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotEmpty(message =  "sport required")
     private String sport;
+
+    @NotEmpty(message =  "season required")
     private String season;
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "schedule")
     private List<Game> games = new ArrayList<>();
 
     public Integer getId() {
@@ -48,5 +52,10 @@ public class GameSchedule implements Serializable {
 
     public void setGames(List<Game> games) {
         this.games = games;
+    }
+
+    public void addGame(Game game) {
+        game.setSchedule(this);
+        this.games.add(game);
     }
 }

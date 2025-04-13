@@ -1,5 +1,6 @@
 package edu.tcu.cs.frogcrewbackend.system;
 
+import edu.tcu.cs.frogcrewbackend.game.*;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.member.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -8,9 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DBInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
+    private final GameScheduleRepository gameScheduleRepository;
+    private final GameRepository gameRepository;
 
-    public DBInitializer(UserRepository userRepository) {
+    public DBInitializer(UserRepository userRepository, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository) {
         this.userRepository = userRepository;
+        this.gameScheduleRepository = gameScheduleRepository;
+        this.gameRepository = gameRepository;
     }
 
     @Override
@@ -48,6 +53,17 @@ public class DBInitializer implements CommandLineRunner {
         userRepository.save(mem1);
         userRepository.save(mem2);
         userRepository.save(mem3);
+
+        GameSchedule schedule1 = new GameSchedule();
+        schedule1.setSport("Baseball");
+        schedule1.setSeason("2024-2025");
+
+        GameSchedule schedule2 = new GameSchedule();
+        schedule2.setSport("Football");
+        schedule2.setSeason("2023-2024");
+
+        gameScheduleRepository.save(schedule1);
+        gameScheduleRepository.save(schedule2);
     }
 }
 

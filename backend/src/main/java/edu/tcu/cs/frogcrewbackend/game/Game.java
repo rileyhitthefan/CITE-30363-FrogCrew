@@ -1,6 +1,10 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.tcu.cs.frogcrewbackend.game.dto.GameScheduleDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
@@ -14,11 +18,18 @@ public class Game implements Serializable {
     @JoinColumn(name = "scheduleId")
     private GameSchedule schedule;
 
-    private Integer scheduleId;
-
+//    private Integer scheduleId;
+    @NotEmpty(message =  "date required")
     private String gameDate;
+
+    @NotEmpty(message =  "venue required")
     private String venue;
+
+    @NotEmpty(message =  "opponent required")
     private String opponent;
+
+    @JsonProperty("isFinalized")
+    @NotNull(message =  "finalized required")
     private Boolean isFinalized;
 
     public Integer getGameId() {
@@ -27,14 +38,6 @@ public class Game implements Serializable {
 
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
-    }
-
-    public Integer getScheduleId() {
-        return (this.schedule != null) ? this.schedule.getId() : this.scheduleId;
-    }
-
-    public void setScheduleId(Integer scheduleId) {
-        this.scheduleId = scheduleId;;
     }
 
     public String getGameDate() {
