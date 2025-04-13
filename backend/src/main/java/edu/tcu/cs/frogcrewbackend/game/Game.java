@@ -1,20 +1,35 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.tcu.cs.frogcrewbackend.game.dto.GameScheduleDTO;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
+@Entity
 public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer gameId;
 
-    private Integer scheduleId;
+    @ManyToOne
+    @JoinColumn(name = "scheduleId")
+    private GameSchedule schedule;
+
+//    private Integer scheduleId;
+    @NotEmpty(message =  "date required")
     private String gameDate;
+
+    @NotEmpty(message =  "venue required")
     private String venue;
+
+    @NotEmpty(message =  "opponent required")
     private String opponent;
+
+    @JsonProperty("isFinalized")
+    @NotNull(message =  "finalized required")
     private Boolean isFinalized;
 
     public Integer getGameId() {
@@ -23,14 +38,6 @@ public class Game implements Serializable {
 
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
-    }
-
-    public Integer getScheduleId() {
-        return scheduleId;
-    }
-
-    public void setScheduleId(Integer scheduleId) {
-        this.scheduleId = scheduleId;
     }
 
     public String getGameDate() {
@@ -63,5 +70,13 @@ public class Game implements Serializable {
 
     public void setFinalized(Boolean finalized) {
         isFinalized = finalized;
+    }
+
+    public GameSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(GameSchedule schedule) {
+        this.schedule = schedule;
     }
 }

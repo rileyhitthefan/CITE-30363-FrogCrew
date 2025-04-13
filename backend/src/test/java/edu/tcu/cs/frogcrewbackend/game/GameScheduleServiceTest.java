@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
@@ -24,8 +27,13 @@ public class GameScheduleServiceTest {
     @Mock
     GameScheduleRepository gameScheduleRepository;
 
+    @Mock
+    GameRepository gameRepository;
+
     @InjectMocks
     GameScheduleService gameScheduleService;
+
+    List<GameSchedule> schedules;
 
     @BeforeEach
     void setUp() {
@@ -38,6 +46,10 @@ public class GameScheduleServiceTest {
         schedule2.setId(2);
         schedule2.setSport("Football");
         schedule2.setSeason("2023-2024");
+
+        this.schedules = new ArrayList<>();
+        schedules.add(schedule1);
+        schedules.add(schedule2);
     }
 
     @AfterEach
@@ -64,4 +76,44 @@ public class GameScheduleServiceTest {
         assertThat(returnedSchedule.getSeason()).isEqualTo(gameSchedule.getSeason());
         verify(this.gameScheduleRepository, times(1)).save(gameSchedule);
     }
+
+    @Test
+    void testFindAllGameSchedulesSuccess() {
+        // Given
+        given(this.gameScheduleRepository.findAll()).willReturn(this.schedules);
+
+        // When
+        List<GameSchedule> returnedSchedules = this.gameScheduleService.findAllGameSchedules();
+
+        // Then
+        assertThat(returnedSchedules.size()).isEqualTo(this.schedules.size());
+        verify(this.gameScheduleRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testAddGameToScheduleSuccess() {
+        // Given
+        GameSchedule schedule = new GameSchedule();
+        schedule.setId(2);
+        schedule.setSport("Football");
+        schedule.setSeason("2023-2024");
+
+        Game newGame = new Game();
+        newGame.setGameId(10);
+        newGame.setGameDate("2024-01-01");
+        newGame.setVenue("Carter");
+        newGame.setOpponent("SMU");
+        newGame.setFinalized(true);
+
+        given(this.gameScheduleRepository.findById(2)).willReturn(java.util.Optional.of(schedule));
+        given(this.gameRepository.save(newGame)).willReturn(newGame);
+
+        // When
+        this.gameScheduleService.addGameToSchedule(2, newGame);
+
+        // Then
+        assertThat(newGame.getSchedule().getId()).isEqualTo(2);
+        assertThat(schedule.getGames().contains(newGame));
+    }
+
 }
