@@ -14,6 +14,7 @@
             Email: <input
                 type="email"
                 required
+                unique
             />
             <br />
             Phone Number: <input
@@ -24,6 +25,7 @@
             <br />
             Password: <input
                 type="password"
+                required
             />
             <br />
             Role: <input
@@ -36,8 +38,11 @@
                 required
             />
             <br />
-
+            <button>
+                Confirm
+            </button>
         </form>
+
 
     </div>
 </template>
