@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div> Enter the details of the new account
         <form action="#">
             First Name: <input
                 type="text"
@@ -39,11 +39,9 @@
             />
             <br />
             <button>
-                Confirm
+                Submit
             </button>
         </form>
-
-
     </div>
 </template>
 

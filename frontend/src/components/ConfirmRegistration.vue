@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div>Display Details of new account
         <button>Confirm Registration</button>
         <button>Modify details</button>
     </div>
