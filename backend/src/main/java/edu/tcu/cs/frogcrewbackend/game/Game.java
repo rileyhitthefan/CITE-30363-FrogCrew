@@ -3,11 +3,13 @@ package edu.tcu.cs.frogcrewbackend.game;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.tcu.cs.frogcrewbackend.game.dto.GameScheduleDTO;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
+@Transactional
 @Entity
 public class Game implements Serializable {
     @Id

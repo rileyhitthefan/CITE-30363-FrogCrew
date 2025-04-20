@@ -116,4 +116,42 @@ public class GameScheduleServiceTest {
         assertThat(schedule.getGames().contains(newGame));
     }
 
+    @Test
+    void testFindGamesByScheduleIdSuccess() {
+        // Given
+        int scheduleId = 1;
+
+        Game game1 = new Game();
+        game1.setGameId(1);
+        game1.setGameDate("2025-02-02");
+        game1.setVenue("Carter");
+        game1.setOpponent("Baylor");
+        game1.setFinalized(true);
+
+        Game game2 = new Game();
+        game2.setGameId(2);
+        game2.setGameDate("2025-02-09");
+        game2.setVenue("Globe Life");
+        game2.setOpponent("UT");
+        game2.setFinalized(false);
+
+        GameSchedule schedule = new GameSchedule();
+        schedule.setId(scheduleId);
+        schedule.setSport("Baseball");
+        schedule.setSeason("2024-2025");
+        schedule.getGames().add(game1);
+        schedule.getGames().add(game2);
+
+        given(this.gameScheduleRepository.findById(scheduleId)).willReturn(java.util.Optional.of(schedule));
+
+        // When
+        List<Game> games = this.gameScheduleService.findGamesByScheduleId(scheduleId);
+
+        // Then
+        assertThat(games.size()).isEqualTo(2);
+        assertThat(games).contains(game1, game2);
+        verify(this.gameScheduleRepository, times(1)).findById(scheduleId);
+    }
+
+
 }

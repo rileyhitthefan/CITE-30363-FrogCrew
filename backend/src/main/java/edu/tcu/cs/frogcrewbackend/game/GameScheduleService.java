@@ -16,6 +16,7 @@ public class GameScheduleService {
         this.gameScheduleRepository = gameRepository;
         this.gameRepository = gameRepository1;
     }
+
     public Game addGame(Game newGame){
         return this.gameRepository.save(newGame);
     }
@@ -28,14 +29,8 @@ public class GameScheduleService {
         return this.gameScheduleRepository.findAll();
     }
 
-    public GameSchedule findGameScheduleById(int id) {
-        return this.gameScheduleRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("game schedule", id));
-    }
-
-    public Game findGameById(int id) {
-        return this.gameRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("game", id));
+    public List<Game> findAllGames() {
+        return this.gameRepository.findAll();
     }
 
     public void addGameToSchedule(Integer scheduleId, Game game) {
@@ -45,6 +40,13 @@ public class GameScheduleService {
                 .orElseThrow(() -> new ObjectNotFoundException("game schedule", scheduleId));
 
         assignedSchedule.addGame(assignedGame);
+    }
+
+    public List<Game> findGamesByScheduleId(int scheduleId) {
+        GameSchedule schedule = this.gameScheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new ObjectNotFoundException("game", scheduleId));
+        List<Game> scheduledGames = schedule.getGames();
+        return scheduledGames;
     }
 
 }

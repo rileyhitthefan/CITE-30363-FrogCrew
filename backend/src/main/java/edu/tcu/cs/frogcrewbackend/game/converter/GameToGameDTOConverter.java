@@ -18,7 +18,7 @@ public class GameToGameDTOConverter implements Converter<Game, GameDTO> {
     public GameDTO convert(Game source) {
         GameDTO gameDTO = new GameDTO(
                 source.getGameId(),
-                source.getSchedule() != null ? this.scheduleToScheduleDTOConverter.convert(source.getSchedule()) : null,
+                source.getSchedule() != null ? this.scheduleToScheduleDTOConverter.convert(source.getSchedule()).id() : null,
                 source.getGameDate(),
                 source.getVenue(),
                 source.getOpponent(),

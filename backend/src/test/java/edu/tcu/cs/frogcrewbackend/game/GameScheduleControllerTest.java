@@ -140,4 +140,38 @@ public class GameScheduleControllerTest {
                 .andExpect(jsonPath("$.message").value("Game added to schedule 1"))
                 .andExpect(jsonPath("$.data").isNotEmpty());
     }
+
+    @Test
+    void testFindGamesByScheduleIdSuccess() throws Exception {
+        int scheduleId = 1;
+
+        Game game1 = new Game();
+        game1.setGameId(1);
+        game1.setGameDate("2025-02-02");
+        game1.setVenue("Carter");
+        game1.setOpponent("Baylor");
+        game1.setFinalized(true);
+
+        Game game2 = new Game();
+        game2.setGameId(2);
+        game2.setGameDate("2025-02-09");
+        game2.setVenue("Globe Life");
+        game2.setOpponent("UT");
+        game2.setFinalized(false);
+
+        List<Game> games = List.of(game1, game2);
+
+        // Given
+        given(this.gameScheduleService.findGamesByScheduleId(scheduleId)).willReturn(games);
+
+        // When and Then
+        this.mockMvc.perform(get(this.baseUrl + "/gameSchedule/" + scheduleId + "/game")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(true))
+                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                .andExpect(jsonPath("$.message").value("Found all games with scheduleId " + scheduleId))
+                .andExpect(jsonPath("$.data[0].gameId").value(1))
+                .andExpect(jsonPath("$.data[1].gameId").value(2));
+    }
+
 }
