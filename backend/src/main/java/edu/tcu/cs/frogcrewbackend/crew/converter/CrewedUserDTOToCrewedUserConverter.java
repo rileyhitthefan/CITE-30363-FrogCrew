@@ -24,9 +24,7 @@ public class CrewedUserDTOToCrewedUserConverter implements Converter<CrewedUserD
     @Override
     public CrewedUser convert(CrewedUserDTO source) {
         CrewedUser cu = new CrewedUser();
-
-        cu.setPosition(source.position());
-        cu.setReportTime(source.reportTime());
+        cu.setCrewedUserId(source.crewedUserId());
 
         Member member = userRepository.findById(source.userId())
                 .orElseThrow(() -> new ObjectNotFoundException("Member", source.userId()));
@@ -35,6 +33,10 @@ public class CrewedUserDTOToCrewedUserConverter implements Converter<CrewedUserD
         Game game = gameRepository.findById(source.gameId())
                 .orElseThrow(() -> new ObjectNotFoundException("Game", source.gameId()));
         cu.setGame(game);
+
+        cu.setPosition(source.position());
+        cu.setReportTime(source.reportTime());
+        cu.setReportLocation(source.reportLocation());
 
         return cu;
     }

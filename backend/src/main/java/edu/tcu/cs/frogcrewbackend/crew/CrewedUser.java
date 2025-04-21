@@ -14,8 +14,7 @@ import java.io.Serializable;
 public class CrewedUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer crewedId;
+    private Integer crewedUserId;
 
     @OneToOne
     @JoinColumn(name = "id", nullable = false)
@@ -28,16 +27,17 @@ public class CrewedUser implements Serializable {
     @NotEmpty(message = "position required")
     private String position;
 
-    @NotEmpty(message = "report time required")
     private String reportTime;
 
+    private String reportLocation;
+
     // Getters and Setters
-    public Integer getId() {
-        return crewedId;
+    public Integer getCrewedUserId() {
+        return crewedUserId;
     }
 
-    public void setId(Integer id) {
-        this.crewedId = id;
+    public void setCrewedUserId(Integer id) {
+        this.crewedUserId = id;
     }
 
     public Member getUser() {
@@ -70,5 +70,13 @@ public class CrewedUser implements Serializable {
 
     public void setReportTime(String reportTime) {
         this.reportTime = reportTime;
+    }
+
+    public String getReportLocation() {
+        return reportLocation;
+    }
+
+    public void setReportLocation(String reportLocation) {
+        this.reportLocation = reportLocation;
     }
 }

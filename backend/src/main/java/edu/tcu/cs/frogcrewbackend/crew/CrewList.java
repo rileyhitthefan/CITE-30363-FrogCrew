@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @Entity
@@ -15,12 +17,10 @@ public class CrewList implements Serializable {
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "gameId", nullable = false)
     private Game game;
 
-    @ManyToOne
-    @JoinColumn(name = "crewedId", nullable = false)
-    private CrewedUser crewedUsers;
+    @OneToMany
+    private List<CrewedUser> crewedUsers = new ArrayList<>();
 
     public void setId(Integer id) {
         this.id = id;
@@ -38,11 +38,11 @@ public class CrewList implements Serializable {
         this.game = game;
     }
 
-    public CrewedUser getCrewedUser() {
+    public List<CrewedUser> getCrewedUsers() {
         return crewedUsers;
     }
 
-    public void setCrewedUser(CrewedUser crewedUser) {
-        this.crewedUsers = crewedUser;
+    public void setCrewedUsers(List<CrewedUser> crewedUsers) {
+        this.crewedUsers = crewedUsers;
     }
 }

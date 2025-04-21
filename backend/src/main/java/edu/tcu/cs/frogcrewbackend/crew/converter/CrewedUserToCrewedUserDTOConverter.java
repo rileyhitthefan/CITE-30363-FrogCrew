@@ -10,11 +10,13 @@ public class CrewedUserToCrewedUserDTOConverter implements Converter<CrewedUser,
     @Override
     public CrewedUserDTO convert(CrewedUser source) {
         return new CrewedUserDTO(
+                source.getCrewedUserId(),
                 source.getUser().getId(),
                 source.getGame().getGameId(),
                 source.getUser().getFirstName() + " " + source.getUser().getLastName(),
                 source.getPosition(),
-                source.getReportTime()
+                source.getReportTime(),
+                source.getReportLocation()
         );
     }
 }

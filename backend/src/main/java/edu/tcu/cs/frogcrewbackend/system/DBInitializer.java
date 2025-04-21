@@ -1,21 +1,31 @@
 package edu.tcu.cs.frogcrewbackend.system;
 
+import edu.tcu.cs.frogcrewbackend.crew.CrewList;
+import edu.tcu.cs.frogcrewbackend.crew.CrewListRepository;
+import edu.tcu.cs.frogcrewbackend.crew.CrewedUser;
+import edu.tcu.cs.frogcrewbackend.crew.CrewedUserRepository;
 import edu.tcu.cs.frogcrewbackend.game.*;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.member.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DBInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final GameScheduleRepository gameScheduleRepository;
     private final GameRepository gameRepository;
+    private final CrewedUserRepository crewedUserRepository;
+    private final CrewListRepository crewListRepository;
 
-    public DBInitializer(UserRepository userRepository, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository) {
+    public DBInitializer(UserRepository userRepository, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository, CrewedUserRepository crewedUserRepository, CrewListRepository crewListRepository) {
         this.userRepository = userRepository;
         this.gameScheduleRepository = gameScheduleRepository;
         this.gameRepository = gameRepository;
+        this.crewedUserRepository = crewedUserRepository;
+        this.crewListRepository = crewListRepository;
     }
 
     @Override
@@ -41,7 +51,6 @@ public class DBInitializer implements CommandLineRunner {
         mem2.setPositions("Videographer Planner");
 
         Member mem3 = new Member();
-//        mem3.setId(3);
         mem3.setFirstName("Diana");
         mem3.setLastName("Prince");
         mem3.setEmail("dp@gmail.com");
@@ -50,9 +59,19 @@ public class DBInitializer implements CommandLineRunner {
         mem3.setRole("MEMBER");
         mem3.setPositions("Photographer Reporter");
 
+        Member mem4 = new Member();
+        mem4.setFirstName("Hal");
+        mem4.setLastName("Jordan");
+        mem4.setEmail("hj@gmail.com");
+        mem4.setPhoneNumber("1357924680");
+        mem4.setPassword("password4");
+        mem4.setRole("MEMBER");
+        mem4.setPositions("Reporter Supervisor");
+
         userRepository.save(mem1);
         userRepository.save(mem2);
         userRepository.save(mem3);
+        userRepository.save(mem4);
 
         GameSchedule schedule1 = new GameSchedule();
         schedule1.setSport("Baseball");
@@ -79,6 +98,35 @@ public class DBInitializer implements CommandLineRunner {
 
         gameRepository.save(game1);
         gameRepository.save(game2);
+
+        CrewedUser cu1 = new CrewedUser();
+        cu1.setCrewedUserId(0);
+        cu1.setUser(mem1);
+        cu1.setGame(game1);
+        cu1.setPosition("DIRECTOR");
+        cu1.setReportTime("12:00");
+        cu1.setReportLocation("CONTROL ROOM");
+
+        CrewedUser cu2 = new CrewedUser();
+        cu2.setCrewedUserId(1);
+        cu2.setUser(mem2);
+        cu2.setGame(game1);
+        cu2.setPosition("CAMERA");
+        cu2.setReportTime("10:00");
+        cu2.setReportLocation("FIELD");
+
+        crewedUserRepository.save(cu1);
+        crewedUserRepository.save(cu2);
+
+        // crew list
+        CrewList clist1 = new CrewList();
+        clist1.setGame(game1);
+        clist1.setCrewedUsers(List.of(cu1, cu2));
+
+        game1.setCrewList(clist1);
+
+        crewListRepository.save(clist1);
+        gameRepository.save(game1);
     }
 }
 
