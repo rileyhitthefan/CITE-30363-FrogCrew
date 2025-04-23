@@ -1,12 +1,14 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Entity
 public class GameSchedule implements Serializable {
     @Id

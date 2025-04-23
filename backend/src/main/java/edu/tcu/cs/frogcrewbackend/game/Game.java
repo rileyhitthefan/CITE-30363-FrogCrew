@@ -1,13 +1,16 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.tcu.cs.frogcrewbackend.crew.CrewList;
 import edu.tcu.cs.frogcrewbackend.game.dto.GameScheduleDTO;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
+@Transactional
 @Entity
 public class Game implements Serializable {
     @Id
@@ -17,6 +20,9 @@ public class Game implements Serializable {
     @ManyToOne
     @JoinColumn(name = "scheduleId")
     private GameSchedule schedule;
+
+    @OneToOne
+    private CrewList crewList;
 
 //    private Integer scheduleId;
     @NotEmpty(message =  "date required")
@@ -78,5 +84,13 @@ public class Game implements Serializable {
 
     public void setSchedule(GameSchedule schedule) {
         this.schedule = schedule;
+    }
+
+    public CrewList getCrewList() {
+        return crewList;
+    }
+
+    public void setCrewList(CrewList crewList) {
+        this.crewList = crewList;
     }
 }

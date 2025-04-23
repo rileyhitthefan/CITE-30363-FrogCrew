@@ -2,9 +2,11 @@ package edu.tcu.cs.frogcrewbackend.availability;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.transaction.Transactional;
 
 import java.io.Serializable;
 
+@Transactional
 @Entity
 public class Availability implements Serializable {
     // Each user submits 1 availability

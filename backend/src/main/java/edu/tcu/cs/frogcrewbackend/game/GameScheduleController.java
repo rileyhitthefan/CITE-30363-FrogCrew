@@ -50,11 +50,30 @@ public class GameScheduleController {
         return new Result(true, StatusCode.SUCCESS, "Found all schedules", schedulesDTO);
     }
 
+    @GetMapping("/game")
+    public Result findAllGames() {
+        List<Game> games = this.gameScheduleService.findAllGames();
+        // Convert to DTO
+        List<GameDTO> gamesDTO = games.stream()
+                .map(this.gameToGameDTOConverter::convert)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Found all games", gamesDTO);
+    }
+
     @PostMapping("/{scheduleId}/game")
     public Result addGameToSchedule(@PathVariable Integer scheduleId, @RequestBody @Valid Game game) {
         Game newGame = this.gameScheduleService.addGame(game);
         this.gameScheduleService.addGameToSchedule(scheduleId, newGame);
         GameDTO assignedGameDTO = this.gameToGameDTOConverter.convert(newGame);
         return new Result(true, StatusCode.SUCCESS, "Game added to schedule " + scheduleId, assignedGameDTO);
+    }
+
+    @GetMapping("/{scheduleId}/game")
+    public Result findGamesByScheduleId(@PathVariable Integer scheduleId) {
+        List<Game> games = this.gameScheduleService.findGamesByScheduleId(scheduleId);
+        List<GameDTO> gamesDTO = games.stream()
+                .map(this.gameToGameDTOConverter::convert)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Found all games with scheduleId " + scheduleId, gamesDTO);
     }
 }

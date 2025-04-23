@@ -8,7 +8,7 @@ public record GameDTO (
         @NotNull(message = "Game id is required")
         Integer gameId,
 
-        GameScheduleDTO schedule,
+        Integer scheduleId,
 
         @NotEmpty(message = "Game date is required")
         String gameDate,
