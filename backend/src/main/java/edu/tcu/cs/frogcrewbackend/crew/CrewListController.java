@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("${api.endpoint.base-url}/crewList")
+@RequestMapping("${api.endpoint.base-url}")
 public class CrewListController {
     private final CrewListService crewListService;
     private final CrewListToCrewListDTOConverter crewListToCrewListDTOConverter;
@@ -40,8 +40,8 @@ public class CrewListController {
         this.gameDTOToGameConverter = gameDTOToGameConverter;
     }
 
-    @PostMapping("/{gameId}")
-    public Result addGameToSchedule(@PathVariable Integer gameId, @RequestBody @Valid List<CrewRequestDTO> crewRequestDTOList) {
+    @PostMapping("/crewSchedule/{gameId}")
+    public Result addCrewListToGame(@PathVariable Integer gameId, @RequestBody @Valid List<CrewRequestDTO> crewRequestDTOList) {
         // Add crew users to game's crew list
         CrewList gameCrewList = this.crewListService.addCrewListToGame(gameId, crewRequestDTOList);
 
@@ -51,7 +51,7 @@ public class CrewListController {
         return new Result(true, StatusCode.SUCCESS, "CrewList added to game " + gameId, gameCrewListDTO);
     }
 
-    @GetMapping("/{gameId}")
+    @GetMapping("/crewList/{gameId}")
     public Result findCrewListByGameId(@PathVariable Integer gameId) {
         CrewList crewList = this.crewListService.findCrewListByGameId(gameId);
         CrewListDTO clDTO = this.crewListToCrewListDTOConverter.convert(crewList);
