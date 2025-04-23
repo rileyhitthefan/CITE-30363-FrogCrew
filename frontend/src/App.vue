@@ -1,7 +1,11 @@
 <template>
   <div>
-    <SideNavigation></SideNavigation>
-    <router-view></router-view>
+    <aside>
+      <SideNavigation></SideNavigation>
+    </aside>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 

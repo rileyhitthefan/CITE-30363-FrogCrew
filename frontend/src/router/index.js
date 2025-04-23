@@ -3,6 +3,8 @@ import { createRouter, createWebHashHistory } from "vue-router"
 //Import components we want to route to
 import Homepage from "@/views/Homepage.vue"
 import CrewMembers from "@/views/CrewMembers.vue"
+import ManageCrewMembers from "@/views/ManageCrewMembers.vue"
+import InviteCrewMembers from "@/views/InviteCrewMembers.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -11,7 +13,12 @@ const router = createRouter({
     //Define some routes, each route record should map to a componenet
     routes: [
         {path:'/', name:'homepage', component: Homepage},
-        {path: '/crewMember', name: 'crewMembers', component: CrewMembers},
+        {path: '/crewMember', name: 'crewMembers', component: CrewMembers,
+            children: [
+                {path: 'manage', name: 'manageCrewMembers', component: ManageCrewMembers},
+                {path: 'invite', name: 'inviteCrewMembers', component: InviteCrewMembers}
+            ]
+        },
     ],
 })
 

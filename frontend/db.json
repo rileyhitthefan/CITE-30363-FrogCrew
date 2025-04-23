@@ -1,0 +1,22 @@
+{
+    "crewMembers": [
+      {
+        "userId": 1,
+        "fullName": "John Doe",
+        "email": "john.doe@example.com",
+        "phoneNumber": "1234567890"
+      },
+      {
+        "userId": 2,
+        "fullName": "Jane Smith",
+        "email": "Jane.Smith@example.com",
+        "phoneNumber": "1112223333"
+      },
+      {
+        "userId": 3,
+        "fullName": "Bob Marley",
+        "email": "Bob.Marley@example.com",
+        "phoneNumber": "1231231234"
+      }
+    ]
+  }
