@@ -5,6 +5,9 @@ import Homepage from "@/views/Homepage.vue"
 import CrewMembers from "@/views/CrewMembers.vue"
 import ManageCrewMembers from "@/views/ManageCrewMembers.vue"
 import InviteCrewMembers from "@/views/InviteCrewMembers.vue"
+import Schedule from "@/views/Schedule.vue"
+import TradeBoard from "@/views/TradeBoard.vue"
+import Reports from "@/views/Reports.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -19,6 +22,9 @@ const router = createRouter({
                 {path: 'invite', name: 'inviteCrewMembers', component: InviteCrewMembers}
             ]
         },
+        {path: '/schedule', name: 'schedule', component: Schedule},
+        {path: '/tradeBoard', name: 'tradeBoard', component: TradeBoard},
+        {path: '/reports', name: 'reports', component: Reports},
     ],
 })
 
