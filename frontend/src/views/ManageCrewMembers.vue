@@ -1,6 +1,13 @@
 <template>
     <div>
         <h2>Crew Members List</h2>
+        <!--Search bar-->
+        <input
+            type="text"
+            placeholder="Search crew members..."
+        />
+        <button>Search</button>
+
         <!--List of crew members fetched from back end-->
         <table>
             <thead>
@@ -12,6 +19,7 @@
             </thead>
             <tbody>
                 <tr v-for="crewMember in crewMembers" :key="crewMember.userId">
+                    <td><input type="checkbox"></td>
                     <td>{{ crewMember.fullName }}</td>
                     <td>{{ crewMember.email }}</td>
                     <td>{{ crewMember.phoneNumber }}</td>

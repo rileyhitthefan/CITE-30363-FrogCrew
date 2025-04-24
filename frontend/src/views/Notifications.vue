@@ -1,9 +1,6 @@
 <template>
     <div>
-        <h1>
-            Trade Board
-        </h1>
-
+        Notifications
     </div>
 </template>
 
