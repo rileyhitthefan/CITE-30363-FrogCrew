@@ -18,5 +18,21 @@
         "email": "Bob.Marley@example.com",
         "phoneNumber": "1231231234"
       }
+    ],
+
+    "users": [
+      {
+        "username": "john",
+        "password": "1234",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "phoneNumber": "1234567890",
+        "role": "ADMIN",
+        "position": [
+          "Director",
+          "Producer"
+        ]
+       }
     ]
-  }
+}
