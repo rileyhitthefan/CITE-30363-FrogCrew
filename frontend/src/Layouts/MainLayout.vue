@@ -1,11 +1,11 @@
 <template>
     <div>
-        <UserDashboard></UserDashboard>
+        <Dashboard></Dashboard>
     </div>
 </template>
 
 <script setup>
-import UserDashboard from '@/components/UserDashboard.vue';
+import Dashboard from '@/components/Dashboard.vue';
 
 
 </script>

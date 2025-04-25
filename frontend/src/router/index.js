@@ -3,10 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router"
 //Import components we want to route to
 import Homepage from "@/views/Homepage.vue"
 import CrewMembers from "@/views/CrewMembers.vue"
-import ManageCrewMembers from "@/views/ManageCrewMembers.vue"
-import InviteCrewMembers from "@/views/InviteCrewMembers.vue"
 import Schedule from "@/views/Schedule.vue"
-import Reports from "@/views/Reports.vue"
 import LogIn from "@/views/LogIn.vue"
 import MainLayout from "@/Layouts/MainLayout.vue"
 import { isAuthenticated } from "@/apis/auth"
@@ -19,16 +16,10 @@ const router = createRouter({
     routes: [
         {path: '/', name: 'mainLayout', component: MainLayout, redirect: {name: 'homepage'},
             children: [
-                {path:'/', name:'homepage', component: Homepage},
-                {path: '/crewMember', name: 'crewMembers', component: CrewMembers,
-                    children: [
-                    {path: 'manage', name: 'manageCrewMembers', component: ManageCrewMembers},
-                    {path: 'invite', name: 'inviteCrewMembers', component: InviteCrewMembers},
-                    ]
+                {path:'/', name:'homepage', component: Homepage, meta: { title: 'Homepage', isNavLink: true}},
+                {path: '/crewMember', name: 'crewMembers', component: CrewMembers,  meta: { title: 'Crew Members', isNavLink: true},
                 },
-                {path: '/schedule', name: 'schedule', component: Schedule},
-                {path: '/reports', name: 'reports', component: Reports},
-    
+                {path: '/schedule', name: 'schedule', component: Schedule,  meta: { title: 'Schedule', isNavLink: true}}, 
             ]
         },
 
@@ -53,7 +44,6 @@ router.beforeEach((to, from) => {
         return false
     }
 })
-
 
 
 

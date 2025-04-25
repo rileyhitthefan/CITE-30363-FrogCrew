@@ -1,17 +1,13 @@
 <template>
     <div>
-        <h1>
-            Homepage
-        </h1>
-
+        Templates
     </div>
 </template>
 
 <script setup>
 
-
 </script>
 
-<style scoped>
+<style  scoped>
 
 </style>

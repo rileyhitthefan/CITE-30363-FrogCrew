@@ -17,9 +17,10 @@
 </template>
 
 <script setup>
-import { login } from '@/apis/auth'
+import { login, getUserRole } from '@/apis/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { reportsRoute, templatesRoute, manageCrewMembersRoute, inviteCrewMembersRoute } from '@/router/dynamicRoutes'
 
 const username = ref('')
 const password = ref('')
@@ -28,9 +29,32 @@ const router = useRouter()
 
 async function handleLogin() {
     try {
-    await login(username.value, password.value)
-    //After successful login redirect to the home page
-    router.push('/')
+        await login(username.value, password.value)
+
+        const userRole = getUserRole()
+
+        //Dynamically add ADMIN route if the user is ADMIN and report route is not already added
+        if (userRole == 'ADMIN' && !router.hasRoute('reports')) {
+            router.addRoute('mainLayout', reportsRoute) 
+        }
+
+        //Dynamically add ADMIN route if the user is ADMIN and templates route is not already added
+        if (userRole == 'ADMIN' && !router.hasRoute('templates')) {
+            router.addRoute('mainLayout', templatesRoute) 
+        }
+
+        //Dynamically add ADMIN route if the user is ADMIN and manage crew members route is not already added
+        if (userRole == 'ADMIN' && !router.hasRoute('manageCrewMembers')) {
+            router.addRoute('crewMembers', manageCrewMembersRoute) 
+        }
+
+          //Dynamically add ADMIN route if the user is ADMIN and invite crew members route is not already added
+          if (userRole == 'ADMIN' && !router.hasRoute('inviteCrewMembers')) {
+            router.addRoute('crewMembers', inviteCrewMembersRoute) 
+        }
+
+        //After successful login redirect to the home page
+        router.push('/')
     } catch (error) {
         console.error(error)
     }
@@ -91,7 +115,7 @@ async function handleLogin() {
             padding: 0.75rem;
             border: none;
             border-radius: 6px;
-            background-color: #007bff;
+            background-color: purple;
             color: #fff;
             font-size: 1rem;
             font-weight: bold;
