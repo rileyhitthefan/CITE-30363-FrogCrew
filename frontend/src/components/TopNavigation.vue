@@ -38,5 +38,32 @@ const handleLogout = () => {
 </script>
 
 <style  scoped>
+nav {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  background-color: #C89FE9;
+  padding: 0.75rem 1.5rem;
+  gap: 1rem;
+}
+
+nav button {
+  background-color: transparent;
+  color: white;
+  border: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+nav button:hover {
+  background-color: #9B30E2;
+  border-color: white;
+  transform: scale(1.05);
+}
+
 
 </style>
