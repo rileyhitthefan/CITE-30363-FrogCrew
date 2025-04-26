@@ -7,6 +7,8 @@ import Schedule from "@/views/Schedule.vue"
 import LogIn from "@/views/LogIn.vue"
 import MainLayout from "@/Layouts/MainLayout.vue"
 import { isAuthenticated } from "@/apis/auth"
+import Notifications from "@/views/Notifications.vue"
+import Account from "@/views/Account.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -20,11 +22,13 @@ const router = createRouter({
                 {path: '/crewMember', name: 'crewMembers', component: CrewMembers,  meta: { title: 'Crew Members', isNavLink: true},
                 },
                 {path: '/schedule', name: 'schedule', component: Schedule,  meta: { title: 'Schedule', isNavLink: true}}, 
+                {path: '/notifications', name: 'notifications', component: Notifications},
+                {path: '/account', name: 'account', component: Account},
             ]
         },
 
         {path:'/login', name: 'login', component: LogIn },
-    
+
     ],
 })
 

@@ -1,7 +1,7 @@
 <template>
     <nav>
-       <button>Notifications</button>
-       <button>My Account</button>
+       <router-link :to="{name: 'notifications'}">Notifications</router-link>
+       <router-link :to="{name: 'account'}">Account</router-link>
        <button @click="handleLogout" v-if="isAuthenticated">Log Out</button>
     </nav>
 </template>
@@ -30,7 +30,6 @@ const handleLogout = () => {
         router.removeRoute('inviteCrewMembers')
     }
 
-
     logout()
     router.push('/login')
 }
@@ -57,9 +56,30 @@ nav button {
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
+  font-family: sans-serif;
+
 }
 
 nav button:hover {
+  background-color: #9B30E2;
+  border-color: white;
+  transform: scale(1.05);
+}
+
+nav a {
+  background-color: transparent;
+  color: white;
+  border: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: sans-serif;
+}
+
+nav a:hover {
   background-color: #9B30E2;
   border-color: white;
   transform: scale(1.05);
