@@ -2,6 +2,8 @@ package edu.tcu.cs.frogcrewbackend.member;
 
 import jakarta.transaction.Transactional;
 import edu.tcu.cs.frogcrewbackend.system.exception.ObjectNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +46,12 @@ public class UserService {
         this.userRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("member", id));
         this.userRepository.deleteById(id);
+    }
+
+//    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return this.userRepository.findByEmail(email)
+                .map(member -> new MyUserPrincipal(member))
+                .orElseThrow(() -> new UsernameNotFoundException("user not found with email " + email));
     }
 }
