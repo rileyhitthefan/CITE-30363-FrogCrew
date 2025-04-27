@@ -18,10 +18,10 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     // Save new member
     public Member createMember(Member newMember) {
         newMember.setPassword(this.passwordEncoder.encode(newMember.getPassword()));

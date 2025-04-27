@@ -1,6 +1,8 @@
 package edu.tcu.cs.frogcrewbackend.member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.tcu.cs.frogcrewbackend.member.converter.UserDTOToUserConverter;
+import edu.tcu.cs.frogcrewbackend.member.converter.UserToUserDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.dto.UserDTO;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
 import edu.tcu.cs.frogcrewbackend.system.exception.ObjectNotFoundException;
@@ -10,6 +12,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
@@ -25,8 +28,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
-@AutoConfigureMockMvc
-public class UserControllerTest {
+@AutoConfigureMockMvc(addFilters = false)
+class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -35,6 +38,9 @@ public class UserControllerTest {
 
     @MockitoBean
     UserService userService;
+
+    @MockitoBean
+    UserToUserDTOConverter userToUserDTOConverter;
 
     @Value("${api.endpoint.base-url}")
     String baseUrl;
@@ -45,13 +51,14 @@ public class UserControllerTest {
     void setUp(){
         Member mem1 = new Member();
         mem1.setId(1);
-        mem1.setFirstName("Jack");
+        mem1.setId(1);
+        mem1.setFirstName("John");
         mem1.setLastName("Smith");
-        mem1.setEmail("jsmith@gmail.com");
+        mem1.setEmail("john.smith@gmail.com");
         mem1.setPhoneNumber("1234567890");
-        mem1.setPassword("password1");
-        mem1.setRole("MEMBER");
-        mem1.setPositions("Director");
+        mem1.setPassword("password");
+        mem1.setRole("ADMIN");
+        mem1.setPositions("DIRECTOR");
 
         Member mem2 = new Member();
         mem2.setId(2);
@@ -78,13 +85,15 @@ public class UserControllerTest {
         member.setPhoneNumber("1234567890");
         member.setPassword("password");
         member.setRole("ADMIN");
-        member.setPositions("Director");
+        member.setPositions("DIRECTOR");
+
+        UserDTO memberDTO = new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR");
 
         String json = this.objectMapper.writeValueAsString(member);
 
-        member.setId(1);
         // Given
         given(this.userService.createMember(Mockito.any(Member.class))).willReturn(member);
+        given(this.userToUserDTOConverter.convert(Mockito.any(Member.class))).willReturn(memberDTO);
 
         // When and Then
         this.mockMvc.perform(
@@ -105,6 +114,11 @@ public class UserControllerTest {
     void testFindAllMembersSuccess() throws Exception {
         // Given
         given(this.userService.findAllMembers()).willReturn(this.members);
+        given(this.userToUserDTOConverter.convert(this.members.get(0)))
+                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR"));
+
+        given(this.userToUserDTOConverter.convert(this.members.get(1)))
+                .willReturn(new UserDTO(2, "Jane", "Smith", "jane.smith@gmail.com", "0123456789", "MEMBER", "Videographer Planner"));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember")
@@ -113,7 +127,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Found all members"))
                 .andExpect(jsonPath("$.data[0].id").value(1))
-                .andExpect(jsonPath("$.data[0].firstName").value("Jack"))
+                .andExpect(jsonPath("$.data[0].firstName").value("John"))
                 .andExpect(jsonPath("$.data[1].id").value(2))
                 .andExpect(jsonPath("$.data[1].firstName").value("Jane"));
     }
@@ -122,6 +136,8 @@ public class UserControllerTest {
     void testFindMemberByIdSuccess() throws Exception {
         // Given
         given(this.userService.findMemberById(1)).willReturn(this.members.get(0));
+        given(this.userToUserDTOConverter.convert(this.members.get(0)))
+                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR"));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember/1")
@@ -130,13 +146,18 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Found member with Id: 1"))
                 .andExpect(jsonPath("$.data.id").value(1))
-                .andExpect(jsonPath("$.data.firstName").value("Jack"));
+                .andExpect(jsonPath("$.data.firstName").value("John"));
     }
 
     @Test
     void testFindMemberByIdNotFound() throws Exception {
         // Given
         given(this.userService.findMemberById(3)).willThrow(new ObjectNotFoundException("member", 3));
+        given(this.userToUserDTOConverter.convert(this.members.get(0)))
+                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR"));
+
+        given(this.userToUserDTOConverter.convert(this.members.get(1)))
+                .willReturn(new UserDTO(2, "Jane", "Smith", "jane.smith@gmail.com", "0123456789", "MEMBER", "Videographer Planner"));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember/3")

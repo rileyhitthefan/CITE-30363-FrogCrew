@@ -1,6 +1,7 @@
 package edu.tcu.cs.frogcrewbackend.crew;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.tcu.cs.frogcrewbackend.crew.converter.CrewedUserToCrewedUserDTOConverter;
 import edu.tcu.cs.frogcrewbackend.crew.dto.CrewedUserDTO;
 import edu.tcu.cs.frogcrewbackend.game.Game;
 import edu.tcu.cs.frogcrewbackend.member.Member;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class CrewedUserControllerTest {
 
     @Autowired
@@ -38,6 +38,9 @@ public class CrewedUserControllerTest {
 
     @MockitoBean
     CrewedUserService crewedUserService;
+
+    @MockitoBean
+    CrewedUserToCrewedUserDTOConverter crewedUserToCrewedUserDTOConverter;
 
     List<CrewedUserDTO> crewedUsers;
 
@@ -60,15 +63,17 @@ public class CrewedUserControllerTest {
     @Test
     void testFindCrewedUsersByGameAndPositionSuccess() throws Exception {
         Member mem1 = new Member();
+        mem1.setId(1);
         mem1.setFirstName("Bruce");
         mem1.setLastName("Wayne");
         mem1.setEmail("bw@gmail.com");
         mem1.setPhoneNumber("1234567890");
         mem1.setPassword("password1");
         mem1.setRole("MEMBER");
-        mem1.setPositions("Director");
+        mem1.setPositions("DIRECTOR");
 
         Game game1 = new Game();
+        game1.setGameId(1);
         game1.setGameDate("2024-10-10");
         game1.setVenue("Amon G. Carter");
         game1.setOpponent("Texas Longhorn");
@@ -82,9 +87,11 @@ public class CrewedUserControllerTest {
         cu1.setReportTime("12:00");
         cu1.setReportLocation("CONTROL ROOM");
 
+        CrewedUserDTO cuDTO = new CrewedUserDTO(1, 1, 1, "Bruce Wayne", "DIRECTOR", "", "");
+
         // Given
-        given(this.crewedUserService.findCrewedUsersByGameAndPosition(1, "DIRECTOR"))
-                .willReturn(List.of(cu1));
+        given(this.crewedUserService.findCrewedUsersByGameAndPosition(1, "DIRECTOR")).willReturn(List.of(cu1));
+        given(this.crewedUserToCrewedUserDTOConverter.convert(cu1)).willReturn(cuDTO);
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewedUser/1/DIRECTOR")

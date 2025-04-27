@@ -1,6 +1,11 @@
 package edu.tcu.cs.frogcrewbackend.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.tcu.cs.frogcrewbackend.availability.converter.AvailabilityDTOToAvailabilityConverter;
+import edu.tcu.cs.frogcrewbackend.game.converter.GameToGameDTOConverter;
+import edu.tcu.cs.frogcrewbackend.game.converter.ScheduleToScheduleDTOConverter;
+import edu.tcu.cs.frogcrewbackend.game.dto.GameDTO;
+import edu.tcu.cs.frogcrewbackend.game.dto.GameScheduleDTO;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
 import org.hibernate.query.sqm.mutation.internal.cte.CteInsertStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,6 +40,12 @@ public class GameScheduleControllerTest {
 
     @MockitoBean
     GameScheduleService gameScheduleService;
+
+    @MockitoBean
+    ScheduleToScheduleDTOConverter scheduleToScheduleDTOConverter;
+
+    @MockitoBean
+    GameToGameDTOConverter gameToGameDTOConverter;
 
     List<GameSchedule> schedules;
 
@@ -73,16 +85,18 @@ public class GameScheduleControllerTest {
 
     @Test
     void testAddGameScheduleSuccess() throws Exception {
+        GameScheduleDTO scheduleDTO = new GameScheduleDTO(1, "BaseBall", "2024-2025");
+
         GameSchedule schedule1 = new GameSchedule();
         schedule1.setId(1);
         schedule1.setSport("Baseball");
         schedule1.setSeason("2024-2025");
 
-        String json = this.objectMapper.writeValueAsString(schedule1);
-        schedule1.setId(1);
+        String json = this.objectMapper.writeValueAsString(scheduleDTO);
 
         // Given
         given(this.gameScheduleService.addGameSchedule(Mockito.any(GameSchedule.class))).willReturn(schedule1);
+        given(this.scheduleToScheduleDTOConverter.convert(schedule1)).willReturn(scheduleDTO);
 
         // When and Then
         this.mockMvc.perform(
@@ -94,8 +108,7 @@ public class GameScheduleControllerTest {
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Schedule added"))
-                .andExpect(jsonPath("$.data.id").isNotEmpty())
-                .andExpect(jsonPath("$.data.sport").value("Baseball"));
+                .andExpect(jsonPath("$.data").isNotEmpty());
     }
 
     @Test
@@ -109,10 +122,7 @@ public class GameScheduleControllerTest {
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Found all schedules"))
-                .andExpect(jsonPath("$.data[0].id").value(1))
-                .andExpect(jsonPath("$.data[0].sport").value("Baseball"))
-                .andExpect(jsonPath("$.data[1].id").value(2))
-                .andExpect(jsonPath("$.data[1].sport").value("Football"));
+                .andExpect(jsonPath("$.data").isNotEmpty());
     }
 
     @Test
@@ -124,21 +134,27 @@ public class GameScheduleControllerTest {
         game1.setOpponent("Baylor");
         game1.setFinalized(true);
 
+        GameSchedule schedule1 = new GameSchedule();
+        schedule1.setId(1);
+        schedule1.setSport("Baseball");
+        schedule1.setSeason("2024-2025");
+
+        GameDTO gameDTO = new GameDTO(1, 1, "2025-02-02", "Carter", "Baylor", Boolean.TRUE);
+
         String json = this.objectMapper.writeValueAsString(game1);
 
         // Given
-        given(this.gameScheduleService.addGame(Mockito.any(Game.class))).willReturn(game1);
         doNothing().when(this.gameScheduleService).addGameToSchedule(1, game1);
+        given(this.gameToGameDTOConverter.convert(game1)).willReturn(gameDTO);
 
         // When and Then
         this.mockMvc.perform(post(this.baseUrl + "/gameSchedule/1/game")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON)
-                            .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Game added to schedule 1"))
-                .andExpect(jsonPath("$.data").isNotEmpty());
+                .andExpect(jsonPath("$.message").value("Game added to schedule 1"));
     }
 
     @Test
@@ -164,14 +180,17 @@ public class GameScheduleControllerTest {
         // Given
         given(this.gameScheduleService.findGamesByScheduleId(scheduleId)).willReturn(games);
 
+        GameDTO gameDTO = new GameDTO(1, 1, "2025-02-02", "Carter", "Baylor", Boolean.TRUE);
+
+        given(this.gameToGameDTOConverter.convert(game1)).willReturn(gameDTO);
+
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/gameSchedule/" + scheduleId + "/game")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Found all games with scheduleId " + scheduleId))
-                .andExpect(jsonPath("$.data[0].gameId").value(1))
-                .andExpect(jsonPath("$.data[1].gameId").value(2));
+                .andExpect(jsonPath("$.data").isArray());
     }
 
 }

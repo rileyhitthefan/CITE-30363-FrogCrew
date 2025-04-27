@@ -16,8 +16,7 @@ public class CrewedUser implements Serializable {
     @Id
     private Integer crewedUserId;
 
-    @OneToOne
-    @JoinColumn(name = "id", nullable = false)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Member user;
 
     @ManyToOne
