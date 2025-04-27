@@ -23,7 +23,7 @@ public class MyUserPrincipal implements UserDetails  {
         // E.g., john's roles are stored in a string like "admin user moderator", we need to convert it to a list of GrantedAuthority.
         // Before conversion, we need to add this "ROLE_" prefix to each role name.
         return Arrays.stream(StringUtils.tokenizeToStringArray(this.member.getRole(), " "))
-                .map(role -> new SimpleGrantedAuthority(role))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
     }
 

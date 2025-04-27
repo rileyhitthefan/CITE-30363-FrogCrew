@@ -71,17 +71,16 @@ public class SecurityConfiguration {
                 // It is recommended to secure your application at the API endpoint level.
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/invite/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/invite/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewMember/**").permitAll()
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewMember").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, this.baseUrl + "/crewMember/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, this.baseUrl + "/crewMember/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/availability").permitAll()
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/gameSchedule/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/gameSchedule/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/gameSchedule/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewList/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewList/*/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewList/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewSchedule/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewList/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewSchedule/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll() // Explicitly fallback to antMatcher inside requestMatchers.
                         // Disallow everything else.
                         .anyRequest().authenticated() // Always a good idea to put this as last
@@ -119,8 +118,29 @@ public class SecurityConfiguration {
         return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-//        return authConfig.getAuthenticationManager();
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+
+        /*
+        Let’s say that that your authorization server communicates authorities in a custom claim called "authorities".
+        In that case, you can configure the claim that JwtAuthenticationConverter should inspect, like so:
+         */
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
+
+        /*
+        You can also configure the authority prefix to be different as well. The default one is "SCOPE_".
+        In this project, you need to change it to empty, that is, no prefix!
+         */
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
+    }
 }

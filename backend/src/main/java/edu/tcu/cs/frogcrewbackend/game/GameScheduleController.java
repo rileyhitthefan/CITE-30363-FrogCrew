@@ -62,8 +62,7 @@ public class GameScheduleController {
 
     @PostMapping("/{scheduleId}/game")
     public Result addGameToSchedule(@PathVariable Integer scheduleId, @RequestBody @Valid Game game) {
-        Game newGame = this.gameScheduleService.addGame(game);
-        this.gameScheduleService.addGameToSchedule(scheduleId, newGame);
+        Game newGame = this.gameScheduleService.addGameToSchedule(scheduleId, game);
         GameDTO assignedGameDTO = this.gameToGameDTOConverter.convert(newGame);
         return new Result(true, StatusCode.SUCCESS, "Game added to schedule " + scheduleId, assignedGameDTO);
     }

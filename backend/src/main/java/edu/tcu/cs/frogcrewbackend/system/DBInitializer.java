@@ -84,20 +84,25 @@ public class DBInitializer implements CommandLineRunner {
         schedule2.setSport("Football");
         schedule2.setSeason("2023-2024");
 
-        gameScheduleRepository.save(schedule1);
-        gameScheduleRepository.save(schedule2);
-
         Game game1 = new Game();
         game1.setGameDate("2024-10-10");
+        game1.setSchedule(schedule1);
         game1.setVenue("Amon G. Carter");
         game1.setOpponent("Texas Longhorn");
         game1.setFinalized(Boolean.FALSE);
 
         Game game2 = new Game();
         game2.setGameDate("2022-01-10");
+        game2.setSchedule(schedule1);
         game2.setVenue("Amon G. Carter");
         game2.setOpponent("Baylor");
         game2.setFinalized(Boolean.TRUE);
+
+        schedule1.addGame(game1);
+        schedule1.addGame(game2);
+
+        gameScheduleRepository.save(schedule1);
+        gameScheduleRepository.save(schedule2);
 
         gameRepository.save(game1);
         gameRepository.save(game2);
