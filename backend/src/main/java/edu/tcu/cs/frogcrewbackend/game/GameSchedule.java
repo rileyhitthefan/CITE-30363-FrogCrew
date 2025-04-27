@@ -13,7 +13,7 @@ import java.util.List;
 public class GameSchedule implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer scheduleId;
 
     @NotEmpty(message =  "sport required")
     private String sport;
@@ -25,11 +25,11 @@ public class GameSchedule implements Serializable {
     private List<Game> games = new ArrayList<>();
 
     public Integer getId() {
-        return id;
+        return scheduleId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     public String getSport() {

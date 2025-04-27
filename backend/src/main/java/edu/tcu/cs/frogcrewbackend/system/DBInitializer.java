@@ -7,6 +7,7 @@ import edu.tcu.cs.frogcrewbackend.crew.CrewedUserRepository;
 import edu.tcu.cs.frogcrewbackend.game.*;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.member.UserRepository;
+import edu.tcu.cs.frogcrewbackend.member.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,13 +16,15 @@ import java.util.List;
 @Component
 public class DBInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final GameScheduleRepository gameScheduleRepository;
     private final GameRepository gameRepository;
     private final CrewedUserRepository crewedUserRepository;
     private final CrewListRepository crewListRepository;
 
-    public DBInitializer(UserRepository userRepository, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository, CrewedUserRepository crewedUserRepository, CrewListRepository crewListRepository) {
+    public DBInitializer(UserRepository userRepository, UserService userService, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository, CrewedUserRepository crewedUserRepository, CrewListRepository crewListRepository) {
         this.userRepository = userRepository;
+        this.userService = userService;
         this.gameScheduleRepository = gameScheduleRepository;
         this.gameRepository = gameRepository;
         this.crewedUserRepository = crewedUserRepository;
@@ -37,7 +40,7 @@ public class DBInitializer implements CommandLineRunner {
         mem1.setEmail("bw@gmail.com");
         mem1.setPhoneNumber("1234567890");
         mem1.setPassword("password1");
-        mem1.setRole("MEMBER");
+        mem1.setRole("ADMIN MEMBER");
         mem1.setPositions("Director");
 
         Member mem2 = new Member();
@@ -47,7 +50,7 @@ public class DBInitializer implements CommandLineRunner {
         mem2.setEmail("ck@gmail.com");
         mem2.setPhoneNumber("9876543210");
         mem2.setPassword("password2");
-        mem2.setRole("ADMIN");
+        mem2.setRole("ADMIN MEMBER");
         mem2.setPositions("Videographer Planner");
 
         Member mem3 = new Member();
@@ -68,10 +71,10 @@ public class DBInitializer implements CommandLineRunner {
         mem4.setRole("MEMBER");
         mem4.setPositions("Reporter Supervisor");
 
-        userRepository.save(mem1);
-        userRepository.save(mem2);
-        userRepository.save(mem3);
-        userRepository.save(mem4);
+        userService.createMember(mem1);
+        userService.createMember(mem2);
+        userService.createMember(mem3);
+        userService.createMember(mem4);
 
         GameSchedule schedule1 = new GameSchedule();
         schedule1.setSport("Baseball");

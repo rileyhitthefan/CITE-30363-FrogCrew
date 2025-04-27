@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -68,20 +70,28 @@ public class SecurityConfiguration {
         return http
                 // It is recommended to secure your application at the API endpoint level.
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/artifacts/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/users/**").hasAuthority("ROLE_admin") // Protect the endpoint.
-                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/users").hasAuthority("ROLE_admin") // Protect the endpoint.
-                        .requestMatchers(HttpMethod.PUT, this.baseUrl + "/users/**").hasAuthority("ROLE_admin") // Protect the endpoint.
-                        .requestMatchers(HttpMethod.DELETE, this.baseUrl + "/users/**").hasAuthority("ROLE_admin") // Protect the endpoint.
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/invite/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewMember/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewMember").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, this.baseUrl + "/crewMember/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/availability").permitAll()
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/gameSchedule/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/gameSchedule/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewList/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewList/*/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewList/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewSchedule/**").hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll() // Explicitly fallback to antMatcher inside requestMatchers.
                         // Disallow everything else.
-                        .anyRequest().authenticated() // Always a good idea to put this as last.
+                        .anyRequest().authenticated() // Always a good idea to put this as last
                 )
-                .headers(headers -> headers.frameOptions().disable()) // This is for H2 browser console access.
+                .headers(headers -> headers.frameOptions(Customizer.withDefaults()).disable()) // This is for H2 browser console access.
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(this.customBasicAuthenticationEntryPoint))
-                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt().and()
+                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
+                        .jwt(Customizer.withDefaults())
                         .authenticationEntryPoint(this.customBearerTokenAuthenticationEntryPoint)
                         .accessDeniedHandler(this.customBearerTokenAccessDeniedHandler))
                 /* Configures the spring boot application as an OAuth2 Resource Server which authenticates all
@@ -109,25 +119,8 @@ public class SecurityConfiguration {
         return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
     }
 
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-
-        /*
-        Let’s say that that your authorization server communicates authorities in a custom claim called "authorities".
-        In that case, you can configure the claim that JwtAuthenticationConverter should inspect, like so:
-         */
-        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
-
-        /*
-        You can also configure the authority prefix to be different as well. The default one is "SCOPE_".
-        In this project, you need to change it to empty, that is, no prefix!
-         */
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
-
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        return jwtAuthenticationConverter;
-    }
-
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+//        return authConfig.getAuthenticationManager();
+//    }
 }

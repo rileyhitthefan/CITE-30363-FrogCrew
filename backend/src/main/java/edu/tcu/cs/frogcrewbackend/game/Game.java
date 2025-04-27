@@ -18,7 +18,6 @@ public class Game implements Serializable {
     private Integer gameId;
 
     @ManyToOne
-    @JoinColumn(name = "scheduleId")
     private GameSchedule schedule;
 
     @OneToOne

@@ -10,7 +10,7 @@ public class ScheduleDTOToScheduleConverter implements Converter<GameScheduleDTO
     @Override
     public GameSchedule convert(GameScheduleDTO source) {
         GameSchedule gameSchedule = new GameSchedule();
-        gameSchedule.setId(source.id());
+        gameSchedule.setId(source.scheduleId());
         gameSchedule.setSport(source.sport());
         gameSchedule.setSeason(source.season());
         return gameSchedule;

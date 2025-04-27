@@ -5,7 +5,6 @@ import edu.tcu.cs.frogcrewbackend.member.MyUserPrincipal;
 import edu.tcu.cs.frogcrewbackend.member.converter.UserToLoginDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.converter.UserToUserDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.dto.LoginDTO;
-import edu.tcu.cs.frogcrewbackend.member.dto.UserDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final UserToLoginDTOConverter userToLoginDTOConverter;
 
-    public AuthService(JwtProvider jwtProvider, UserToUserDTOConverter userToUserDTOConverter, UserToLoginDTOConverter userToLoginDTOConverter) {
+    public AuthService(JwtProvider jwtProvider, UserToLoginDTOConverter userToLoginDTOConverter) {
         this.jwtProvider = jwtProvider;
         this.userToLoginDTOConverter = userToLoginDTOConverter;
     }
@@ -33,7 +32,7 @@ public class AuthService {
         Map<String, Object> loginInfo = new HashMap<>();
         loginInfo.put("userId", loginDTO.userId());
         loginInfo.put("role", loginDTO.role());
-        loginInfo.put("token", loginDTO.token());
+        loginInfo.put("token", token);
 
         return loginInfo;
     }
