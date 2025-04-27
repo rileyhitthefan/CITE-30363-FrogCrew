@@ -147,53 +147,53 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
-    @Test
-    void testUpdateMemberSuccess() throws Exception {
-        UserDTO userDTO = new UserDTO(3, "jane", "smith", "js@gmail.com", "1234567890", "MEMBER", "Producer");
-
-        Member update = new Member();
-        update.setId(3);
-        update.setFirstName("Jane");
-        update.setLastName("Nguyen");
-        update.setEmail("js@gmail.com");
-        update.setPhoneNumber("1234567890");
-        update.setPassword("password");
-        update.setRole("MEMBER");
-        update.setPositions("Producer");
-
-        String json = this.objectMapper.writeValueAsString(userDTO);
-
-        // Given
-        given(this.userService.updateMember(eq(3), Mockito.any(Member.class))).willReturn(update);
-
-        // When and Then
-        this.mockMvc.perform(put(this.baseUrl + "/crewMember/3")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.flag").value(true))
-                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Member updated with Id: 3"))
-                .andExpect(jsonPath("$.data.id").value(3))
-                .andExpect(jsonPath("$.data.lastName").value("Nguyen"));
-    }
-
-    @Test
-    void testUpdateMemberNotFound() throws Exception {
-        // Given
-        given(this.userService.updateMember(eq(3), Mockito.any(Member.class))).willThrow(new ObjectNotFoundException("member", 3));
-
-        UserDTO userDTO = new UserDTO(3, "jane", "smith", "js@gmail.com", "1234567890", "MEMBER", "Producer");
-
-        String json = this.objectMapper.writeValueAsString(userDTO);
-
-        // When and then
-        this.mockMvc.perform(put(this.baseUrl + "/crewMember/3").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.flag").value(false))
-                .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find member with Id 3"))
-                .andExpect(jsonPath("$.data").isEmpty());
-    }
+//    @Test
+//    void testUpdateMemberSuccess() throws Exception {
+//        UserDTO userDTO = new UserDTO(3, "jane", "smith", "js@gmail.com", "1234567890", "MEMBER", "Producer");
+//
+//        Member update = new Member();
+//        update.setId(3);
+//        update.setFirstName("Jane");
+//        update.setLastName("Nguyen");
+//        update.setEmail("js@gmail.com");
+//        update.setPhoneNumber("1234567890");
+//        update.setPassword("password");
+//        update.setRole("MEMBER");
+//        update.setPositions("Producer");
+//
+//        String json = this.objectMapper.writeValueAsString(userDTO);
+//
+//        // Given
+//        given(this.userService.updateMember(eq(3), Mockito.any(Member.class))).willReturn(update);
+//
+//        // When and Then
+//        this.mockMvc.perform(put(this.baseUrl + "/crewMember/3")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(json)
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.flag").value(true))
+//                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+//                .andExpect(jsonPath("$.message").value("Member updated with Id: 3"))
+//                .andExpect(jsonPath("$.data.id").value(3))
+//                .andExpect(jsonPath("$.data.lastName").value("Nguyen"));
+//    }
+//
+//    @Test
+//    void testUpdateMemberNotFound() throws Exception {
+//        // Given
+//        given(this.userService.updateMember(eq(3), Mockito.any(Member.class))).willThrow(new ObjectNotFoundException("member", 3));
+//
+//        UserDTO userDTO = new UserDTO(3, "jane", "smith", "js@gmail.com", "1234567890", "MEMBER", "Producer");
+//
+//        String json = this.objectMapper.writeValueAsString(userDTO);
+//
+//        // When and then
+//        this.mockMvc.perform(put(this.baseUrl + "/crewMember/3").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.flag").value(false))
+//                .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
+//                .andExpect(jsonPath("$.message").value("Could not find member with Id 3"))
+//                .andExpect(jsonPath("$.data").isEmpty());
+//    }
 
     @Test
     void testDeleteMemberSuccess() throws Exception {

@@ -28,11 +28,9 @@ public class CrewListService {
 
     public CrewList addCrewListToGame(Integer gameId, List<CrewRequestDTO> crewRequestDTOList) {
         Game game = this.gameRepository.findById(gameId)
-                .orElseThrow(() -> new ObjectNotFoundException("Game", gameId));
+                .orElseThrow(() -> new ObjectNotFoundException("game", gameId));
 
-        CrewList gameCrewList = this.findCrewListByGameId(gameId) != null
-                ? this.findCrewListByGameId(gameId)
-                : new CrewList();
+        CrewList gameCrewList = new CrewList();
 
         List<CrewedUser> crewedUsers = crewRequestDTOList.stream()
                 .map(dto -> {
@@ -40,8 +38,8 @@ public class CrewListService {
                     cu.setCrewedUserId(dto.crewedUserId());
                     cu.setGame(game);
                     cu.setPosition(dto.position());
-                    cu.setReportLocation("ok");
-                    cu.setReportTime("ok");
+                    cu.setReportLocation(""); // Unsure where this comes from
+                    cu.setReportTime(""); // Unsure where this comes from
                     cu.setUser(userRepository.findById(dto.userId())
                             .orElseThrow(() -> new ObjectNotFoundException("user", dto.userId())));
                     return this.crewedUserRepository.save(cu);

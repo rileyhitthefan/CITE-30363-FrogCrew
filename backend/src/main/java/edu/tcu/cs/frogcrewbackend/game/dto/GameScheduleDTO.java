@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record GameScheduleDTO (
         @NotNull(message = "Schedule is required")
-        Integer id,
+        Integer scheduleId,
 
         @NotEmpty(message = "Sport is required")
         String sport,
