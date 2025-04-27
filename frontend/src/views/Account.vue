@@ -1,6 +1,11 @@
 <template>
     <div>
-        My account information
+        My Account
+        
+        <!-- Display details of the account -->
+
+        
+
     </div>
 </template>
 
