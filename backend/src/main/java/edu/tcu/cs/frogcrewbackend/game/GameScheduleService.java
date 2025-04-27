@@ -33,13 +33,14 @@ public class GameScheduleService {
         return this.gameRepository.findAll();
     }
 
-    public void addGameToSchedule(Integer scheduleId, Game game) {
-        Game assignedGame = this.gameRepository.save(game);
-
+    public Game addGameToSchedule(Integer scheduleId, Game game) {
         GameSchedule assignedSchedule = this.gameScheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new ObjectNotFoundException("game schedule", scheduleId));
 
-        assignedSchedule.addGame(assignedGame);
+        assignedSchedule.addGame(game);
+        game.setSchedule(assignedSchedule);
+
+        return this.gameRepository.save(game);
     }
 
     public List<Game> findGamesByScheduleId(int scheduleId) {

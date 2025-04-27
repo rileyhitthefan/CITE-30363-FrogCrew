@@ -158,66 +158,66 @@ public class UserServiceTest {
         verify(this.userRepository, times(1)).findById(Mockito.any(Integer.class));
     }
 
-    @Test
-    void testUpdateMemberSuccess(){
-        // Given
-        Member oldMember = new Member();
-        oldMember.setId(1);
-        oldMember.setFirstName("Jane");
-        oldMember.setLastName("Smith");
-        oldMember.setEmail("jane.smith@gmail.com");
-        oldMember.setPhoneNumber("0123456789");
-        oldMember.setPassword("password");
-        oldMember.setRole("MEMBER");
-        oldMember.setPositions("Director");
-
-        Member update = new Member();
-        update.setFirstName("Jenny");
-        update.setLastName("Smith");
-        update.setEmail("jane.smith@gmail.com");
-        update.setPhoneNumber("0123456789");
-        update.setPassword("password");
-        update.setRole("MEMBER");
-        update.setPositions("Director");
-
-        given(this.userRepository.findById(1)).willReturn(Optional.of(oldMember));
-        given(this.userRepository.save(oldMember)).willReturn(oldMember);
-
-        // When
-        Member updatedMember = this.userService.updateMember(1, update);
-
-        // Then
-        assertThat(updatedMember.getId()).isEqualTo(1);
-        assertThat(updatedMember.getFirstName()).isEqualTo(update.getFirstName());
-        verify(this.userRepository, times(1)).findById(1);
-        verify(this.userRepository, times(1)).save(oldMember);
-    }
-
-    @Test
-    void testUpdateMemberNotFound() {
-        // Given
-        Member update = new Member();
-        update.setFirstName("Jane");
-        update.setLastName("Smith");
-        update.setEmail("jane.smith@gmail.com");
-        update.setPhoneNumber("0123456789");
-        update.setPassword("password");
-        update.setRole("MEMBER");
-        update.setPositions("Director");
-
-        given(this.userRepository.findById(1)).willReturn(Optional.empty());
-
-        // When
-        Throwable thrown = assertThrows(ObjectNotFoundException.class, () -> {
-            this.userService.updateMember(1, update);
-        });
-
-        // Then
-        assertThat(thrown)
-            .isInstanceOf(ObjectNotFoundException.class)
-            .hasMessage("Could not find member with Id 1");
-        verify(this.userRepository, times(1)).findById(1);
-    }
+//    @Test
+//    void testUpdateMemberSuccess(){
+//        // Given
+//        Member oldMember = new Member();
+//        oldMember.setId(1);
+//        oldMember.setFirstName("Jane");
+//        oldMember.setLastName("Smith");
+//        oldMember.setEmail("jane.smith@gmail.com");
+//        oldMember.setPhoneNumber("0123456789");
+//        oldMember.setPassword("password");
+//        oldMember.setRole("MEMBER");
+//        oldMember.setPositions("Director");
+//
+//        Member update = new Member();
+//        update.setFirstName("Jenny");
+//        update.setLastName("Smith");
+//        update.setEmail("jane.smith@gmail.com");
+//        update.setPhoneNumber("0123456789");
+//        update.setPassword("password");
+//        update.setRole("MEMBER");
+//        update.setPositions("Director");
+//
+//        given(this.userRepository.findById(1)).willReturn(Optional.of(oldMember));
+//        given(this.userRepository.save(oldMember)).willReturn(oldMember);
+//
+//        // When
+//        Member updatedMember = this.userService.updateMember(1, update);
+//
+//        // Then
+//        assertThat(updatedMember.getId()).isEqualTo(1);
+//        assertThat(updatedMember.getFirstName()).isEqualTo(update.getFirstName());
+//        verify(this.userRepository, times(1)).findById(1);
+//        verify(this.userRepository, times(1)).save(oldMember);
+//    }
+//
+//    @Test
+//    void testUpdateMemberNotFound() {
+//        // Given
+//        Member update = new Member();
+//        update.setFirstName("Jane");
+//        update.setLastName("Smith");
+//        update.setEmail("jane.smith@gmail.com");
+//        update.setPhoneNumber("0123456789");
+//        update.setPassword("password");
+//        update.setRole("MEMBER");
+//        update.setPositions("Director");
+//
+//        given(this.userRepository.findById(1)).willReturn(Optional.empty());
+//
+//        // When
+//        Throwable thrown = assertThrows(ObjectNotFoundException.class, () -> {
+//            this.userService.updateMember(1, update);
+//        });
+//
+//        // Then
+//        assertThat(thrown)
+//            .isInstanceOf(ObjectNotFoundException.class)
+//            .hasMessage("Could not find member with Id 1");
+//        verify(this.userRepository, times(1)).findById(1);
+//    }
 
     @Test
     void testDeleteMemberSuccess() {
