@@ -11,6 +11,7 @@ import Notifications from "@/views/Notifications.vue"
 import Account from "@/views/Account.vue"
 import ChangeAccountDetails from "@/views2/ChangeAccountDetails.vue"
 import ConfirmAccountChanges from "@/views2/ConfirmAccountChanges.vue"
+import DetailsCrewMember from "@/views2/detailsCrewMember.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -26,8 +27,11 @@ const router = createRouter({
                 {path: '/schedule', name: 'schedule', component: Schedule,  meta: { title: 'Schedule', isNavLink: true}}, 
                 {path: '/notifications', name: 'notifications', component: Notifications},
                 {path: '/account', name: 'account', component: Account},
+                
                 {path: '/account/changeAccountDetails/:id', name: 'changeAccountDetails', component: ChangeAccountDetails, props: true},
-                {path: '/account/changeAccountDetails/:id/confirmAccountChanges', name: 'confirmAccountChanges', component: ConfirmAccountChanges}
+                {path: '/account/changeAccountDetails/:id/confirmAccountChanges', name: 'confirmAccountChanges', component: ConfirmAccountChanges},
+
+                {path: '/crewMember/detailsCrewMember/:id', name: 'detailsCrewMember', component: DetailsCrewMember, props: true}  
             ]
         },
 

@@ -64,7 +64,31 @@ const updateMemberById = async (id, updatedData) => {
 }  
 
 
+/**
+ * POST /invite
+ * Admin sends invite to new crew members by specifing their emails
+ */
+const inviteCrewMembers = async (emails) => {
+    try {
+        const response = await fetch(BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ emails }),
+            })
+
+        if (!response.ok) {
+            throw new Error('Failed to invite crew members')
+        }
+        return await response.json()
+
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+}
 
 
 
-export default {findAllCrewMembers, findMemberById, updateMemberById}
+export default {findAllCrewMembers, findMemberById, updateMemberById, inviteCrewMembers}
