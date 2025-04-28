@@ -1,40 +1,38 @@
 {
-    "crewMembers": [
-      {
-        "id": 1,
-        "fullName": "John Doe",
-        "email": "john.doe@example.com",
-        "phoneNumber": "1234567890",
-        "username": "john",
-        "password": "1234",
-        "role": "ADMIN",
-        "position": [
-          "Director",
-          "Producer"
-        ]
-      },
-      {
-        "id": 2,
-        "fullName": "Jane Smith",
-        "email": "Jane.Smith@example.com",
-        "phoneNumber": "1112223333",
-        "username": "jane",
-        "password": "234",
-        "role": "CREW",
-        "position": [
-          "Camera"
-        ]
-      },
-      {
-        "id": 3,
-        "fullName": "Bob Marley",
-        "email": "Bob.Marley@example.com",
-        "phoneNumber": "1231231234",
-        "username": "bob",
-        "password": "34",
-        "position": [
-          "Camera"
-        ]
-      }
-    ]
+  "crewMembers": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "123-456-7890",
+      "email": "john.doe@example.com",
+      "position": [
+        "Director",
+        "Producer"
+      ],
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@example.com",
+      "phoneNumber": "111-222-3333",
+      "password": "234",
+      "role": "CREW",
+      "position": [
+        "Camera"
+      ]
+    },
+    {
+      "id": "3",
+      "firstName": "Bob",
+      "lastName": "Marley",
+      "email": "bob.marley@example.com",
+      "phoneNumber": "123-1231-2345",
+      "password": "34",
+      "position": [
+        "Camera"
+      ]
+    }
+  ]
 }
