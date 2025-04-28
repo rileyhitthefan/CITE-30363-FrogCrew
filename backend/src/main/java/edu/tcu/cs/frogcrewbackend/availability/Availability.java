@@ -1,7 +1,8 @@
 package edu.tcu.cs.frogcrewbackend.availability;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import edu.tcu.cs.frogcrewbackend.game.Game;
+import edu.tcu.cs.frogcrewbackend.member.Member;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 
 import java.io.Serializable;
@@ -11,28 +12,41 @@ import java.io.Serializable;
 public class Availability implements Serializable {
     // Each user submits 1 availability
     @Id
-    private Integer userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-    private Integer gameId;
+    @ManyToOne
+    private Member user;
+
+    @ManyToOne
+    private Game game;
 
     private Boolean availability;
 
     private String comment;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getGameId() {
-        return gameId;
+    public Member getUser() {
+        return user;
     }
 
-    public void setGameId(Integer gameId) {
-        this.gameId = gameId;
+    public void setUser(Member user) {
+        this.user = user;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public Boolean getAvailability() {

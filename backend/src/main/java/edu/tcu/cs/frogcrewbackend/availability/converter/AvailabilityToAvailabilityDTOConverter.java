@@ -11,8 +11,8 @@ public class AvailabilityToAvailabilityDTOConverter implements Converter<Availab
     @Override
     public AvailabilityDTO convert(Availability source) {
         return new AvailabilityDTO(
-                source.getUserId(),
-                source.getGameId(),
+                source.getUser().getId(),
+                source.getGame().getGameId(),
                 source.getAvailability(),
                 source.getComment()
         );

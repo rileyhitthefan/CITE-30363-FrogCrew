@@ -1,5 +1,7 @@
 package edu.tcu.cs.frogcrewbackend.availability;
 
+import edu.tcu.cs.frogcrewbackend.game.Game;
+import edu.tcu.cs.frogcrewbackend.member.Member;
 import jakarta.inject.Inject;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterEach;
@@ -41,9 +43,15 @@ public class AvailabilityServiceTest {
     @Test
     void testAddAvailability() {
         // Given
+        Game game = new Game();
+        game.setGameId(1);
+
+        Member mem1 = new Member();
+        mem1.setId(1);
+
         Availability availability = new Availability();
-        availability.setUserId(1);
-        availability.setGameId(1);
+        availability.setUser(mem1);
+        availability.setGame(game);
         availability.setAvailability(true);
         availability.setComment("comment");
 
@@ -53,8 +61,8 @@ public class AvailabilityServiceTest {
         Availability newAvailability = this.availabilityService.addAvailability(availability);
 
         // Then
-        assertThat(newAvailability.getUserId()).isEqualTo(1);
-        assertThat(newAvailability.getGameId()).isEqualTo(1);
+        assertThat(newAvailability.getUser().getId()).isEqualTo(1);
+        assertThat(newAvailability.getGame().getGameId()).isEqualTo(1);
         assertThat(newAvailability.getAvailability()).isEqualTo(true);
         assertThat(newAvailability.getComment()).isEqualTo("comment");
         verify(this.availabilityRepository, times(1)).save(availability);

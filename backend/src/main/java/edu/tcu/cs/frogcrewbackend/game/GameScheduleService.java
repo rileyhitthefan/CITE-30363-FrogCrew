@@ -21,6 +21,11 @@ public class GameScheduleService {
         return this.gameRepository.save(newGame);
     }
 
+    public Game findGameById(int gameId){
+        return this.gameRepository.findById(gameId)
+                .orElseThrow(() -> new ObjectNotFoundException("game", gameId));
+    }
+
     public GameSchedule addGameSchedule(GameSchedule gameSchedule) {
         return this.gameScheduleRepository.save(gameSchedule);
     }

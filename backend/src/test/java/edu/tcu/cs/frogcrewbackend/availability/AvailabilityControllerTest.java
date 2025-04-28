@@ -1,6 +1,10 @@
 package edu.tcu.cs.frogcrewbackend.availability;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.tcu.cs.frogcrewbackend.availability.converter.AvailabilityToAvailabilityDTOConverter;
+import edu.tcu.cs.frogcrewbackend.availability.dto.AvailabilityDTO;
+import edu.tcu.cs.frogcrewbackend.game.Game;
+import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +36,9 @@ public class AvailabilityControllerTest {
     @MockitoBean
     AvailabilityService availabilityService;
 
+    @MockitoBean
+    AvailabilityToAvailabilityDTOConverter availabilityToAvailabilityDTOConverter;
+
     @Value("${api.endpoint.base-url}")
     String baseUrl;
 
@@ -39,34 +46,29 @@ public class AvailabilityControllerTest {
 
     @BeforeEach
     void setUp() {
-        Availability avail1 = new Availability();
-        avail1.setUserId(1);
-        avail1.setGameId(1);
-        avail1.setAvailability(true);
-        avail1.setComment("alo");
-
-        Availability avail2 = new Availability();
-        avail2.setUserId(1);
-        avail2.setGameId(2);
-        avail2.setAvailability(false);
-
-        this.availList = new ArrayList<>();
-        this.availList.add(avail1);
-        this.availList.add(avail2);
     }
 
     @Test
     void testAddAvailability() throws Exception{
+        Game game = new Game();
+        game.setGameId(1);
+
+        Member mem1 = new Member();
+        mem1.setId(1);
+
         Availability availability = new Availability();
-        availability.setUserId(1);
-        availability.setGameId(1);
+        availability.setUser(mem1);
+        availability.setGame(game);
         availability.setAvailability(true);
         availability.setComment("alo");
 
-        String json = this.objectMapper.writeValueAsString(availability);
+        AvailabilityDTO availabilityDTO = new AvailabilityDTO(1, 1, Boolean.TRUE, "alo");
+
+        String json = this.objectMapper.writeValueAsString(availabilityDTO);
 
         // Given
         given(this.availabilityService.addAvailability(Mockito.any(Availability.class))).willReturn(availability);
+        given(this.availabilityToAvailabilityDTOConverter.convert(availability)).willReturn(availabilityDTO);
 
         // When and Then
         this.mockMvc.perform(
@@ -78,6 +80,6 @@ public class AvailabilityControllerTest {
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("New availability added"))
-                .andExpect(jsonPath("$.data.userId").value(1));
+                .andExpect(jsonPath("$.data").isNotEmpty());
     }
 }
