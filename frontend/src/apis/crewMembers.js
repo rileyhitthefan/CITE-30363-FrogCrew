@@ -8,7 +8,7 @@ const findAllCrewMembers = async () => {
     try {
         const response = await fetch(BASE_URL)
         if (!response.ok) {
-            throw new Error(`Error fetching blog posts: ${response.statusText}`)
+            throw new Error(`Error fetching crew members: ${response.statusText}`)
         }
         return await response.json();
     } catch (error) {
@@ -17,4 +17,54 @@ const findAllCrewMembers = async () => {
     }
 }
 
-export default {findAllCrewMembers}
+/**
+ * Fetch a single member by its UserId
+ * @param {number} id The userID of the member to fetch
+ * @returns {Promise<Object>} A promise that resolves to the member object
+ */
+const findMemberById = async (id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${id}`)
+        if (!response.ok) {
+            throw new Error(`Error fetching crew member: ${response.statusText}`)
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error)
+        throw error //Rethrow the error to be caught by the caller
+    }
+}
+
+
+/**
+ * PUT /crewMember/{userId}
+ * Updates user account information
+ */
+const updateMemberById = async (id, updatedData) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedData),
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to update member');
+        }
+
+        const data = await response.json()
+        return data
+
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+}  
+
+
+
+
+
+export default {findAllCrewMembers, findMemberById, updateMemberById}

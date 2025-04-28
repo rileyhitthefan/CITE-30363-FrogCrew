@@ -3,8 +3,8 @@
         <h2>Login</h2>
         <form @submit.prevent="handleLogin" class="login-form">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" v-model="username" required placeholder="Enter your username">
+                <label for="email">Email</label>
+                <input type="text" id="email" v-model="email" required placeholder="Enter your email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -22,14 +22,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { reportsRoute, templatesRoute, manageCrewMembersRoute, inviteCrewMembersRoute } from '@/router/dynamicRoutes'
 
-const username = ref('')
+const email = ref('')
 const password = ref('')
 
 const router = useRouter()
 
 async function handleLogin() {
     try {
-        await login(username.value, password.value)
+        await login(email.value, password.value)
 
         const userRole = getUserRole()
 

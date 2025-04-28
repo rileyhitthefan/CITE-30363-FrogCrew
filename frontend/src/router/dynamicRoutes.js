@@ -1,7 +1,7 @@
 import Reports from "@/views/Reports.vue"
 import Templates from "@/views/Templates.vue"
-import ManageCrewMembers from "@/views/ManageCrewMembers.vue"
-import InviteCrewMembers from "@/views/InviteCrewMembers.vue"
+import ManageCrewMembers from "@/views2/ManageCrewMembers.vue"
+import InviteCrewMembers from "@/views2/InviteCrewMembers.vue"
 
 export const reportsRoute = {
     path: '/reports', name: 'reports', component: Reports, 
