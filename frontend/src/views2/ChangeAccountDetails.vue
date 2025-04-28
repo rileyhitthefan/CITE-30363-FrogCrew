@@ -1,35 +1,35 @@
 <template>
     <div>
-        <h2>Change Account Details</h2>
-        <br />
-        <div v-if="user">
-          <form @submit.prevent="goToConfirm"> <!-- Form submission will trigger goToConfirm -->
-                <label>First Name: 
-                    <input v-model="user.firstName" type="text" required/>
-                </label>
-                <br />
-                <label>Last Name: 
-                    <input v-model="user.lastName" type="text" required/>
-                </label>
-                <br />
-                <label>Phone Number: 
-                    <input v-model="user.phoneNumber" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
-                </label>
-                <br />
-                <label>Email: 
-                    <input v-model="user.email" required type="email"/>
-                </label>
-                <br />
-                <label>Position: 
-                    <input v-model="positions" placeholder="comma separated (e.g. Camera, Director)" type="text" required/>
-                    (separate positions with a comma)
-                </label>
-            <!-- Submit button -->
-            <button type="submit">Finish Changes</button>
-            </form> 
-        </div>
-        <br />
-        <button @click="$router.push({name : 'account'})">Discard Changes</button>
+      <h2>Change Account Details</h2>
+      <br />
+      <div v-if="user">
+        <form @submit.prevent="goToConfirm"> <!-- Form submission will trigger goToConfirm -->
+          <label>First Name: 
+              <input v-model="user.firstName" type="text" required/>
+          </label>
+          <br />
+          <label>Last Name: 
+              <input v-model="user.lastName" type="text" required/>
+          </label>
+          <br />
+          <label>Phone Number: 
+              <input v-model="user.phoneNumber" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+          </label>
+          <br />
+          <label>Email: 
+              <input v-model="user.email" required type="email"/>
+          </label>
+          <br />
+          <label>Position: 
+              <input v-model="positions" placeholder="comma separated (e.g. Camera, Director)" type="text" required/>
+              (separate positions with a comma)
+          </label>
+          <!-- Submit button -->
+          <button type="submit">Finish Changes</button>
+        </form> 
+      </div>
+      <br />
+      <button @click="$router.push({name : 'account'})">Discard Changes</button>
     </div>
 </template>
 

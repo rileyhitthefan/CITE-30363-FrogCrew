@@ -40,10 +40,13 @@ const confirmChanges = async () => {
 
   try {
     const updatedData = {
+      id: user.value.id,  // Ensure the id is also included
       firstName: user.value.firstName,
       lastName: user.value.lastName,
       phoneNumber: user.value.phoneNumber,
       email: user.value.email,
+      password: user.value.password,  // Include the password
+      role: user.value.role,  // Include the role
       position: positions.value.split(',').map(p => p.trim()),
     }
 
