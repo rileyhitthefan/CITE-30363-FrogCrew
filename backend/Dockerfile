@@ -1,13 +1,26 @@
-FROM eclipse-temurin:21-jre as builder
-WORKDIR application
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} application.jar
-RUN java -Djarmode=layertools -jar application.jar extract
+# ----------- Stage 1: Build the jar -------------
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
-FROM eclipse-temurin:21-jre
-WORKDIR application
-COPY --from=builder application/dependencies/ ./
-COPY --from=builder application/spring-boot-loader/ ./
-COPY --from=builder application/snapshot-dependencies/ ./
-COPY --from=builder application/application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+WORKDIR /build
+
+# Copy pom.xml first and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy source code
+COPY src ./src
+
+# Build the application
+RUN mvn clean package -DskipTests
+
+# ----------- Stage 2: Run the app ---------------
+FROM eclipse-temurin:21-jrec
+
+WORKDIR /app
+
+# Copy built jar from builder stage
+COPY --from=builder /build/target/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
