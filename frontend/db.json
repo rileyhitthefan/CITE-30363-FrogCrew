@@ -1,15 +1,17 @@
 {
   "crewMembers": [
     {
+      "id": "1",
       "firstName": "John",
       "lastName": "Doe",
       "phoneNumber": "123-456-7890",
       "email": "john.doe@example.com",
+      "password": "1234",
+      "role": "ADMIN",
       "position": [
         "Director",
         "Producer"
-      ],
-      "id": "1"
+      ]
     },
     {
       "id": "2",
