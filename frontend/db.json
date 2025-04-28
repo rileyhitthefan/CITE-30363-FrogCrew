@@ -1,7 +1,7 @@
 {
     "crewMembers": [
       {
-        "userId": 1,
+        "id": 1,
         "fullName": "John Doe",
         "email": "john.doe@example.com",
         "phoneNumber": "1234567890",
@@ -14,16 +14,27 @@
         ]
       },
       {
-        "userId": 2,
+        "id": 2,
         "fullName": "Jane Smith",
         "email": "Jane.Smith@example.com",
-        "phoneNumber": "1112223333"
+        "phoneNumber": "1112223333",
+        "username": "jane",
+        "password": "234",
+        "role": "CREW",
+        "position": [
+          "Camera"
+        ]
       },
       {
-        "userId": 3,
+        "id": 3,
         "fullName": "Bob Marley",
         "email": "Bob.Marley@example.com",
-        "phoneNumber": "1231231234"
+        "phoneNumber": "1231231234",
+        "username": "bob",
+        "password": "34",
+        "position": [
+          "Camera"
+        ]
       }
     ]
 }
