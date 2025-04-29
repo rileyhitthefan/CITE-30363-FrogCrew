@@ -82,6 +82,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewList/**").permitAll()
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewList/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/crewSchedule/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/notification/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/notification/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll() // Explicitly fallback to antMatcher inside requestMatchers.
                         // Disallow everything else.
                         .anyRequest().authenticated() // Always a good idea to put this as last

@@ -3,6 +3,7 @@ package edu.tcu.cs.frogcrewbackend.crew;
 import edu.tcu.cs.frogcrewbackend.game.Game;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,9 +18,11 @@ public class CrewList implements Serializable {
     private Integer id;
 
     @OneToOne
+    @NotNull(message = "game Id required")
     private Game game;
 
     @OneToMany
+    @NotNull(message = "crew required")
     private List<CrewedUser> crewedUsers = new ArrayList<>();
 
     public void setId(Integer id) {

@@ -38,7 +38,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import api from '@/apis/gameschedule' 
+import api from '@/apis/gameSchedule' 
 
 const route = useRoute()
 const gameId = route.params.gameId
