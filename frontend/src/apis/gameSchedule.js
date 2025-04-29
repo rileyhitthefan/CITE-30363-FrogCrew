@@ -30,4 +30,25 @@ const findScheduledGamesByUserId = async (id) => {
   }
 
 
-export default { findScheduledGamesByUserId }
+ /**
+  * GET /gameSchedule/games
+  * Find all games
+  * Use Case 5
+  *  */ 
+ const findGeneralGameSchedule = async () => {
+  try {
+    const response = await fetch(BASE_URL)
+
+    if (!response.ok) {
+      throw new Error(`Error fetching games: ${response.statusText}`)
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+
+export default { findScheduledGamesByUserId, findGeneralGameSchedule }
