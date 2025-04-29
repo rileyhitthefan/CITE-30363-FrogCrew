@@ -1,5 +1,5 @@
 # Back-end
-Built with Java and Spring Boot, deployed on Render
+Tools: Java, Spring Boot, Postman, Docker, Render, Vercel 
 
 ## To-be done:
 
