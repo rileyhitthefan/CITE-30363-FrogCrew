@@ -79,17 +79,12 @@
             </thead>
             <tbody>
                 <tr v-for="crewMember in filteredCrewMembers" :key="crewMember.userId">
-                    <td>
-  <input 
-    type="checkbox"
-    :value="crewMember.userId"
-    :checked="selectedMembers.includes(crewMember.userId)"
-    @change="toggleMemberSelection(crewMember.userId, $event.target.checked)"
-  />
-</td>
+                    <td><input type="checkbox" :value="crewMember.userId" :checked="selectedMembers.includes(crewMember.userId)" @change="toggleMemberSelection(crewMember.userId, $event.target.checked)"/></td>
+                    <td>{{ crewMember.fullName }}</td>
                     <td>{{ crewMember.email }}</td>
                     <td>{{ crewMember.phoneNumber }}</td>
                     <td><button @click="$router.push({name: 'detailsCrewMember',  params: { id: crewMember.id } })">MORE</button></td>
+                    <td><button class="delete">Delete</button></td>
                 </tr> 
             </tbody>
         </table> 
@@ -236,6 +231,11 @@ const allSelected = computed(() => {
 </script>
 
 <style scoped>
+
+.delete {
+    background-color: red;
+}
+
 /* Controls Layout */
 .controls-container {
   display: flex;
