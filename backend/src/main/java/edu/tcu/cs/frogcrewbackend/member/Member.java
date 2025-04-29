@@ -1,12 +1,12 @@
 package edu.tcu.cs.frogcrewbackend.member;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import edu.tcu.cs.frogcrewbackend.notification.Notification;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member implements Serializable  {
@@ -34,6 +34,9 @@ public class Member implements Serializable  {
 
     @NotEmpty(message =  "qualified positions required")
     private String positions;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Notification> notifications = new ArrayList<>();
 
     public void setId(Integer id) {
         this.id = id;
@@ -97,5 +100,18 @@ public class Member implements Serializable  {
 
     public void setPositions(String positions) {
         this.positions = positions;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        notification.setUser(this);
+        this.notifications.add(notification);
     }
 }

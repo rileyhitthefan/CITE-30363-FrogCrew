@@ -8,9 +8,13 @@ import edu.tcu.cs.frogcrewbackend.game.*;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.member.UserRepository;
 import edu.tcu.cs.frogcrewbackend.member.UserService;
+import edu.tcu.cs.frogcrewbackend.notification.Notification;
+import edu.tcu.cs.frogcrewbackend.notification.NotificationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -21,14 +25,16 @@ public class DBInitializer implements CommandLineRunner {
     private final GameRepository gameRepository;
     private final CrewedUserRepository crewedUserRepository;
     private final CrewListRepository crewListRepository;
+    private final NotificationRepository notificationRepository;
 
-    public DBInitializer(UserRepository userRepository, UserService userService, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository, CrewedUserRepository crewedUserRepository, CrewListRepository crewListRepository) {
+    public DBInitializer(UserRepository userRepository, UserService userService, GameScheduleRepository gameScheduleRepository, GameRepository gameRepository, CrewedUserRepository crewedUserRepository, CrewListRepository crewListRepository, NotificationRepository notificationRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.gameScheduleRepository = gameScheduleRepository;
         this.gameRepository = gameRepository;
         this.crewedUserRepository = crewedUserRepository;
         this.crewListRepository = crewListRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @Override
@@ -135,6 +141,18 @@ public class DBInitializer implements CommandLineRunner {
 
         crewListRepository.save(clist1);
         gameRepository.save(game1);
+
+        // notifications
+        Notification noti1 = new Notification();
+        noti1.setUser(mem1);
+        noti1.setMessage("Need to be at all games this season");
+        noti1.setRead(Boolean.FALSE);
+        noti1.setDate("11/10/2024 14:00:00");
+
+        mem1.addNotification(noti1);
+
+        this.userRepository.save(mem1);
+        this.notificationRepository.save(noti1);
     }
 }
 
