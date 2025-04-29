@@ -59,7 +59,7 @@ onMounted(async () => {
     // Create a set of scheduleIds where the current user has already submitted availability
     const submittedGameIds = new Set(
       existingAvailability.value
-        .filter(entry => String(entry.id) === String(currentUserIdValue)) // Ensure matching type and value
+        .filter(entry => String(entry.userId) === String(currentUserIdValue)) // Ensure matching type and value
         .map(entry => entry.scheduleId)
     );
 
@@ -92,11 +92,12 @@ const submit = async (scheduleId) => {
 
   try {
     await availabilityApi.submitAvailability({
-      id: currentUserId.id,
+      userId: currentUserId.id,
       scheduleId,
       availability: available,
       comment
     })
+
 
     alert('Availability submitted!')
     // Remove the game from the list after submission

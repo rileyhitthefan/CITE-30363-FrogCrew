@@ -72,7 +72,8 @@
           "ReportTime": "12:00",
           "ReportLocation": "CONTROL ROOM"
         }
-      ]
+      ],
+      "id": "c9ff"
     },
     {
       "gameId": "2",
@@ -103,7 +104,8 @@
           "ReportTime": "12:00",
           "ReportLocation": "CONTROL ROOM"
         }
-      ]
+      ],
+      "id": "ce7b"
     },
     {
       "gameId": "3",
@@ -134,33 +136,38 @@
           "ReportTime": "10:00",
           "ReportLocation": "LEGENDS CLUB"
         }
-      ]
+      ],
+      "id": "7f5e"
     }
   ],
   "availability": [
     {
-      "id": "1",
+      "userId": "1",
       "scheduleId": "1",
       "availability": true,
-      "comment": "Will be coming from another game"
+      "comment": "Will be coming from another game",
+      "id": "3712"
     },
     {
-      "id": "1",
+      "userId": "1",
       "scheduleId": "2",
       "availability": true,
-      "comment": null
+      "comment": null,
+      "id": "887a"
     },
     {
-      "id": "2",
+      "userId": "2",
       "scheduleId": "2",
       "availability": true,
-      "comment": null
+      "comment": null,
+      "id": "a09d"
     },
     {
-      "id": "3",
+      "userId": "3",
       "scheduleId": "2",
       "availability": true,
-      "comment": null
+      "comment": null,
+      "id": "1c60"
     }
   ]
 }
