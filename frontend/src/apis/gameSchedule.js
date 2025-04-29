@@ -50,5 +50,28 @@ const findScheduledGamesByUserId = async (id) => {
   }
 }
 
+/**
+ * GET /crewList/{gameId}
+ * Find Crew List by game Id
+ * Use Case 6
+ 
+ */
+const findCrewListByGameId = async (gameId) => {
+  try {
+    const response = await fetch(`${BASE_URL}?gameId=${gameId}`);
 
-export default { findScheduledGamesByUserId, findGeneralGameSchedule }
+    if (!response.ok) {
+      throw new Error(`Error fetching game crew list: ${response.statusText}`)
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+
+
+export default { findScheduledGamesByUserId, findGeneralGameSchedule, findCrewListByGameId }

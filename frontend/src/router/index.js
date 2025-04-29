@@ -14,6 +14,7 @@ import ConfirmAccountChanges from "@/views2/ConfirmAccountChanges.vue"
 import DetailsCrewMember from "@/views2/detailsCrewMember.vue"
 import UserGameSchedule from "@/views2/UserGameSchedule.vue"
 import GeneralGameSchedule from "@/views2/GeneralGameSchedule.vue"
+import CrewListGame from "@/views2/CrewListGame.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -37,6 +38,8 @@ const router = createRouter({
             
                 {path: '/schedule/myGameSchedule', name: 'userGameSchedule', component: UserGameSchedule},
                 {path: '/schedule/generalGameSchedule', name: 'generalGameSchedule', component: GeneralGameSchedule},
+                {path: '/schedule/crewListGame/:gameId', name: 'crewListGame', component: CrewListGame, props: true},
+
             ]
         },
 
