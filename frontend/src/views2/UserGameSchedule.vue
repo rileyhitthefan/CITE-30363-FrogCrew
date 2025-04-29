@@ -47,6 +47,7 @@
         <br />
 
         <button @click="$router.push({name: 'crewListGame', params: { gameId: game.gameId } })">View Crew List</button>
+        <button @click=requestCoverage>Request Coverage</button>
 
       </div>
     </div>
@@ -58,6 +59,8 @@
 import { ref, onMounted, computed } from 'vue'
 import api from '@/apis/gameSchedule' 
 import { getUserId } from '@/apis/auth';
+import { useRouter } from 'vue-router'
+
 
 
 const schedule = ref([])

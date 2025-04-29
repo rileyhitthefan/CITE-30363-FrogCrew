@@ -169,5 +169,13 @@
       "comment": null,
       "id": "1c60"
     }
+  ],
+  "notification": [
+    {
+      "userId": "2",
+      "message": "You have been assigned to game 2",
+      "read": false,
+      "date": "11/10/2024 14:00:00"
+    }
   ]
 }
