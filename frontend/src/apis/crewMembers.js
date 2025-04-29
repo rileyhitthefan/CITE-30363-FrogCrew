@@ -25,10 +25,13 @@ const findAllCrewMembers = async () => {
 const findMemberById = async (id) => {
     try {
         const response = await fetch(`${BASE_URL}/${id}`)
+        
         if (!response.ok) {
             throw new Error(`Error fetching crew member: ${response.statusText}`)
         }
-        return await response.json();
+        const data = await response.json(); 
+        return data;
+
     } catch (error) {
         console.error(error)
         throw error //Rethrow the error to be caught by the caller
@@ -63,7 +66,6 @@ const updateMemberById = async (id, updatedData) => {
         }
 }  
 
-
 /**
  * POST /invite
  * Admin sends invite to new crew members by specifing their emails
@@ -90,5 +92,25 @@ const inviteCrewMembers = async (emails) => {
 }
 
 
+/**
+ * DELETE /crewMember/{id}
+ * Admin deletes a crew member (Use Case 15)
+ */
+const deleteCrewMember = async (id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${id}`, {
+            method: 'DELETE' })
+    
+        if (!response.ok) {
+            throw new Error('Failed to delete crew members')
+        }
+    } catch (error) {
+        console.error(error)
+        throw error //Rethrow the error to be caught by the caller
+    }
+}
 
-export default {findAllCrewMembers, findMemberById, updateMemberById, inviteCrewMembers}
+
+
+
+export default {findAllCrewMembers, findMemberById, updateMemberById, inviteCrewMembers, deleteCrewMember}

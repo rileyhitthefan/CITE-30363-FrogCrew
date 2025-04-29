@@ -2,7 +2,7 @@
     <div>
         <h2>Crew Members List</h2>
 
-        <!-- Sorting and Filtering Controls together -->
+        <!-- Sorting and Filtering Controls -->
         <div class="controls-container">
             <!-- Sorting Controls -->
             <div class="control-group">
@@ -49,7 +49,7 @@
         <input
             type="text"
             class="search-bar"
-            placeholder="Search crew members by name..."
+            placeholder="Search crew members by first or last name..."
             v-model="searchQuery"
         />
 
@@ -75,6 +75,8 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone number</th>
+                    <th>Details</th>
+                    <th>Actions</th>
                 </tr> 
             </thead>
             <tbody>
@@ -84,7 +86,7 @@
                     <td>{{ crewMember.email }}</td>
                     <td>{{ crewMember.phoneNumber }}</td>
                     <td><button @click="$router.push({name: 'detailsCrewMember',  params: { id: crewMember.id } })">MORE</button></td>
-                    <td><button class="delete">Delete</button></td>
+                    <td><button class="delete" @click="handleDeleteCrewMember(crewMember.id)">Delete</button></td>
                 </tr> 
             </tbody>
         </table> 
@@ -94,6 +96,7 @@
 <script setup>
 import api from '@/apis/crewMembers'
 import { ref, computed, onMounted} from 'vue'
+import { getUserId } from '@/apis/auth';
 
 const crewMembers = ref([])
 
@@ -116,6 +119,7 @@ onMounted(loadCrewMembers)
 //Crew member list fetched from api
 async function loadCrewMembers(){
     crewMembers.value = await api.findAllCrewMembers()
+
 }
 
 const filteredCrewMembers = computed(() => {
@@ -225,6 +229,19 @@ const toggleSelectAll = (event) => {
 const allSelected = computed(() => {
   return selectedMembers.value.length === filteredCrewMembers.value.length && filteredCrewMembers.value.length > 0;
 })
+
+//Delete button
+const handleDeleteCrewMember = async (id) => {
+    if (confirm('Are you sure you want to delete this member?')) {
+    try {
+      await api.deleteCrewMember(id)
+      await loadCrewMembers(); // refresh the list after successful deletion
+    } catch (error) {
+      alert('Failed to delete the crew member.');
+    }
+  }
+}
+
 
 
 
