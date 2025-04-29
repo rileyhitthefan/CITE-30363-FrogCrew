@@ -1,10 +1,7 @@
 <template>
-    <h2>Schedule</h2>
+    <button @click="$router.push({name: 'schedule'})">Back</button>
+    <h2>Update Availability</h2>
     <div>
-        <button @click="$router.push({name: 'userGameSchedule'})">My Game Schedule</button>
-        <button @click="$router.push({name: 'generalGameSchedule'})">General Game Schedule</button>
-        <button @click="$router.push({name: 'availability'})">Availability</button>
-
 
     </div>
 </template>
@@ -45,4 +42,5 @@ button {
     transform: scale(1.03);
   }
 }
+
 </style>

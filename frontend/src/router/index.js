@@ -15,6 +15,9 @@ import DetailsCrewMember from "@/views2/detailsCrewMember.vue"
 import UserGameSchedule from "@/views2/UserGameSchedule.vue"
 import GeneralGameSchedule from "@/views2/GeneralGameSchedule.vue"
 import CrewListGame from "@/views2/CrewListGame.vue"
+import Availability from "@/views2/Availability.vue"
+import SubmitAvailability from "@/views2/SubmitAvailability.vue"
+import UpdateAvailability from "@/views2/UpdateAvailability.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -39,7 +42,13 @@ const router = createRouter({
                 {path: '/schedule/myGameSchedule', name: 'userGameSchedule', component: UserGameSchedule},
                 {path: '/schedule/generalGameSchedule', name: 'generalGameSchedule', component: GeneralGameSchedule},
                 {path: '/schedule/crewListGame/:gameId', name: 'crewListGame', component: CrewListGame, props: true},
+                {path: '/schedule/availability', name: 'availability', component: Availability},
 
+                {path: '/schedule/availability/submitAvailability', name: 'submitAvailability', component: SubmitAvailability},
+                {path: '/schedule/availability/updateAvailability', name: 'updateAvailability', component: UpdateAvailability},
+
+
+                
             ]
         },
 

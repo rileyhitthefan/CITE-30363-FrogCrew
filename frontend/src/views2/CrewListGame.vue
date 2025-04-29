@@ -11,6 +11,9 @@
 
     <!-- Crew Data -->
     <div v-else>
+        <p v-if="crewData">
+        <strong>Sport:</strong> {{ crewData.sport }}
+      </p>
       <p v-if="crewData">
         <strong>Date:</strong> {{ crewData.gameDate }}
       </p>
