@@ -6,6 +6,7 @@ import { ref } from "vue"
 const isAuthenticated = ref(false) //Global state that tracks whether the user is logged in
 const userRole = ref('') //Stores 'CREW' or 'ADMIN
 const userId = ref(null) //Stores full user info
+const userInfo = ref(null) // Stores user details (role, userId, etc.)
 const token = ref(null) //Stores JWT token
 
 //Real API: POST /auth/login
