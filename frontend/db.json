@@ -27,7 +27,6 @@
         "Camera"
       ]
     },
-
     {
       "id": "3",
       "fullName": "Bob Marley",
@@ -38,7 +37,100 @@
       "password": "34",
       "role": "CREW",
       "position": [
-        "Camera"
+        "Camera",
+        "Producer"
+      ]
+    }
+  ],
+  "gamesSchedule": [
+    {
+      "gameId": "1",
+      "sport": "Football",
+      "season": "2024-2025",
+      "gameStart": "16:00:00",
+      "gameDate": "2024-10-10",
+      "venue": "Amon G. Carter Stadium",
+      "opponent": "Texas Longhorns",
+      "isFinalized": true,
+      "crewedMembers": [
+        {
+        "crewedUserId": "1",
+        "id": "1",
+        "gameId": "1",
+        "Position": "DIRECTOR",
+        "fullName": "John Smith",
+        "ReportTime": "12:00",
+        "ReportLocation": "CONTROL ROOM"
+        },
+        {
+        "crewedUserId": "2",
+        "id": "2",
+        "gameId": "1",
+        "Position": "PRODUCER",
+        "fullName": "Jane Doe",
+        "ReportTime": "12:00",
+        "ReportLocation": "CONTROL ROOM"
+        }
+      ]
+    },
+    {
+      "gameId": "2",
+      "sport": "Basketball",
+      "season": "2024-2025",
+      "gameStart": "17:00:00",
+      "gameDate": "2024-11-06",
+      "venue": "Schollmaier Arena",
+      "opponent": "Texas Tech",
+      "isFinalized": true,
+      "crewedMembers": [
+        {
+        "crewedUserId": "1",
+        "id": "1",
+        "gameId": "2",
+        "Position": "DIRECTOR",
+        "fullName": "John Smith",
+        "ReportTime": "12:00",
+        "ReportLocation": "CONTROL ROOM"
+        },
+        {
+        "crewedUserId": "3",
+        "id": "3",
+        "gameId": "2",
+        "Position": "CAMERA",
+        "fullName": "Bob Marley",
+        "ReportTime": "12:00",
+        "ReportLocation": "CONTROL ROOM"
+        }
+      ]
+    },
+    {
+      "gameId": "3",
+      "sport": "Football",
+      "season": "2025-2026",
+      "gameStart": "14:00:00",
+      "gameDate": "2025-10-10",
+      "venue": "Amon G. Carter Stadium",
+      "opponent": "Texas Longhorns",
+      "isFinalized": true,
+      "crewedMembers": [
+        {
+        "crewedUserId": "1",
+        "id": "1",
+        "gameId": "3",
+        "Position": "DIRECTOR",
+        "fullName": "John Smith",
+        "ReportTime": "10:00",
+        "ReportLocation": "LEGENDS CLUB"
+        },
+        {
+        "crewedUserId": "3",
+        "id": "3",
+        "gameId": "3",
+        "Position": "CAMERA",
+        "fullName": "Bob Marley",
+        "ReportTime": "10:00",
+        "ReportLocation": "LEGENDS CLUB"
+        }
       ]
     }
   ]
