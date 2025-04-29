@@ -13,7 +13,7 @@
         Loading crew member details...
     </div>
 
-    <button @click="$router.push({name: 'crewMembers'})">Back to Full List</button>
+    <button @click="$router.back()">Back</button>
 
 </template>
 

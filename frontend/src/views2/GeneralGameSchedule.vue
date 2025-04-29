@@ -38,6 +38,7 @@
         <p><strong>Time:</strong> {{ game.gameStart }}</p>
         <p><strong>Venue:</strong> {{ game.venue }}</p>
 
+        <button @click="$router.push({name: 'crewListGame', params: { gameId: game.gameId } })">View Crew List</button>
 
       </div>
     </div>

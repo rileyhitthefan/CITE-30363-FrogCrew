@@ -15,8 +15,8 @@
         Loading user information...
         </div>     
                 
-        <br />
-        <button @click="$router.push({ name: 'changeAccountDetails', params: { id: user.id } })">Change Account Details</button>
+        <br />        <button @click="$router.push({ name: 'changeAccountDetails', params: { id: user.id } })">Change Account Details</button>
+
 
 
 

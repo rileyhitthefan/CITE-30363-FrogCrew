@@ -44,6 +44,9 @@
             <p><strong>Report Time:</strong> {{ game.myAssignment.ReportTime || 'N/A' }}</p>
             <p><strong>Report Location:</strong> {{ game.myAssignment.ReportLocation || 'N/A' }}</p>
         </div>
+        <br />
+
+        <button @click="$router.push({name: 'crewListGame', params: { gameId: game.gameId } })">View Crew List</button>
 
       </div>
     </div>
