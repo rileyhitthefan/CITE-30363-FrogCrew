@@ -30,3 +30,5 @@ const submitNotification = async ({ userId, message, read, date }) => {
         throw error //Rethrow the error to be caught by the caller
     }
 }
+
+export default { submitNotification }

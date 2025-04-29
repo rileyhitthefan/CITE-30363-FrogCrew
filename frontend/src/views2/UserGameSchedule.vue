@@ -57,10 +57,10 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import api from '@/apis/gameSchedule' 
-import { getUserId } from '@/apis/auth';
+import scheduleApi from '@/apis/gameSchedule' 
+import { getUserId } from '@/apis/auth'
 import { useRouter } from 'vue-router'
-
+import notificationApi from '@/apis/notifications'
 
 
 const schedule = ref([])
@@ -71,7 +71,7 @@ onMounted(async () => {
     try {
         const loggedInUser = getUserId()
 
-        const games = await api.findScheduledGamesByUserId(loggedInUser.id)
+        const games = await scheduleApi.findScheduledGamesByUserId(loggedInUser.id)
    
         // Attach myAssignment manually
         schedule.value = games.map(game => {
@@ -107,6 +107,28 @@ const filteredAndSortedSchedule = computed(() => {
 
   return filtered
 })
+
+// Request coverage function
+const requestCoverage = async (game) => {
+  const userId = getUserId()
+  const date = new Date().toISOString()
+
+  try {
+    const response = await notificationApi.submitNotification({
+      userId,
+      message: `Requesting coverage for game: ${game.sport} vs ${game.opponent} on ${game.gameDate}`,
+      read: false,
+      date,
+    })
+
+    if (response) {
+      alert('Coverage requested successfully.')
+    }
+  } catch (error) {
+    console.error('Failed to request coverage:', error)
+    alert('Failed to request coverage. Please try again later.')
+  }
+}
 
 </script>
 
