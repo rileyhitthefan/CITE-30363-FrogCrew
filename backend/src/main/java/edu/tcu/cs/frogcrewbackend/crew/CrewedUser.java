@@ -17,6 +17,7 @@ public class CrewedUser implements Serializable {
     private Integer crewedUserId;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @NotNull(message = "member Id required")
     private Member user;
 
     @ManyToOne

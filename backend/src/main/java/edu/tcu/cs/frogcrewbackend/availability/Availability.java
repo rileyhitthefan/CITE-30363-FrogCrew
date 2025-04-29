@@ -4,6 +4,7 @@ import edu.tcu.cs.frogcrewbackend.game.Game;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ public class Availability implements Serializable {
     private Integer id;
 
     @ManyToOne
+    @NotNull(message = "Member id is required.")
     private Member user;
 
     @ManyToOne
