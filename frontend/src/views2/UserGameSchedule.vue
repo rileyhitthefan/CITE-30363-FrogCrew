@@ -56,7 +56,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import api from '@/apis/gameschedule' 
+import api from '@/apis/gameSchedule' 
 import { getUserId } from '@/apis/auth';
 
 
