@@ -51,7 +51,7 @@ public class UserServiceTest {
         mem1.setFirstName("Jack");
         mem1.setLastName("Smith");
         mem1.setEmail("jsmith@gmail.com");
-        mem1.setPhoneNumber("1234567890");
+        mem1.setPhoneNumber("123-456-7890");
         mem1.setPassword("password1");
         mem1.setRole("MEMBER");
         mem1.setPositions("Director");
@@ -60,7 +60,7 @@ public class UserServiceTest {
         mem2.setFirstName("Jane");
         mem2.setLastName("Smith");
         mem2.setEmail("jane.smith@gmail.com");
-        mem2.setPhoneNumber("0123456789");
+        mem2.setPhoneNumber("123-456-7890");
         mem2.setPassword("password2");
         mem2.setRole("MEMBER");
         mem2.setPositions("Videographer Planner");
@@ -82,7 +82,7 @@ public class UserServiceTest {
         newMember.setFirstName("Ben");
         newMember.setLastName("Ten");
         newMember.setEmail("b10@gmail.com");
-        newMember.setPhoneNumber("0001112222");
+        newMember.setPhoneNumber("123-456-7890");
         newMember.setPassword("password");
         newMember.setRole("MEMBER");
         newMember.setPositions("Crew");
@@ -125,7 +125,7 @@ public class UserServiceTest {
         member.setFirstName("Jack");
         member.setLastName("Smith");
         member.setEmail("jsmith@gmail.com");
-        member.setPhoneNumber("1234567890");
+        member.setPhoneNumber("123-456-7890");
         member.setPassword("password");
         member.setRole("MEMBER");
         member.setPositions("Director");
@@ -232,7 +232,7 @@ public class UserServiceTest {
         member.setFirstName("Jane");
         member.setLastName("Smith");
         member.setEmail("jane.smith@gmail.com");
-        member.setPhoneNumber("0123456789");
+        member.setPhoneNumber("123-456-7890");
         member.setPassword("password");
         member.setRole("MEMBER");
         member.setPositions("Director");

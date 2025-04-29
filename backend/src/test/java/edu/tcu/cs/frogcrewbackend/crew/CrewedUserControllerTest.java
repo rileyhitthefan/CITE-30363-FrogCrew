@@ -67,7 +67,7 @@ public class CrewedUserControllerTest {
         mem1.setFirstName("Bruce");
         mem1.setLastName("Wayne");
         mem1.setEmail("bw@gmail.com");
-        mem1.setPhoneNumber("1234567890");
+        mem1.setPhoneNumber("123-456-7890");
         mem1.setPassword("password1");
         mem1.setRole("MEMBER");
         mem1.setPositions("DIRECTOR");

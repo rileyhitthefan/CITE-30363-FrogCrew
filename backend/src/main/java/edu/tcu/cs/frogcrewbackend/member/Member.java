@@ -27,7 +27,7 @@ public class Member implements Serializable  {
     private String email;
 
     @NotEmpty(message =  "phone number required")
-    @Pattern(regexp = "^[0-9]{3}-[0-9]{3}-[0-9]{4}", message = "A phone number must be in the form XXX-XXX-XXXX")
+//    @Pattern(regexp = "^[0-9]{3}-[0-9]{3}-[0-9]{4}", message = "A phone number must be in the form XXX-XXX-XXXX")
     private String phoneNumber;
 
     @NotEmpty(message =  "password required")

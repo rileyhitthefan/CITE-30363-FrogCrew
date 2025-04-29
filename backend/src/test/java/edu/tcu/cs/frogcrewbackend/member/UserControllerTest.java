@@ -55,7 +55,7 @@ class UserControllerTest {
         mem1.setFirstName("John");
         mem1.setLastName("Smith");
         mem1.setEmail("john.smith@gmail.com");
-        mem1.setPhoneNumber("1234567890");
+        mem1.setPhoneNumber("123-456-7890");
         mem1.setPassword("password");
         mem1.setRole("ADMIN");
         mem1.setPositions("DIRECTOR");
@@ -65,7 +65,7 @@ class UserControllerTest {
         mem2.setFirstName("Jane");
         mem2.setLastName("Smith");
         mem2.setEmail("jane.smith@gmail.com");
-        mem2.setPhoneNumber("0123456789");
+        mem2.setPhoneNumber("012-345-6789");
         mem2.setPassword("password2");
         mem2.setRole("MEMBER");
         mem2.setPositions("Videographer Planner");
@@ -82,12 +82,12 @@ class UserControllerTest {
         member.setFirstName("John");
         member.setLastName("Smith");
         member.setEmail("john.smith@gmail.com");
-        member.setPhoneNumber("1234567890");
+        member.setPhoneNumber("123-456-7890");
         member.setPassword("password");
         member.setRole("ADMIN");
         member.setPositions("DIRECTOR");
 
-        UserDTO memberDTO = new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR");
+        UserDTO memberDTO = new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "123-456-7890", "ADMIN", "DIRECTOR");
 
         String json = this.objectMapper.writeValueAsString(member);
 
@@ -115,10 +115,10 @@ class UserControllerTest {
         // Given
         given(this.userService.findAllMembers()).willReturn(this.members);
         given(this.userToUserDTOConverter.convert(this.members.get(0)))
-                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR"));
+                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "123-456-7890", "ADMIN", "DIRECTOR"));
 
         given(this.userToUserDTOConverter.convert(this.members.get(1)))
-                .willReturn(new UserDTO(2, "Jane", "Smith", "jane.smith@gmail.com", "0123456789", "MEMBER", "Videographer Planner"));
+                .willReturn(new UserDTO(2, "Jane", "Smith", "jane.smith@gmail.com", "123-456-7890", "MEMBER", "Videographer Planner"));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember")
@@ -137,7 +137,7 @@ class UserControllerTest {
         // Given
         given(this.userService.findMemberById(1)).willReturn(this.members.get(0));
         given(this.userToUserDTOConverter.convert(this.members.get(0)))
-                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR"));
+                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "123-456-7890", "ADMIN", "DIRECTOR"));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember/1")
@@ -154,10 +154,10 @@ class UserControllerTest {
         // Given
         given(this.userService.findMemberById(3)).willThrow(new ObjectNotFoundException("member", 3));
         given(this.userToUserDTOConverter.convert(this.members.get(0)))
-                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "1234567890", "ADMIN", "DIRECTOR"));
+                .willReturn(new UserDTO(1, "John", "Smith", "john.smith@gmail.com", "123-456-7890", "ADMIN", "DIRECTOR"));
 
         given(this.userToUserDTOConverter.convert(this.members.get(1)))
-                .willReturn(new UserDTO(2, "Jane", "Smith", "jane.smith@gmail.com", "0123456789", "MEMBER", "Videographer Planner"));
+                .willReturn(new UserDTO(2, "Jane", "Smith", "jane.smith@gmail.com", "123-456-7890", "MEMBER", "Videographer Planner"));
 
         // When and Then
         this.mockMvc.perform(get(this.baseUrl + "/crewMember/3")
