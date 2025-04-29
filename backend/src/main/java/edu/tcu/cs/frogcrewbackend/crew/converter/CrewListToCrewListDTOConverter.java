@@ -19,7 +19,7 @@ public class CrewListToCrewListDTOConverter implements Converter <CrewList, Crew
 
     @Override
     public CrewListDTO convert(CrewList source) {
-        List<CrewedUserDTO> crewedUserDTOS = source.getCrewedUsers()
+        List<CrewedUserDTO> crewedUsers = source.getCrewedUsers()
                 .stream()
                 .map(crewedUserToCrewedUserDTOConverter::convert)
                 .collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class CrewListToCrewListDTOConverter implements Converter <CrewList, Crew
                 source.getGame().getGameDate(),
                 source.getGame().getVenue(),
                 source.getGame().getOpponent(),
-                crewedUserDTOS
+                crewedUsers
         );
     }
 }

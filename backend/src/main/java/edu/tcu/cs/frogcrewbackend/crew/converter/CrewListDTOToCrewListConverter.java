@@ -34,7 +34,7 @@ public class CrewListDTOToCrewListConverter implements Converter<CrewListDTO, Cr
         cl.setGame(game);
 
         // set crewedUsers
-        List<CrewedUser> crewedUsers = source.crewedUserDTOS().stream()
+        List<CrewedUser> crewedUsers = source.crewedUsers().stream()
                 .map(crewedUserConverter::convert)
                 .collect(Collectors.toList());
         cl.setCrewedUsers(crewedUsers);

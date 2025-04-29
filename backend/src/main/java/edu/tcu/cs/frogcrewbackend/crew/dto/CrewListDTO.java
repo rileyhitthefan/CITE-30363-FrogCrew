@@ -7,5 +7,5 @@ public record CrewListDTO (
         String gameDate,
         String venue,
         String opponent,
-        List<CrewedUserDTO> crewedUserDTOS
+        List<CrewedUserDTO> crewedUsers
 ){ }
