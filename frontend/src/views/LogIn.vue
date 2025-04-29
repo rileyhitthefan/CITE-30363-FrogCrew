@@ -29,33 +29,38 @@ const router = useRouter()
 
 async function handleLogin() {
     try {
-        await login(email.value, password.value)
+         // Call the login API function with the provided credentials
+         const success = await login(email.value, password.value)
 
-        const userRole = getUserRole()
+        if (success) {
+             const userRole = getUserRole()
 
         //Dynamically add ADMIN route if the user is ADMIN and report route is not already added
-        if (userRole == 'ADMIN' && !router.hasRoute('reports')) {
+        if (userRole == 'ADMIN MEMBER' && !router.hasRoute('reports')) {
             router.addRoute('mainLayout', reportsRoute) 
         }
 
         //Dynamically add ADMIN route if the user is ADMIN and templates route is not already added
-        if (userRole == 'ADMIN' && !router.hasRoute('templates')) {
+        if (userRole == 'ADMIN MEMBER' && !router.hasRoute('templates')) {
             router.addRoute('mainLayout', templatesRoute) 
         }
 
         //Dynamically add ADMIN route if the user is ADMIN and manage crew members route is not already added
-        if (userRole == 'ADMIN' && !router.hasRoute('manageCrewMembers')) {
+        if (userRole == 'ADMIN MEMBER' && !router.hasRoute('manageCrewMembers')) {
             router.addRoute('crewMembers', manageCrewMembersRoute) 
         }
 
           //Dynamically add ADMIN route if the user is ADMIN and invite crew members route is not already added
-          if (userRole == 'ADMIN' && !router.hasRoute('inviteCrewMembers')) {
+          if (userRole == 'ADMIN MEMBER' && !router.hasRoute('inviteCrewMembers')) {
             router.addRoute('crewMembers', inviteCrewMembersRoute) 
         }
 
         //After successful login redirect to the home page
         router.push('/')
-    } catch (error) {
+        } else {
+            console.error('Login failed')
+        }
+        } catch (error) {
         console.error(error)
     }
 }

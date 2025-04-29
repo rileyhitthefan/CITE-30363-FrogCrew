@@ -1,5 +1,4 @@
-const BASE_URL = 'http://localhost:3000/crewMembers'
-//Real API: POST /auth/login
+const BASE_URL = 'https://cite-30363-frogcrew.onrender.com/api/v1/auth/login'
 
 
 import { ref } from "vue"
@@ -9,37 +8,47 @@ const userRole = ref('') //Stores 'CREW' or 'ADMIN
 const userId = ref(null) //Stores full user info
 const token = ref(null) //Stores JWT token
 
+//Real API: POST /auth/login
 //Login
 const login = async (email, password) => {
     try {
-        const response = await fetch(`${BASE_URL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`)
+        const response = await fetch(BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
 
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`)
+
+        const result = await response.json()
+
+
+        if (!response.ok || !result.flag) {
+            console.error('Login failed:', result.message || 'Unknown error');
+            throw new Error(result.message || 'Login failed')
         }
 
-        const data = await response.json()
 
-        if (data.length > 0) {
-            // Successful login
-            const user = data[0]
-            isAuthenticated.value = true
-            userRole.value = user.role || 'CREW' // If role missing, default to CREW
-            userId.value = user
-            return true
-        } else {
-        // Wrong email or password
-        isAuthenticated.value = false
-        userRole.value = ''
-        userId.value = null
-        return false
+        //Successful login
+        isAuthenticated.value = true
+        userRole.value = result.data.role || 'MEMBER' // If role missing, default to CREW
+        userInfo.value = {
+            userId: result.data.userId,
+            role: result.data.role
         }
+        token.value = result.data.token
+        return true
     } catch (error) {
         console.error(error)
         isAuthenticated.value = false
         userRole.value = ''
-        userId.value = null
-        throw error //Rethrow the error to be caught by the caller
+        userInfo.value = null
+        token.value = null
+        return false
     }
 }
 
