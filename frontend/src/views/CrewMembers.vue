@@ -1,5 +1,7 @@
 <template>
     <div>
+      <!-- Show list only for CREW-->
+      <div v-if="userRole === 'CREW' ">
         <h1>List of Crew Members</h1>
 
         <!--List of crew members fetched from back end-->
@@ -20,13 +22,16 @@
                 </tr> 
             </tbody>
         </table> 
+        </div>
+
         
-        <br />
         <!-- Show buttown only for ADMIN-->
         <div v-if="userRole === 'ADMIN' ">
+          <div class="crewMembersBox">
+          <h1>Crew Members</h1>
             <button @click="$router.push({ name: 'manageCrewMembers' })">Manage</button>
             <button @click="$router.push({ name: 'inviteCrewMembers' })">Invite</button>
-            
+          </div>
             <!-- This is where Manage or Invite view will be shown -->
             <router-view />
         
@@ -52,6 +57,11 @@ async function loadCrewMembers(){
 </script>
 
 <style scoped>
+.crewMembersBox {
+  background-color: #B3B3B3;
+  padding: 20px;
+}
+
 h1 {
   text-align: center;
   margin-top: 20px;

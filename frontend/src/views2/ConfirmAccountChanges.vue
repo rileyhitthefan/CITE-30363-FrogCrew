@@ -41,6 +41,7 @@ const confirmChanges = async () => {
   try {
     const updatedData = {
       id: user.value.id,  // Ensure the id is also included
+      fullName: user.value.fullName,
       firstName: user.value.firstName,
       lastName: user.value.lastName,
       phoneNumber: user.value.phoneNumber,
