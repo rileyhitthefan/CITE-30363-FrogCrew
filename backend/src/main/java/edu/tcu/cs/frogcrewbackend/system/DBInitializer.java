@@ -144,14 +144,14 @@ public class DBInitializer implements CommandLineRunner {
 
         // notifications
         Notification noti1 = new Notification();
-        noti1.setUser(mem1);
+        noti1.setUser(mem2);
         noti1.setMessage("Need to be at all games this season");
         noti1.setRead(Boolean.FALSE);
         noti1.setDate("11/10/2024 14:00:00");
 
         mem1.addNotification(noti1);
 
-        this.userRepository.save(mem1);
+        this.userRepository.save(mem2);
         this.notificationRepository.save(noti1);
     }
 }
