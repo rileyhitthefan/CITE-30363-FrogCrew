@@ -7,7 +7,7 @@ const BASE_URL = 'http://localhost:3000/gamesSchedule'
  * Use Case 4
  
  */
-const findScheduledGamesByUserId = async (userId) => {
+const findScheduledGamesByUserId = async (id) => {
     try {
       const response = await fetch(BASE_URL)
   
@@ -19,7 +19,7 @@ const findScheduledGamesByUserId = async (userId) => {
   
       // Filter games where user is part of crewedMembers
       const assignedGames = games.filter(game =>
-        game.crewedMembers.some(member => String(member.crewedUserId) === String(userId))
+        game.crewedMembers.some(member => String(member.crewedUserId) === String(id))
       )
   
       return assignedGames

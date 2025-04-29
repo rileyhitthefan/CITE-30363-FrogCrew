@@ -84,18 +84,18 @@
       "isFinalized": true,
       "crewedMembers": [
         {
-        "crewedUserId": 1,
-        "id": 1,
-        "gameId": 2,
+        "crewedUserId": "1",
+        "id": "1",
+        "gameId": "2",
         "Position": "DIRECTOR",
         "fullName": "John Smith",
         "ReportTime": "12:00",
         "ReportLocation": "CONTROL ROOM"
         },
         {
-        "crewedUserId": 3,
-        "id": 3,
-        "gameId": 2,
+        "crewedUserId": "3",
+        "id": "3",
+        "gameId": "2",
         "Position": "CAMERA",
         "fullName": "Bob Marley",
         "ReportTime": "12:00",
@@ -114,18 +114,18 @@
       "isFinalized": true,
       "crewedMembers": [
         {
-        "crewedUserId": 1,
-        "id": 1,
-        "gameId": 3,
+        "crewedUserId": "1",
+        "id": "1",
+        "gameId": "3",
         "Position": "DIRECTOR",
         "fullName": "John Smith",
         "ReportTime": "10:00",
         "ReportLocation": "LEGENDS CLUB"
         },
         {
-        "crewedUserId": 3,
-        "id": 3,
-        "gameId": 3,
+        "crewedUserId": "3",
+        "id": "3",
+        "gameId": "3",
         "Position": "CAMERA",
         "fullName": "Bob Marley",
         "ReportTime": "10:00",
