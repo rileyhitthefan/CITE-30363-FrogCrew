@@ -45,6 +45,7 @@
   "gamesSchedule": [
     {
       "gameId": "1",
+      "scheduleId": "1",
       "sport": "Football",
       "season": "2024-2025",
       "gameStart": "16:00:00",
@@ -54,27 +55,28 @@
       "isFinalized": true,
       "crewedMembers": [
         {
-        "crewedUserId": "1",
-        "id": "1",
-        "gameId": "1",
-        "Position": "DIRECTOR",
-        "fullName": "John Smith",
-        "ReportTime": "12:00",
-        "ReportLocation": "CONTROL ROOM"
+          "crewedUserId": "1",
+          "id": "1",
+          "gameId": "1",
+          "Position": "DIRECTOR",
+          "fullName": "John Smith",
+          "ReportTime": "12:00",
+          "ReportLocation": "CONTROL ROOM"
         },
         {
-        "crewedUserId": "2",
-        "id": "2",
-        "gameId": "1",
-        "Position": "PRODUCER",
-        "fullName": "Jane Doe",
-        "ReportTime": "12:00",
-        "ReportLocation": "CONTROL ROOM"
+          "crewedUserId": "2",
+          "id": "2",
+          "gameId": "1",
+          "Position": "PRODUCER",
+          "fullName": "Jane Doe",
+          "ReportTime": "12:00",
+          "ReportLocation": "CONTROL ROOM"
         }
       ]
     },
     {
       "gameId": "2",
+      "scheduleId": "2",
       "sport": "Basketball",
       "season": "2024-2025",
       "gameStart": "17:00:00",
@@ -84,27 +86,28 @@
       "isFinalized": true,
       "crewedMembers": [
         {
-        "crewedUserId": "1",
-        "id": "1",
-        "gameId": "2",
-        "Position": "DIRECTOR",
-        "fullName": "John Smith",
-        "ReportTime": "12:00",
-        "ReportLocation": "CONTROL ROOM"
+          "crewedUserId": "1",
+          "id": "1",
+          "gameId": "2",
+          "Position": "DIRECTOR",
+          "fullName": "John Smith",
+          "ReportTime": "12:00",
+          "ReportLocation": "CONTROL ROOM"
         },
         {
-        "crewedUserId": "3",
-        "id": "3",
-        "gameId": "2",
-        "Position": "CAMERA",
-        "fullName": "Bob Marley",
-        "ReportTime": "12:00",
-        "ReportLocation": "CONTROL ROOM"
+          "crewedUserId": "3",
+          "id": "3",
+          "gameId": "2",
+          "Position": "CAMERA",
+          "fullName": "Bob Marley",
+          "ReportTime": "12:00",
+          "ReportLocation": "CONTROL ROOM"
         }
       ]
     },
     {
       "gameId": "3",
+      "scheduleId": "3",
       "sport": "Football",
       "season": "2025-2026",
       "gameStart": "14:00:00",
@@ -114,24 +117,50 @@
       "isFinalized": true,
       "crewedMembers": [
         {
-        "crewedUserId": "1",
-        "id": "1",
-        "gameId": "3",
-        "Position": "DIRECTOR",
-        "fullName": "John Smith",
-        "ReportTime": "10:00",
-        "ReportLocation": "LEGENDS CLUB"
+          "crewedUserId": "1",
+          "id": "1",
+          "gameId": "3",
+          "Position": "DIRECTOR",
+          "fullName": "John Smith",
+          "ReportTime": "10:00",
+          "ReportLocation": "LEGENDS CLUB"
         },
         {
-        "crewedUserId": "3",
-        "id": "3",
-        "gameId": "3",
-        "Position": "CAMERA",
-        "fullName": "Bob Marley",
-        "ReportTime": "10:00",
-        "ReportLocation": "LEGENDS CLUB"
+          "crewedUserId": "3",
+          "id": "3",
+          "gameId": "3",
+          "Position": "CAMERA",
+          "fullName": "Bob Marley",
+          "ReportTime": "10:00",
+          "ReportLocation": "LEGENDS CLUB"
         }
       ]
+    }
+  ],
+  "availability": [
+    {
+      "id": "1",
+      "scheduleId": "1",
+      "availability": true,
+      "comment": "Will be coming from another game"
+    },
+    {
+      "id": "1",
+      "scheduleId": "2",
+      "availability": true,
+      "comment": null
+    },
+    {
+      "id": "2",
+      "scheduleId": "2",
+      "availability": true,
+      "comment": null
+    },
+    {
+      "id": "3",
+      "scheduleId": "2",
+      "availability": true,
+      "comment": null
     }
   ]
 }

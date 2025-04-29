@@ -1,19 +1,17 @@
 <template>
-    <h2>Schedule</h2>
-    <div>
-        <button @click="$router.push({name: 'userGameSchedule'})">My Game Schedule</button>
-        <button @click="$router.push({name: 'generalGameSchedule'})">General Game Schedule</button>
-        <button @click="$router.push({name: 'availability'})">Availability</button>
-
-
-    </div>
+        <button @click="$router.back()">Back</button>
+        <h2>Availability</h2>
+        <div>
+        <button @click="$router.push({name: 'submitAvailability'})">Submit Availability</button>
+        <button @click="$router.push({name: 'updateAvailability'})">Update Availability</button>
+        </div>
 </template>
 
 <script setup>
 
 </script>
 
-<style scoped>
+<style  scoped>
 h2 {
   text-align: center;
   font-size: 2rem;
@@ -45,4 +43,5 @@ button {
     transform: scale(1.03);
   }
 }
+
 </style>
