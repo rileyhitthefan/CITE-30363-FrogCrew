@@ -162,5 +162,23 @@ strong {
   color: #2c3e50;
 }
 
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-bottom: 1.5rem;
+}
+
+button:hover {
+  background-color: #2980b9;
+  transform: scale(1.02);
+}
+
 
 </style>
