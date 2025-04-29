@@ -2,7 +2,9 @@ package edu.tcu.cs.frogcrewbackend.member;
 
 import edu.tcu.cs.frogcrewbackend.notification.Notification;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,9 +23,11 @@ public class Member implements Serializable  {
     private String lastName;
 
     @NotEmpty(message =  "email required")
+    @Email(message = "Email should be valid.")
     private String email;
 
     @NotEmpty(message =  "phone number required")
+    @Pattern(regexp = "^[0-9]{3}-[0-9]{3}-[0-9]{4}", message = "A phone number must be in the form XXX-XXX-XXXX")
     private String phoneNumber;
 
     @NotEmpty(message =  "password required")
