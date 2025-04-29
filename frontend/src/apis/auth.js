@@ -27,6 +27,9 @@ const login = async (email, password) => {
 
         const result = await response.json()
 
+        console.log('response:', response);
+        console.log('result:', result);
+
 
         if (!response.ok || !result.flag) {
             console.error('Login failed:', result.message || 'Unknown error');
