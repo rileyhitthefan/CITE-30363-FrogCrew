@@ -17,7 +17,6 @@ public class CorsConfiguration {
                         .allowedOrigins("*")
                         .allowedMethods("*")
                         .allowedHeaders("*"); // Enable CORS for the whole application.
-
             }
         };
     }

@@ -6,6 +6,9 @@ import edu.tcu.cs.frogcrewbackend.member.converter.UserToLoginDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.converter.UserToUserDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.dto.LoginDTO;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,10 +17,12 @@ import java.util.Map;
 @Service
 public class AuthService {
     private final JwtProvider jwtProvider;
+    private final JwtDecoder jwtDecoder;
     private final UserToLoginDTOConverter userToLoginDTOConverter;
 
-    public AuthService(JwtProvider jwtProvider, UserToLoginDTOConverter userToLoginDTOConverter) {
+    public AuthService(JwtProvider jwtProvider, JwtDecoder jwtDecoder, UserToLoginDTOConverter userToLoginDTOConverter) {
         this.jwtProvider = jwtProvider;
+        this.jwtDecoder = jwtDecoder;
         this.userToLoginDTOConverter = userToLoginDTOConverter;
     }
 
@@ -35,5 +40,14 @@ public class AuthService {
         loginInfo.put("token", token);
 
         return loginInfo;
+    }
+
+    public boolean validateInviteToken(String token) {
+        try {
+            Jwt decodedJwt = jwtDecoder.decode(token);
+            return true; // If decoding succeeds
+        } catch (JwtException e) {
+            return false; // If token is invalid or expired
+        }
     }
 }
