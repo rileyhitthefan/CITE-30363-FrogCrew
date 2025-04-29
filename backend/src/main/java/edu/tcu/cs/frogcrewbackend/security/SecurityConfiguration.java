@@ -71,6 +71,7 @@ public class SecurityConfiguration {
                 // It is recommended to secure your application at the API endpoint level.
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/invite/**").permitAll()
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/invite/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewMember/**").permitAll()
