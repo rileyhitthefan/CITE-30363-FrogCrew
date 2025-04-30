@@ -2,7 +2,7 @@
     <div>
         <h2>Templates</h2>
 
-        <button @click="$router.push({ name: 'crewListTemplates' })">Crew List Templates</button>
+        <button @click="$router.push({ name: 'crewListTemplates' })">View Crew List Templates</button>
 
     </div>
 </template>

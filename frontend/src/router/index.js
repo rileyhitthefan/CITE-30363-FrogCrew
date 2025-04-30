@@ -20,6 +20,7 @@ import SubmitAvailability from "@/views2/SubmitAvailability.vue"
 import UpdateAvailability from "@/views2/UpdateAvailability.vue"
 import TradeBoard from "@/views/TradeBoard.vue"
 import CrewListTemplate from "@/views2/CrewListTemplate.vue"
+import CrewListTemplateDetails from "@/views2/CrewListTemplateDetails.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -50,8 +51,8 @@ const router = createRouter({
                 {path: '/schedule/availability/submitAvailability', name: 'submitAvailability', component: SubmitAvailability},
                 {path: '/schedule/availability/updateAvailability', name: 'updateAvailability', component: UpdateAvailability},
 
-                {path: '/crewListTemplates', name: 'crewListTemplates', component: CrewListTemplate}
-
+                {path: '/templates/crewListTemplates', name: 'crewListTemplates', component: CrewListTemplate},
+                {path: '//templates/crewListTemplates/details/:gameId', name: 'crewListTemplateDetails', component: CrewListTemplateDetails, props: true},
                 
             ]
         },
