@@ -1,4 +1,7 @@
 <template>
+    <div class="login-page">
+        <div class="welcome-heading">Welcome Frog Crew</div>
+
     <div class="login-container">
         <h2>Login</h2>
         <form @submit.prevent="handleLogin" class="login-form">
@@ -12,8 +15,8 @@
             </div>
             <button type="submit" class="login-button">Login</button>
         </form>
-
     </div>
+</div>
 </template>
 
 <script setup>
@@ -65,6 +68,28 @@ async function handleLogin() {
 </script>
 
 <style scoped>
+
+.login-page {
+  min-height: 100vh;
+  background-image: url('@/assets/img/Login.jpg'); 
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-heading {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
 .login-container {
     padding: 1.5rem;
     background-color: #f5f5f5;
