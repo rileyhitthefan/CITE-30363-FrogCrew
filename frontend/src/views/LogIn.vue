@@ -13,6 +13,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" v-model="password" required placeholder="Enter your password">
             </div>
+
+            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+
             <button type="submit" class="login-button">Login</button>
         </form>
     </div>
@@ -30,11 +34,19 @@ const password = ref('')
 
 const router = useRouter()
 
+const errorMessage = ref('')
+
+
 async function handleLogin() {
     try {
         await login(email.value, password.value)
 
         const userRole = getUserRole()
+
+        if (!success) {
+            errorMessage.value = 'Invalid email or password. Please try again.'
+            return
+        }
 
         //Dynamically add ADMIN route if the user is ADMIN and report route is not already added
         if (userRole == 'ADMIN' && !router.hasRoute('reports')) {
@@ -56,10 +68,15 @@ async function handleLogin() {
             router.addRoute('crewMembers', inviteCrewMembersRoute) 
         }
 
+         // Clear any previous error
+        errorMessage.value = ''
+
         //After successful login redirect to the home page
         router.push('/')
     } catch (error) {
         console.error(error)
+        errorMessage.value = 'Invalid email or password. Please try again.'
+        router.push('/')
     }
 }
 
@@ -160,5 +177,18 @@ async function handleLogin() {
         }
     }
 }
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  background-color: #ffe5e5;
+  padding: 0.4rem;
+  border-radius: 4px;
+}
+
+
 
 </style>
