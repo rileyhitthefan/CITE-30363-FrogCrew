@@ -52,7 +52,7 @@ onMounted(async () => {
     const allGames = await gameApi.findGeneralGameSchedule()
 
     enrichedTradeBoard.value = scheduledGames
-      .filter(game => game.status === 'AVAILABLE')
+      .filter(game => game.status === 'pending')
       .map(trade => {
         const gameDetails = allGames.find(g => g.gameId === trade.gameId)
         const crewMatch = gameDetails?.crewedMembers.find(

@@ -181,17 +181,33 @@
       "read": false,
       "date": "11/10/2024 14:00:00",
       "id": "8868"
+    },
+    {
+      "id": "e83d",
+      "userId": "3",
+      "userIdCreatedNotification": "2",
+      "message": "A shift is available for Basketball vs Texas Tech on 2025-11-06 (CAMERA).",
+      "read": false,
+      "date": "2025-04-30T17:44:27.702Z"
+    },
+    {
+      "id": "8096",
+      "userId": "2",
+      "userIdCreatedNotification": "2",
+      "message": "You requested coverage for Basketball vs Texas Tech on 2025-11-06.",
+      "read": false,
+      "date": "2025-04-30T17:44:27.702Z"
     }
   ],
   "scheduledGames": [
     {
-      "tradeId": "1-2",
+      "id": "3482",
+      "tradeId": "2-2",
       "dropperId": "2",
-      "gameId": "1",
+      "gameId": "2",
       "position": "CAMERA",
-      "status": "AVAILABLE",
-      "receiverId": null,
-      "id": "b2a0"
+      "status": "pending",
+      "receiverId": null
     }
   ]
 }
