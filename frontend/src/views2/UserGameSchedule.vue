@@ -21,7 +21,7 @@
 
         <div v-if="filteredAndSortedSchedule.length === 0">
             <p>No assigned games found.</p>
-        6</div>
+        </div>
 
         <div v-if="schedule.length === 0">
             <p>You are not scheduled for any upcoming games.</p>
@@ -47,6 +47,7 @@
         <br />
 
         <button @click="$router.push({name: 'crewListGame', params: { gameId: game.gameId } })">View Crew List</button>
+        <button @click="requestCoverage(game)">Request Coverage</button>
 
       </div>
     </div>
@@ -56,8 +57,11 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import api from '@/apis/gameSchedule' 
-import { getUserId } from '@/apis/auth';
+import scheduleApi from '@/apis/gameSchedule' 
+import { getUserId } from '@/apis/auth'
+import { useRouter } from 'vue-router'
+import notificationApi from '@/apis/notifications'
+import crewApi from '@/apis/crewMembers'
 
 
 const schedule = ref([])
@@ -68,7 +72,7 @@ onMounted(async () => {
     try {
         const loggedInUser = getUserId()
 
-        const games = await api.findScheduledGamesByUserId(loggedInUser.id)
+        const games = await scheduleApi.findScheduledGamesByUserId(loggedInUser.id)
    
         // Attach myAssignment manually
         schedule.value = games.map(game => {
@@ -104,6 +108,64 @@ const filteredAndSortedSchedule = computed(() => {
 
   return filtered
 })
+
+//Request Coverage
+const requestCoverage = async (game) => {
+  const currentUser = getUserId()
+  const date = new Date().toISOString()
+
+  // Convert game start time to Date object
+  const gameStartDate = new Date(game.gameDate + ' ' + game.gameStart)
+  const currentTime = new Date()
+  const timeDifference = gameStartDate - currentTime
+  const hoursRemaining = timeDifference / (1000 * 60 * 60)
+
+  if (hoursRemaining < 24) {
+    alert('You cannot request coverage for a game that is within 24 hours of the start time.')
+    return
+  }
+
+  try {
+    const allCrew = await crewApi.findAllCrewMembers()
+
+    const position = game.myAssignment.Position.toLowerCase()
+
+    // Find eligible members (same position, not current user)
+    const eligibleMembers = allCrew.filter(member => 
+      // Normalize position comparison (lowercase and array check)
+      member.position.some(p => p.toLowerCase() === position) &&
+      String(member.id) !== String(currentUser.id)
+    )
+
+
+    // Notify each eligible crew member
+    const notifications = eligibleMembers.map(member => {
+      return notificationApi.submitNotification({
+        userId: member.id,
+        userIdCreatedNotification: currentUser.id,
+        message: `A shift is available for ${game.sport} vs ${game.opponent} on ${game.gameDate} (${game.myAssignment.Position}).`,
+        read: false,
+        date
+      })
+    })
+
+    await Promise.all(notifications)
+
+    // Optional: notify requester
+    await notificationApi.submitNotification({
+      userId: currentUser.id,
+      userIdCreatedNotification: currentUser.id,
+      message: `You requested coverage for ${game.sport} vs ${game.opponent} on ${game.gameDate}.`,
+      read: false,
+      date
+    })
+
+    alert('Coverage requested successfully. All eligible crew members have been notified.')
+  } catch (error) {
+    console.error('Coverage request failed:', error)
+    alert('Failed to request coverage. Please try again.')
+  }
+}
 
 </script>
 
