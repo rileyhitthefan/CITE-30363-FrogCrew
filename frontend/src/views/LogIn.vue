@@ -43,29 +43,20 @@ async function handleLogin() {
 
         const userRole = getUserRole()
 
-        if (!success) {
-            errorMessage.value = 'Invalid email or password. Please try again.'
-            return
-        }
-
-        //Dynamically add ADMIN route if the user is ADMIN and report route is not already added
-        if (userRole == 'ADMIN' && !router.hasRoute('reports')) {
-            router.addRoute('mainLayout', reportsRoute) 
-        }
-
-        //Dynamically add ADMIN route if the user is ADMIN and templates route is not already added
-        if (userRole == 'ADMIN' && !router.hasRoute('templates')) {
-            router.addRoute('mainLayout', templatesRoute) 
-        }
-
-        //Dynamically add ADMIN route if the user is ADMIN and manage crew members route is not already added
-        if (userRole == 'ADMIN' && !router.hasRoute('manageCrewMembers')) {
-            router.addRoute('crewMembers', manageCrewMembersRoute) 
-        }
-
-          //Dynamically add ADMIN route if the user is ADMIN and invite crew members route is not already added
-          if (userRole == 'ADMIN' && !router.hasRoute('inviteCrewMembers')) {
-            router.addRoute('crewMembers', inviteCrewMembersRoute) 
+        // Dynamically add ADMIN-only routes
+        if (userRole === 'ADMIN') {
+            if (!router.hasRoute('reports')) {
+                router.addRoute('mainLayout', reportsRoute)
+            }
+            if (!router.hasRoute('templates')) {
+                router.addRoute('mainLayout', templatesRoute)
+            }
+            if (!router.hasRoute('manageCrewMembers')) {
+                router.addRoute('crewMembers', manageCrewMembersRoute)
+            }
+            if (!router.hasRoute('inviteCrewMembers')) {
+                router.addRoute('crewMembers', inviteCrewMembersRoute)
+            }
         }
 
          // Clear any previous error
