@@ -2,7 +2,6 @@ package edu.tcu.cs.frogcrewbackend.security;
 
 import edu.tcu.cs.frogcrewbackend.system.Result;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

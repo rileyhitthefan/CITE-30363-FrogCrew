@@ -35,9 +35,9 @@ public class AvailabilityController {
         Game availableGame = this.gameScheduleService.findGameById(availabilityDTO.gameId());
         Availability availability = availabilityDTOToAvailabilityConverter.convert(availabilityDTO);
 
+        availability.setGame(availableGame);
+        availability.setUser(availableUser);
         Availability savedAvailability = this.availService.addAvailability(availability);
-        savedAvailability.setGame(availableGame);
-        savedAvailability.setUser(availableUser);
 
         AvailabilityDTO savedAvailabilityDTO = this.availabilityToAvailabilityDTOConverter.convert(savedAvailability);
         return new Result(true, StatusCode.SUCCESS, "New availability added", savedAvailabilityDTO);
