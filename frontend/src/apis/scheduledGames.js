@@ -63,10 +63,13 @@ const deleteTradeBoardPost = async (tradeId) => {
     try {
         // Step 1: GET the existing trade post by tradeId
         const getResponse = await fetch(`${BASE_URL}?tradeId=${tradeId}`);
+
         if (!getResponse.ok) throw new Error('Failed to fetch trade post');
 
         const data = await getResponse.json();
         if (data.length === 0) throw new Error('Trade post not found');
+
+        console.log('GET response data:', data); // 🔍 Add this line
 
         const existingTradePost = data[0];
         const tradeRecordId = existingTradePost.id;

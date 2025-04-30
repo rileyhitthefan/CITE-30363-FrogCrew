@@ -15,8 +15,6 @@
         <p><strong>Time:</strong> {{ game.gameStart }}</p>
         <p><strong>Venue:</strong> {{ game.venue }}</p>
         <p><strong>Role Needed:</strong> {{ game.position }}</p>
-        <p><strong>Report Time:</strong> {{ game.reportTime }}</p>
-        <p><strong>Report Location:</strong> {{ game.reportLocation }}</p>
         <button @click="pickUpShift(game)" class="request-btn">Pick Up Shift</button>
 
     </div>
@@ -33,6 +31,7 @@
 import { ref, onMounted } from 'vue'
 import tradeBoardApi from '@/apis/scheduledGames'
 import gameApi from '@/apis/gameSchedule'
+import { useRouter } from 'vue-router'
 import { getUserId, getUserFullName } from '@/apis/auth';
 import crewMemberApi from '@/apis/crewMembers'
 import notificationApi from '@/apis/notifications'
@@ -44,6 +43,7 @@ const currentUserFullName = getUserFullName()
 const loading = ref(true)
 const enrichedTradeBoard = ref([])
 
+const router = useRouter()
 
 //Find all shifts for the trade board (shifts where coverage has been requested)
 onMounted(async () => {
@@ -66,8 +66,7 @@ onMounted(async () => {
           venue: gameDetails?.venue ?? 'Unknown',
           sport: gameDetails?.sport ?? 'Unknown',
           opponent: gameDetails?.opponent ?? 'Unknown',
-          reportTime: crewMatch?.ReportTime ?? 'Unknown',
-          reportLocation: crewMatch?.ReportLocation ?? 'Unknown'
+
         }
       })
   } catch (err) {
@@ -169,16 +168,19 @@ async function pickUpShift(game) {
       read: false,
       date: dateNow
     })
-
+ 
     // Successfully picked up the shift
     alert("Shift successfully picked up!")
 
      // Step 3: DELETE the shift from the trade board (this will remove the shift from the available shifts)
-     const tradeId = `${game.gameId}-${currentUserId}`;
+     const tradeId = `${game.gameId}-${game.dropperId}`;
+     console.log("Deleting trade post with tradeId:", tradeId);
+
     await tradeBoardApi.deleteTradeBoardPost(tradeId);
 
     console.log('Trade post successfully deleted from the board.');
 
+    router.push({name: 'notifications'})
 
   } catch (err) {
     console.error('Error processing the shift:', err)
