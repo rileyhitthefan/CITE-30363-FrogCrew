@@ -24,7 +24,8 @@
       "password": "234",
       "role": "CREW",
       "position": [
-        "Camera"
+        "Camera",
+        "Producer"
       ]
     },
     {
@@ -37,8 +38,7 @@
       "password": "34",
       "role": "CREW",
       "position": [
-        "Camera",
-        "Producer"
+        "Camera"
       ]
     }
   ],
@@ -47,9 +47,9 @@
       "gameId": "1",
       "scheduleId": "1",
       "sport": "Football",
-      "season": "2024-2025",
+      "season": "2025-2026",
       "gameStart": "16:00:00",
-      "gameDate": "2024-10-10",
+      "gameDate": "2025-10-10",
       "venue": "Amon G. Carter Stadium",
       "opponent": "Texas Longhorns",
       "isFinalized": true,
@@ -79,9 +79,9 @@
       "gameId": "2",
       "scheduleId": "2",
       "sport": "Basketball",
-      "season": "2024-2025",
+      "season": "2025-2026",
       "gameStart": "17:00:00",
-      "gameDate": "2024-11-06",
+      "gameDate": "2025-11-06",
       "venue": "Schollmaier Arena",
       "opponent": "Texas Tech",
       "isFinalized": true,
@@ -173,9 +173,11 @@
   "notification": [
     {
       "userId": "2",
+      "userIdCreatedNotification": "1",
       "message": "You have been assigned to game 2",
       "read": false,
-      "date": "11/10/2024 14:00:00"
+      "date": "11/10/2024 14:00:00",
+      "id": "8868"
     }
   ]
 }
