@@ -1,11 +1,15 @@
 <template>
-    <div class="homepage">
-        <div class="background"></div>
-        <h1> Homepage</h1>
-    </div>
+   <div class="homepage">
+    <div class="background"></div>
+    <h1>Homepage</h1>
+    <p class="welcome-message">Welcome back, {{ userName }}!</p>
+  </div>
 </template>
 
 <script setup>
+import { getUserFullName } from '@/apis/auth';
+
+const userName = getUserFullName()
 
 </script>
 
@@ -13,7 +17,7 @@
 .homepage {
   position: relative;
   width: 100%;
-  height: 35vh; /* Full screen height */
+  height: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -31,17 +35,43 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px); /* <-- THIS BLURS IT */
+  filter: blur(2px);
   z-index: 1;
 }
 
-/* Make sure text is ABOVE the background */
 h1 {
   position: relative;
   z-index: 2;
-  color: white;
-  font-size: 48px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  font-size: 72px;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
+  margin: 0;
+  animation: fadeIn 1s ease-out;
+}
+
+.welcome-message {
+  position: relative;
+  z-index: 2;
+  color: #f0f0f0;
+  font-size: 40px;
+  font-weight: 400;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 15px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 </style>
