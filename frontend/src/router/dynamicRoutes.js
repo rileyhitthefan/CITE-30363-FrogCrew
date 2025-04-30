@@ -16,6 +16,8 @@ export const templatesRoute = {
     }
 }
 
+
+
 export const manageCrewMembersRoute = {
     path: '/manageCrewMembers', name: 'manageCrewMembers', component: ManageCrewMembers,
     meta: {
