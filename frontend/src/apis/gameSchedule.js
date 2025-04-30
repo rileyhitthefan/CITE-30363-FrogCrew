@@ -123,7 +123,46 @@ const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gam
         throw error
     }
 }  
+
+/**
+ * POST
+ * Create game schedule
+ * Use Case 18
+ */
+
+const createGameSchedule = async (gameId, scheduleId, sport, season, gameStart, gameDate, venue, opponent, isFinalized, crewedMembers) => {
+  try {   
+    const response = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gameId, 
+          scheduleId, 
+          sport, 
+          season, 
+          gameStart, 
+          gameDate, 
+          venue, 
+          opponent, 
+          isFinalized, 
+          crewedMembers
+    }),
+    });
+    
+    if (!response.ok) {
+        throw new Error('Failed to update member');
+    }
+
+    return await response.json();
+
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}  
   
 
 
-export default { findScheduledGamesByUserId, findGeneralGameSchedule, findCrewListByGameId, updateGameScheduleByGameId }
+export default { findScheduledGamesByUserId, findGeneralGameSchedule, findCrewListByGameId, updateGameScheduleByGameId, createGameSchedule }

@@ -21,6 +21,8 @@ import UpdateAvailability from "@/views2/UpdateAvailability.vue"
 import TradeBoard from "@/views/TradeBoard.vue"
 import CrewListTemplate from "@/views2/CrewListTemplate.vue"
 import CrewListTemplateDetails from "@/views2/CrewListTemplateDetails.vue"
+import CreateGameSchedule from "@/views2/CreateGameSchedule.vue"
+
 
 //Create a router instance
 const router = createRouter({
@@ -54,6 +56,10 @@ const router = createRouter({
                 {path: '/templates/crewListTemplates', name: 'crewListTemplates', component: CrewListTemplate},
                 {path: '//templates/crewListTemplates/details/:gameId', name: 'crewListTemplateDetails', component: CrewListTemplateDetails, props: true},
                 
+
+                {path: '/schedule/createGameSchedule', name: 'createGameSchedule', component: CreateGameSchedule },
+
+
             ]
         },
 

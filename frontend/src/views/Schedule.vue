@@ -1,15 +1,24 @@
 <template>
     <h2>Schedule</h2>
     <div>
-        <button @click="$router.push({name: 'userGameSchedule'})">My Game Schedule</button>
-        <button @click="$router.push({name: 'generalGameSchedule'})">General Game Schedule</button>
-        <button @click="$router.push({name: 'availability'})">Availability</button>
+      <button @click="$router.push({name: 'userGameSchedule'})">My Game Schedule</button>
+      <button @click="$router.push({name: 'generalGameSchedule'})">General Game Schedule</button>
+      <button @click="$router.push({name: 'availability'})">Availability</button>
 
-
+      <!-- This button will now be inside the same flex context -->
+      <button
+        v-if="userRole === 'ADMIN'"
+        class="purple-button"
+        @click="$router.push({ name: 'createGameSchedule' })"
+      >
+        Create Game Schedule
+      </button>
     </div>
 </template>
 
 <script setup>
+import { userRole } from '@/apis/auth';
+
 
 </script>
 
@@ -45,4 +54,13 @@ button {
     transform: scale(1.03);
   }
 }
+
+.purple-button {
+  background-color: #9b59b6; /* Purple */
+}
+
+.purple-button:hover {
+  background-color: #8e44ad; /* Darker purple */
+}
+
 </style>
