@@ -62,7 +62,10 @@ async function loadCrewMembers(){
 .crewMembersBox {
   background-color: #C89FE9;
   padding: 20px;
+  border-radius: 12px; /* <-- Add this line to round the corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: You can add a slight shadow for depth */
 }
+
 
 h1 {
   text-align: center;

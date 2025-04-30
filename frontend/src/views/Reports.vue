@@ -3,7 +3,7 @@
         <h1>
             Reports
         </h1>
-        <p>No reports available currently.</p>
+        <p>No reports currently available .</p>
 
     </div>
 </template>
