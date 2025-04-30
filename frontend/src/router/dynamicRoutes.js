@@ -16,8 +16,6 @@ export const templatesRoute = {
     }
 }
 
-
-
 export const manageCrewMembersRoute = {
     path: '/manageCrewMembers', name: 'manageCrewMembers', component: ManageCrewMembers,
     meta: {
@@ -32,6 +30,7 @@ export const inviteCrewMembersRoute = {
         title: 'Invite', isNavLink: false, roles: ['ADMIN']
     }
 }
+
 
 
 

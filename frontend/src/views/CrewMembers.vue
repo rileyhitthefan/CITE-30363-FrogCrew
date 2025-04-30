@@ -29,8 +29,10 @@
         <div v-if="userRole === 'ADMIN' ">
           <div class="crewMembersBox">
           <h1>Crew Members</h1>
+          <div class="button-group">
             <button @click="$router.push({ name: 'manageCrewMembers' })">Manage</button>
             <button @click="$router.push({ name: 'inviteCrewMembers' })">Invite</button>
+          </div>
           </div>
             <!-- This is where Manage or Invite view will be shown -->
             <router-view />
@@ -58,7 +60,7 @@ async function loadCrewMembers(){
 
 <style scoped>
 .crewMembersBox {
-  background-color: #B3B3B3;
+  background-color: #C89FE9;
   padding: 20px;
 }
 
@@ -116,6 +118,13 @@ div {
 
 .router-view {
   margin-top: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
 }
 
 
