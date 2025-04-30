@@ -2,6 +2,7 @@
   "crewMembers": [
     {
       "id": "1",
+      "userId": "1",
       "fullName": "John Doe",
       "firstName": "John",
       "lastName": "Doe",
@@ -10,12 +11,13 @@
       "password": "1234",
       "role": "ADMIN",
       "position": [
-        "Director",
-        "Producer"
+        "DIRECTOR",
+        "PRODUCER"
       ]
     },
     {
       "id": "2",
+      "userId": "2",
       "fullName": "Jane Smith",
       "firstName": "Jane",
       "lastName": "Smith",
@@ -24,12 +26,13 @@
       "password": "234",
       "role": "CREW",
       "position": [
-        "Camera",
-        "Producer"
+        "CAMERA",
+        "PRODUCER"
       ]
     },
     {
       "id": "3",
+      "userId": "3",
       "fullName": "Bob Marley",
       "firstName": "Bob",
       "lastName": "Marley",
@@ -38,7 +41,7 @@
       "password": "34",
       "role": "CREW",
       "position": [
-        "Camera"
+        "CAMERA"
       ]
     }
   ],
@@ -178,6 +181,16 @@
       "read": false,
       "date": "11/10/2024 14:00:00",
       "id": "8868"
+    }
+  ],
+  "scheduledGames": [
+    {
+      "tradeId": "1-1",
+      "dropperId": "1",
+      "gameId": "1",
+      "position": "DIRECTOR",
+      "status": "AVAILABLE",
+      "receiverId": null
     }
   ]
 }

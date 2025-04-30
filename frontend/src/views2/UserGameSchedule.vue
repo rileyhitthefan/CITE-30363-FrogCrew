@@ -19,12 +19,11 @@
         </div>
         <br />
 
-        <div v-if="filteredAndSortedSchedule.length === 0">
-            <p>No assigned games found.</p>
-        </div>
-
         <div v-if="schedule.length === 0">
-            <p>You are not scheduled for any upcoming games.</p>
+          <p>You are not scheduled for any upcoming games.</p>
+        </div>
+        <div v-else-if="filteredAndSortedSchedule.length === 0">
+          <p>No assigned games found.</p>
         </div>
 
         <div v-else>
@@ -47,8 +46,11 @@
         <br />
 
         <button @click="$router.push({name: 'crewListGame', params: { gameId: game.gameId } })">View Crew List</button>
-        <button @click="requestCoverage(game)">Request Coverage</button>
-
+        <button
+            @click="requestCoverage(game)"
+            :disabled="requestedTrades.has(`${game.gameId}-${getUserId().id}`)">
+            Request Coverage
+          </button>
       </div>
     </div>
 
@@ -62,11 +64,15 @@ import { getUserId } from '@/apis/auth'
 import { useRouter } from 'vue-router'
 import notificationApi from '@/apis/notifications'
 import crewApi from '@/apis/crewMembers'
+import tradeBoardApi from '@/apis/scheduledGames'
 
 
 const schedule = ref([])
 const searchQuery = ref('')
 const sortOption = ref('date')
+const requestedTrades = ref(new Set())
+
+const router = useRouter()
 
 onMounted(async () => {
     try {
@@ -80,6 +86,20 @@ onMounted(async () => {
             member => String(member.crewedUserId) === String(loggedInUser.id)
         )
         return { ...game, myAssignment }
+        })
+
+        // Fetch all trade board entries
+        const allTrades = await tradeBoardApi.findAllTradeBoard()
+
+        // Track all trade board entries where the current user has already requested coverage
+        allTrades.forEach(trade => {
+          if (String(trade.dropperId) === String(loggedInUser.id)) {
+            requestedTrades.value.add(`${trade.gameId}-${trade.dropperId}`)
+          }
+
+
+          console.log("Requested trades:", Array.from(requestedTrades.value)) // Debugging line
+
     })
    
     } catch (error) {
@@ -145,22 +165,40 @@ const requestCoverage = async (game) => {
         userIdCreatedNotification: currentUser.id,
         message: `A shift is available for ${game.sport} vs ${game.opponent} on ${game.gameDate} (${game.myAssignment.Position}).`,
         read: false,
-        date
+        date,
       })
     })
 
     await Promise.all(notifications)
 
-    // Optional: notify requester
+    //Notify requester
     await notificationApi.submitNotification({
       userId: currentUser.id,
       userIdCreatedNotification: currentUser.id,
       message: `You requested coverage for ${game.sport} vs ${game.opponent} on ${game.gameDate}.`,
       read: false,
-      date
+      date,
     })
 
+    // Add shift to trade board
+    try {
+      await tradeBoardApi.addShiftToTradeBoard({
+        tradeId: `${game.gameId}-${currentUser.id}`,
+        dropperId: currentUser.id,
+        gameId: game.gameId,
+        position: game.myAssignment.Position,
+        status: 'pending',
+        receiverId: null
+      })
+    } catch (err) {
+      console.error('Failed to add shift to trade board:', err)
+      alert('Coverage notifications sent, but failed to add to trade board.')
+    }
+
     alert('Coverage requested successfully. All eligible crew members have been notified.')
+  
+    router.push({name: 'notifications'})
+    
   } catch (error) {
     console.error('Coverage request failed:', error)
     alert('Failed to request coverage. Please try again.')
@@ -244,6 +282,14 @@ button:hover {
   background-color: #2980b9;
   transform: scale(1.02);
 }
+
+button:disabled {
+  background-color: #dcdcdc; /* Light gray background */
+  color: #7f8c8d; /* Slightly darker gray for the text */
+  cursor: not-allowed; /* Indicate the button is unclickable */
+  transform: scale(1); /* Remove hover effect */
+}
+
 
 
 </style>

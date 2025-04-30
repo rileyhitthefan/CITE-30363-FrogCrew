@@ -7,6 +7,7 @@ import { ref } from "vue"
 const isAuthenticated = ref(false) //Global state that tracks whether the user is logged in
 const userRole = ref('') //Stores 'CREW' or 'ADMIN
 const userId = ref(null) //Stores full user info
+const fullName = ref('') // Stores the full name of the user
 const token = ref(null) //Stores JWT token
 
 //Login
@@ -26,12 +27,14 @@ const login = async (email, password) => {
             isAuthenticated.value = true
             userRole.value = user.role || 'CREW' // If role missing, default to CREW
             userId.value = user
+            fullName.value = user.fullName || '' // Store the full name of the user
             return true
         } else {
         // Wrong email or password
         isAuthenticated.value = false
         userRole.value = ''
         userId.value = null
+        fullName.value = ''
         return false
         }
     } catch (error) {
@@ -39,6 +42,7 @@ const login = async (email, password) => {
         isAuthenticated.value = false
         userRole.value = ''
         userId.value = null
+        fullName.value = ''
         throw error //Rethrow the error to be caught by the caller
     }
 }
@@ -61,4 +65,9 @@ const getUserId = () => {
     return userId.value
 }
 
-export { isAuthenticated, login, logout, getUserRole, userRole, getUserId}
+// Get user full name
+const getUserFullName = () => {
+    return fullName.value
+}
+
+export { isAuthenticated, login, logout, getUserRole, userRole, getUserId, getUserFullName }

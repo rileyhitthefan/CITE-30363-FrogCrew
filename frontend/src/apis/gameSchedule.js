@@ -73,5 +73,46 @@ const findCrewListByGameId = async (gameId) => {
 }
 
 
+/**
+ * PUT
+ * Update game schedule
+ * Use Case 10
+ */
 
-export default { findScheduledGamesByUserId, findGeneralGameSchedule, findCrewListByGameId }
+const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gameStart, gameDate, venue, opponent, isFinalized, crewedMembers) => {
+  try {
+    const response = await fetch(`${BASE_URL}?gameId=${gameId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+          gameId, 
+          scheduleId, 
+          sport, 
+          season, 
+          gameStart, 
+          gameDate, 
+          venue, 
+          opponent, 
+          isFinalized, 
+          crewedMembers
+        ),
+    });
+    
+    if (!response.ok) {
+        throw new Error('Failed to update member');
+    }
+
+    const data = await response.json()
+    return data
+
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}  
+  
+
+
+export default { findScheduledGamesByUserId, findGeneralGameSchedule, findCrewListByGameId, updateGameScheduleByGameId }

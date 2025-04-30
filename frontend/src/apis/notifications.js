@@ -90,4 +90,6 @@ const markNotificationAsRead = async (id, userId, userIdCreatedNotification, mes
 }
 
 
+
+
 export default { submitNotification, getNotificationsById, markNotificationAsRead }
