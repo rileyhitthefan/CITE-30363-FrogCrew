@@ -48,32 +48,46 @@
   "gamesSchedule": [
     {
       "gameId": "1",
-      "scheduleId": "1",
       "sport": "Football",
-      "season": "2025-2026",
       "gameStart": "16:00:00",
       "gameDate": "2025-10-10",
       "venue": "Amon G. Carter Stadium",
       "opponent": "Texas Longhorns",
-      "isFinalized": true,
       "crewedMembers": [
         {
-          "crewedUserId": "1",
-          "id": "1",
+          "crewedUserId": {
+            "id": "3",
+            "userId": "3",
+            "fullName": "Bob Marley",
+            "firstName": "Bob",
+            "lastName": "Marley",
+            "email": "bob.marley@example.com",
+            "phoneNumber": "123-1231-2345",
+            "password": "34",
+            "role": "CREW",
+            "position": [
+              "CAMERA"
+            ]
+          },
+          "id": {
+            "id": "3",
+            "userId": "3",
+            "fullName": "Bob Marley",
+            "firstName": "Bob",
+            "lastName": "Marley",
+            "email": "bob.marley@example.com",
+            "phoneNumber": "123-1231-2345",
+            "password": "34",
+            "role": "CREW",
+            "position": [
+              "CAMERA"
+            ]
+          },
           "gameId": "1",
-          "Position": "DIRECTOR",
-          "fullName": "John Smith",
-          "ReportTime": "12:00",
-          "ReportLocation": "CONTROL ROOM"
-        },
-        {
-          "crewedUserId": "2",
-          "id": "2",
-          "gameId": "1",
-          "Position": "PRODUCER",
-          "fullName": "Jane Doe",
-          "ReportTime": "12:00",
-          "ReportLocation": "CONTROL ROOM"
+          "Position": "CAMERA",
+          "fullName": "Bob Marley",
+          "ReportTime": "Unknown",
+          "ReportLocation": "Unknown"
         }
       ],
       "id": "c9ff"
@@ -93,17 +107,17 @@
           "crewedUserId": "1",
           "id": "1",
           "gameId": "2",
-          "Position": "DIRECTOR",
+          "Position": "PRODUCER",
           "fullName": "John Smith",
           "ReportTime": "12:00",
           "ReportLocation": "CONTROL ROOM"
         },
         {
-          "crewedUserId": "3",
-          "id": "3",
+          "crewedUserId": "2",
+          "id": "2",
           "gameId": "2",
           "Position": "CAMERA",
-          "fullName": "Bob Marley",
+          "fullName": "Jane Doe",
           "ReportTime": "12:00",
           "ReportLocation": "CONTROL ROOM"
         }
@@ -181,14 +195,69 @@
       "read": false,
       "date": "11/10/2024 14:00:00",
       "id": "8868"
+    },
+    {
+      "id": "0219",
+      "userId": "2",
+      "userIdCreatedNotification": {
+        "id": "3",
+        "userId": "3",
+        "fullName": "Bob Marley",
+        "firstName": "Bob",
+        "lastName": "Marley",
+        "email": "bob.marley@example.com",
+        "phoneNumber": "123-1231-2345",
+        "password": "34",
+        "role": "CREW",
+        "position": [
+          "CAMERA"
+        ]
+      },
+      "message": "Bob Marley has picked up your shift as CAMERA for Football vs Texas Longhorns on 2025-10-10.",
+      "read": false,
+      "date": "2025-04-30T14:01:42.919Z"
+    },
+    {
+      "id": "0038",
+      "userId": {
+        "id": "3",
+        "userId": "3",
+        "fullName": "Bob Marley",
+        "firstName": "Bob",
+        "lastName": "Marley",
+        "email": "bob.marley@example.com",
+        "phoneNumber": "123-1231-2345",
+        "password": "34",
+        "role": "CREW",
+        "position": [
+          "CAMERA"
+        ]
+      },
+      "userIdCreatedNotification": {
+        "id": "3",
+        "userId": "3",
+        "fullName": "Bob Marley",
+        "firstName": "Bob",
+        "lastName": "Marley",
+        "email": "bob.marley@example.com",
+        "phoneNumber": "123-1231-2345",
+        "password": "34",
+        "role": "CREW",
+        "position": [
+          "CAMERA"
+        ]
+      },
+      "message": "You have successfully picked up a shift as CAMERA for Football vs Texas Longhorns on 2025-10-10.",
+      "read": false,
+      "date": "2025-04-30T14:01:42.919Z"
     }
   ],
   "scheduledGames": [
     {
-      "tradeId": "1-1",
-      "dropperId": "1",
+      "tradeId": "1-2",
+      "dropperId": "2",
       "gameId": "1",
-      "position": "DIRECTOR",
+      "position": "CAMERA",
       "status": "AVAILABLE",
       "receiverId": null
     }

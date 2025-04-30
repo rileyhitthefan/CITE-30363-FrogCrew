@@ -54,5 +54,39 @@ const findAllTradeBoard = async () => {
 }
 
 
+/**
+ * DELETE 
+ * Delete Trade Board post after someone has picked up the shift
+ * Use Case 10
+ */
+const deleteTradeBoardPost = async (tradeId) => {
+    try {
+        // Step 1: GET the existing trade post by tradeId
+        const getResponse = await fetch(`${BASE_URL}?tradeId=${tradeId}`);
+        if (!getResponse.ok) throw new Error('Failed to fetch trade post');
 
-export default { addShiftToTradeBoard, findAllTradeBoard}
+        const data = await getResponse.json();
+        if (data.length === 0) throw new Error('Trade post not found');
+
+        const existingTradePost = data[0];
+        const tradeRecordId = existingTradePost.id;
+
+        // Step 2: DELETE the trade post using its ID
+        const deleteResponse = await fetch(`${BASE_URL}/${tradeRecordId}`, {
+            method: 'DELETE',
+        });
+
+        if (!deleteResponse.ok) {
+            throw new Error(`Failed to delete trade post: ${deleteResponse.statusText}`);
+        }
+
+        return await deleteResponse.json();
+    } catch (error) {
+        console.error(error)
+        throw error //Rethrow the error to be caught by the caller
+    }
+}
+
+
+
+export default { addShiftToTradeBoard, findAllTradeBoard, deleteTradeBoardPost}

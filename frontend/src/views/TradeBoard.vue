@@ -35,6 +35,7 @@ import tradeBoardApi from '@/apis/scheduledGames'
 import gameApi from '@/apis/gameSchedule'
 import { getUserId, getUserFullName } from '@/apis/auth';
 import crewMemberApi from '@/apis/crewMembers'
+import notificationApi from '@/apis/notifications'
 
 
 const currentUserId = getUserId()
@@ -44,6 +45,7 @@ const loading = ref(true)
 const enrichedTradeBoard = ref([])
 
 
+//Find all shifts for the trade board (shifts where coverage has been requested)
 onMounted(async () => {
   try {
     const scheduledGames = await tradeBoardApi.findAllTradeBoard()
@@ -148,8 +150,34 @@ async function pickUpShift(game) {
       crewedMembers
     )
 
+    const dateNow = new Date().toISOString()
+
+    // Notify Crew Member A (dropperId)
+    await notificationApi.submitNotification({
+      userId: game.dropperId,
+      userIdCreatedNotification: currentUserId,
+      message: `${currentUserFullName} has picked up your shift as ${game.position} for ${game.sport} vs ${game.opponent} on ${game.gameDate}.`,
+      read: false,
+      date: dateNow
+    })
+
+    // Notify Crew Member B
+    await notificationApi.submitNotification({
+      userId: currentUserId,
+      userIdCreatedNotification: currentUserId,
+      message: `You have successfully picked up a shift as ${game.position} for ${game.sport} vs ${game.opponent} on ${game.gameDate}.`,
+      read: false,
+      date: dateNow
+    })
+
     // Successfully picked up the shift
     alert("Shift successfully picked up!")
+
+     // Step 3: DELETE the shift from the trade board (this will remove the shift from the available shifts)
+     const tradeId = `${game.gameId}-${currentUserId}`;
+    await tradeBoardApi.deleteTradeBoardPost(tradeId);
+
+    console.log('Trade post successfully deleted from the board.');
 
 
   } catch (err) {

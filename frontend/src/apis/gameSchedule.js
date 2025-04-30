@@ -81,12 +81,23 @@ const findCrewListByGameId = async (gameId) => {
 
 const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gameStart, gameDate, venue, opponent, isFinalized, crewedMembers) => {
   try {
-    const response = await fetch(`${BASE_URL}?gameId=${gameId}`, {
+    // Step 1: GET the existing game by gameId
+    const getResponse = await fetch(`${BASE_URL}?gameId=${gameId}`);
+    if (!getResponse.ok) throw new Error('Failed to fetch game schedule');
+    
+    const data = await getResponse.json();
+    if (data.length === 0) throw new Error('Game schedule not found');
+    
+    const existingGame = data[0];
+    const gameRecordId = existingGame.id;
+
+    // Step 2: PUT to /gamesSchedule/:id with updated values
+    const putResponse = await fetch(`${BASE_URL}/${gameRecordId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(
+        body: JSON.stringify({
           gameId, 
           scheduleId, 
           sport, 
@@ -97,15 +108,15 @@ const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gam
           opponent, 
           isFinalized, 
           crewedMembers
-        ),
+    }),
     });
     
-    if (!response.ok) {
+    if (!putResponse.ok) {
         throw new Error('Failed to update member');
     }
 
-    const data = await response.json()
-    return data
+    const updatedData = await putResponse.json()
+    return updatedData
 
     } catch (error) {
         console.error(error)
