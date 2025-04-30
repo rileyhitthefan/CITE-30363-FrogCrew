@@ -110,7 +110,25 @@ const deleteCrewMember = async (id) => {
     }
 }
 
+/**
+ * Fetch a single member by its UserId
+ * 
+ */
+const findMemberByUserId = async (userId) => {
+    try {
+        const response = await fetch(`${BASE_URL}?userId=${userId}`)
+        
+        if (!response.ok) {
+            throw new Error(`Error fetching crew member: ${response.statusText}`)
+        }
+        const data = await response.json(); 
+        return data;
+
+    } catch (error) {
+        console.error(error)
+        throw error //Rethrow the error to be caught by the caller
+    }
+}
 
 
-
-export default {findAllCrewMembers, findMemberById, updateMemberById, inviteCrewMembers, deleteCrewMember}
+export default {findAllCrewMembers, findMemberById, updateMemberById, inviteCrewMembers, deleteCrewMember, findMemberByUserId}

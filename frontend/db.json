@@ -2,6 +2,7 @@
   "crewMembers": [
     {
       "id": "1",
+      "userId": "1",
       "fullName": "John Doe",
       "firstName": "John",
       "lastName": "Doe",
@@ -10,12 +11,13 @@
       "password": "1234",
       "role": "ADMIN",
       "position": [
-        "Director",
-        "Producer"
+        "DIRECTOR",
+        "PRODUCER"
       ]
     },
     {
       "id": "2",
+      "userId": "2",
       "fullName": "Jane Smith",
       "firstName": "Jane",
       "lastName": "Smith",
@@ -24,21 +26,22 @@
       "password": "234",
       "role": "CREW",
       "position": [
-        "Camera",
-        "Producer"
+        "CAMERA",
+        "PRODUCER"
       ]
     },
     {
       "id": "3",
+      "userId": "3",
       "fullName": "Bob Marley",
       "firstName": "Bob",
       "lastName": "Marley",
       "email": "bob.marley@example.com",
-      "phoneNumber": "123-1231-2345",
+      "phoneNumber": "123-123-2345",
       "password": "34",
       "role": "CREW",
       "position": [
-        "Camera"
+        "CAMERA"
       ]
     }
   ],
@@ -90,17 +93,17 @@
           "crewedUserId": "1",
           "id": "1",
           "gameId": "2",
-          "Position": "DIRECTOR",
+          "Position": "PRODUCER",
           "fullName": "John Smith",
           "ReportTime": "12:00",
           "ReportLocation": "CONTROL ROOM"
         },
         {
-          "crewedUserId": "3",
-          "id": "3",
+          "crewedUserId": "2",
+          "id": "2",
           "gameId": "2",
           "Position": "CAMERA",
-          "fullName": "Bob Marley",
+          "fullName": "Jane Doe",
           "ReportTime": "12:00",
           "ReportLocation": "CONTROL ROOM"
         }
@@ -178,6 +181,17 @@
       "read": false,
       "date": "11/10/2024 14:00:00",
       "id": "8868"
+    }
+  ],
+  "scheduledGames": [
+    {
+      "tradeId": "1-2",
+      "dropperId": "2",
+      "gameId": "1",
+      "position": "CAMERA",
+      "status": "AVAILABLE",
+      "receiverId": null,
+      "id": "b2a0"
     }
   ]
 }

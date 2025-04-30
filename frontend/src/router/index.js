@@ -18,6 +18,7 @@ import CrewListGame from "@/views2/CrewListGame.vue"
 import Availability from "@/views2/Availability.vue"
 import SubmitAvailability from "@/views2/SubmitAvailability.vue"
 import UpdateAvailability from "@/views2/UpdateAvailability.vue"
+import TradeBoard from "@/views/TradeBoard.vue"
 
 //Create a router instance
 const router = createRouter({
@@ -31,6 +32,7 @@ const router = createRouter({
                 {path: '/crewMember', name: 'crewMembers', component: CrewMembers,  meta: { title: 'Crew Members', isNavLink: true},
                 },
                 {path: '/schedule', name: 'schedule', component: Schedule,  meta: { title: 'Schedule', isNavLink: true}}, 
+                {path: '/tradeBoard', name: 'tradeBoard', component: TradeBoard,  meta: { title: 'Trade Board', isNavLink: true}}, 
                 {path: '/notifications', name: 'notifications', component: Notifications},
                 {path: '/account', name: 'account', component: Account},
                 
