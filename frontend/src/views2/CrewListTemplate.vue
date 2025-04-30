@@ -9,24 +9,22 @@
     <div v-else>
       <div v-for="game in games" :key="game.id" class="game-card">
         <h3>{{ game.sport }} – {{ game.opponent }} ({{ game.gameDate }})</h3>
-        <p><strong>Venue:</strong> {{ game.venue }}</p>
-        <p><strong>Start Time:</strong> {{ game.gameStart }}</p>
+        <button @click="$router.push({ name: 'crewListTemplateDetails', params: { gameId: game.id } })">
+  More
+</button>
+
 
         <table>
           <thead>
             <tr>
               <th>Full Name</th>
               <th>Position</th>
-              <th>Report Time</th>
-              <th>Report Location</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="member in game.crewedMembers" :key="member.id">
               <td>{{ member.fullName }}</td>
               <td>{{ member.Position }}</td>
-              <td>{{ member.ReportTime }}</td>
-              <td>{{ member.ReportLocation }}</td>
             </tr>
           </tbody>
         </table>
