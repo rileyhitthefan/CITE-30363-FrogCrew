@@ -2,7 +2,9 @@
 const isDevelopment = import.meta.env.DEV
 
 export const API_CONFIG = {
-    BASE_URL: isDevelopment ? '/api/v1' : import.meta.env.VITE_API_BASE_URL,
+    BASE_URL: isDevelopment 
+        ? '/api/v1' 
+        : 'https://cite-30363-frogcrew.onrender.com/api/v1',
     TIMEOUT: 10000, // 10 seconds
     HEADERS: {
         'Content-Type': 'application/json',
