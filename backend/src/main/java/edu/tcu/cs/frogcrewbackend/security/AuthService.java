@@ -3,7 +3,6 @@ package edu.tcu.cs.frogcrewbackend.security;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.member.MyUserPrincipal;
 import edu.tcu.cs.frogcrewbackend.member.converter.UserToLoginDTOConverter;
-import edu.tcu.cs.frogcrewbackend.member.converter.UserToUserDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.dto.LoginDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
