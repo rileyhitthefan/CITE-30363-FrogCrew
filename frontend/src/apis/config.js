@@ -2,7 +2,7 @@
 const isDevelopment = import.meta.env.DEV
 
 export const API_CONFIG = {
-    BASE_URL: isDevelopment ? '/api/v1' : 'http://localhost:8080/api/v1',
+    BASE_URL: isDevelopment ? '/api/v1' : import.meta.env.VITE_API_BASE_URL,
     TIMEOUT: 10000, // 10 seconds
     HEADERS: {
         'Content-Type': 'application/json',

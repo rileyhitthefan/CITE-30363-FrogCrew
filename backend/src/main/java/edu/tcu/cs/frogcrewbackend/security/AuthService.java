@@ -31,17 +31,17 @@ public class AuthService {
         Member member = principal.getMember();
         LoginDTO loginDTO = userToLoginDTOConverter.convert(member);
 
+        if (loginDTO.userId() == null) {
+            throw new IllegalStateException("Authenticated user must have a non-null userId.");
+        }
+
         // jwt
         String token = this.jwtProvider.createToken(authentication);
         Map<String, Object> loginInfo = new HashMap<>();
 
-        if (loginDTO.userId() != null) {
-            loginInfo.put("userId", loginDTO.userId());
-            loginInfo.put("role", loginDTO.role());
-            loginInfo.put("token", token);
-        } else {
-            loginInfo.put("userId", null);
-        }
+        loginInfo.put("userId", loginDTO.userId());
+        loginInfo.put("role", loginDTO.role());
+        loginInfo.put("token", token);
 
         return loginInfo;
     }
