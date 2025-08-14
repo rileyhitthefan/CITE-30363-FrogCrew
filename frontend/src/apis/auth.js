@@ -10,21 +10,31 @@ const token = ref(null) //Stores JWT token
 //Login
 const login = async (email, password) => {
     try {
+        console.log('Login attempt for email:', email)
+        console.log('API URL:', getApiUrl('/auth/login'))
+        
         const response = await fetch(getApiUrl('/auth/login'), {
             method: 'POST',
             headers: getHeaders(),
             body: JSON.stringify({ email, password })
         })
 
+        console.log('Response status:', response.status)
+        console.log('Response ok:', response.ok)
+
         if (!response.ok) {
+            const errorText = await response.text()
+            console.error('Response error text:', errorText)
             throw new Error(`Network response was not ok: ${response.statusText}`)
         }
 
         const data = await response.json()
+        console.log('Response data:', data)
 
-        if (data.success) {
+        if (data.flag) {  // Backend uses 'flag' not 'success'
             // Successful login - backend returns { userId, role, token }
             const userInfo = data.data
+            console.log('User info:', userInfo)
             isAuthenticated.value = true
             userRole.value = userInfo.role || 'CREW' // If role missing, default to CREW
             userId.value = userInfo.userId
@@ -33,6 +43,7 @@ const login = async (email, password) => {
             return true
         } else {
             // Wrong email or password
+            console.log('Login failed - data.flag is false')
             isAuthenticated.value = false
             userRole.value = ''
             userId.value = null
@@ -40,7 +51,7 @@ const login = async (email, password) => {
             return false
         }
     } catch (error) {
-        console.error(error)
+        console.error('Login error:', error)
         isAuthenticated.value = false
         userRole.value = ''
         userId.value = null

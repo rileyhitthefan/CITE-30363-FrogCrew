@@ -17,7 +17,9 @@
             <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
 
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="login-button" :disabled="isLoading">
+                {{ isLoading ? 'Logging in...' : 'Login' }}
+            </button>
         </form>
     </div>
 </div>
@@ -31,6 +33,7 @@ import { reportsRoute, templatesRoute, manageCrewMembersRoute, inviteCrewMembers
 
 const email = ref('')
 const password = ref('')
+const isLoading = ref(false)
 
 const router = useRouter()
 
@@ -38,36 +41,55 @@ const errorMessage = ref('')
 
 
 async function handleLogin() {
+    if (isLoading.value) {
+        console.log('Login already in progress, ignoring click')
+        return
+    }
+    
     try {
-        await login(email.value, password.value)
+        isLoading.value = true
+        console.log('Starting login process...')
+        console.log('Email:', email.value)
+        console.log('Password length:', password.value.length)
+        
+        const loginResult = await login(email.value, password.value)
+        console.log('Login result:', loginResult)
 
-        const userRole = getUserRole()
+        if (loginResult) {
+            const userRole = getUserRole()
+            console.log('User role:', userRole)
 
-        // Dynamically add ADMIN-only routes
-        if (userRole === 'ADMIN') {
-            if (!router.hasRoute('reports')) {
-                router.addRoute('mainLayout', reportsRoute)
+            // Dynamically add ADMIN-only routes
+            if (userRole === 'ADMIN') {
+                if (!router.hasRoute('reports')) {
+                    router.addRoute('mainLayout', reportsRoute)
+                }
+                if (!router.hasRoute('templates')) {
+                    router.addRoute('mainLayout', templatesRoute)
+                }
+                if (!router.hasRoute('manageCrewMembers')) {
+                    router.addRoute('crewMembers', manageCrewMembersRoute)
+                }
+                if (!router.hasRoute('inviteCrewMembers')) {
+                    router.addRoute('crewMembers', inviteCrewMembersRoute)
+                }
             }
-            if (!router.hasRoute('templates')) {
-                router.addRoute('mainLayout', templatesRoute)
-            }
-            if (!router.hasRoute('manageCrewMembers')) {
-                router.addRoute('crewMembers', manageCrewMembersRoute)
-            }
-            if (!router.hasRoute('inviteCrewMembers')) {
-                router.addRoute('crewMembers', inviteCrewMembersRoute)
-            }
+
+            // Clear any previous error
+            errorMessage.value = ''
+
+            //After successful login redirect to the home page
+            router.push('/')
+        } else {
+            // Login failed but no exception thrown
+            errorMessage.value = 'Login failed. Please check your credentials.'
         }
-
-         // Clear any previous error
-        errorMessage.value = ''
-
-        //After successful login redirect to the home page
-        router.push('/')
     } catch (error) {
-        console.error(error)
-        errorMessage.value = 'Invalid email or password. Please try again.'
-        router.push('/')
+        console.error('Login error in component:', error)
+        errorMessage.value = `Login error: ${error.message}`
+        // Don't redirect on error - let user see the error message
+    } finally {
+        isLoading.value = false
     }
 }
 
