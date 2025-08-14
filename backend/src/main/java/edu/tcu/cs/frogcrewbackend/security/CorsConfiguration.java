@@ -27,11 +27,11 @@ public class CorsConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(allowedOrigins.split(","))
-                        .allowedMethods(allowedMethods.split(","))
-                        .allowedHeaders(allowedHeaders)
-                        .allowCredentials(allowCredentials)
-                        .maxAge(3600); // Cache preflight response for 1 hour
+                    .allowedOriginPatterns(allowedOrigins.split(","))
+                    .allowedMethods(allowedMethods.split(","))
+                    .allowedHeaders(allowedHeaders)
+                    .allowCredentials(allowCredentials)
+                    .maxAge(3600); // Cache preflight response for 1 hour
             }
         };
     }
