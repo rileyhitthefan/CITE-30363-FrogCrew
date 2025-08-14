@@ -71,7 +71,8 @@ public class SecurityConfiguration {
                 // It is recommended to secure your application at the API endpoint level.
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, this.baseUrl + "/auth/validate/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, this.baseUrl + "/auth/me").authenticated()
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/invite/**").permitAll()
                         .requestMatchers(HttpMethod.POST, this.baseUrl + "/invite/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, this.baseUrl + "/crewMember/**").permitAll()
@@ -93,6 +94,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(this.customBasicAuthenticationEntryPoint))
+                .formLogin(formLogin -> formLogin.disable()) // Disable form login since we're using custom login
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
                         .jwt(Customizer.withDefaults())
                         .authenticationEntryPoint(this.customBearerTokenAuthenticationEntryPoint)

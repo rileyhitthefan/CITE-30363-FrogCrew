@@ -3,7 +3,6 @@ package edu.tcu.cs.frogcrewbackend.security;
 import edu.tcu.cs.frogcrewbackend.member.Member;
 import edu.tcu.cs.frogcrewbackend.member.MyUserPrincipal;
 import edu.tcu.cs.frogcrewbackend.member.converter.UserToLoginDTOConverter;
-import edu.tcu.cs.frogcrewbackend.member.converter.UserToUserDTOConverter;
 import edu.tcu.cs.frogcrewbackend.member.dto.LoginDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -32,9 +31,14 @@ public class AuthService {
         Member member = principal.getMember();
         LoginDTO loginDTO = userToLoginDTOConverter.convert(member);
 
+        if (loginDTO.userId() == null) {
+            throw new IllegalStateException("Authenticated user must have a non-null userId.");
+        }
+
         // jwt
         String token = this.jwtProvider.createToken(authentication);
         Map<String, Object> loginInfo = new HashMap<>();
+
         loginInfo.put("userId", loginDTO.userId());
         loginInfo.put("role", loginDTO.role());
         loginInfo.put("token", token);

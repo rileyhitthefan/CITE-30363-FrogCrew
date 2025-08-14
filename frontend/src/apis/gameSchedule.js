@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/gamesSchedule'
+import { getApiUrl, getHeaders } from './config.js'
 
 
 /**
@@ -9,7 +9,7 @@ const BASE_URL = 'http://localhost:3000/gamesSchedule'
  */
 const findScheduledGamesByUserId = async (id) => {
     try {
-      const response = await fetch(BASE_URL)
+      const response = await fetch(getApiUrl('/gameSchedule'))
   
       if (!response.ok) {
         throw new Error(`Error fetching games: ${response.statusText}`)
@@ -37,7 +37,7 @@ const findScheduledGamesByUserId = async (id) => {
   *  */ 
  const findGeneralGameSchedule = async () => {
   try {
-    const response = await fetch(BASE_URL)
+    const response = await fetch(getApiUrl('/gameSchedule'))
 
     if (!response.ok) {
       throw new Error(`Error fetching games: ${response.statusText}`)
@@ -58,7 +58,7 @@ const findScheduledGamesByUserId = async (id) => {
  */
 const findCrewListByGameId = async (gameId) => {
   try {
-    const response = await fetch(`${BASE_URL}?gameId=${gameId}`);
+    const response = await fetch(getApiUrl(`/crewList?gameId=${gameId}`));
 
     if (!response.ok) {
       throw new Error(`Error fetching game crew list: ${response.statusText}`)
@@ -82,7 +82,7 @@ const findCrewListByGameId = async (gameId) => {
 const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gameStart, gameDate, venue, opponent, isFinalized, crewedMembers) => {
   try {
     // Step 1: GET the existing game by gameId
-    const getResponse = await fetch(`${BASE_URL}?gameId=${gameId}`);
+    const getResponse = await fetch(getApiUrl(`/gameSchedule?gameId=${gameId}`));
     if (!getResponse.ok) throw new Error('Failed to fetch game schedule');
     
     const data = await getResponse.json();
@@ -91,12 +91,10 @@ const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gam
     const existingGame = data[0];
     const gameRecordId = existingGame.id;
 
-    // Step 2: PUT to /gamesSchedule/:id with updated values
-    const putResponse = await fetch(`${BASE_URL}/${gameRecordId}`, {
+    // Step 2: PUT to /gameSchedule/:id with updated values
+    const putResponse = await fetch(getApiUrl(`/gameSchedule/${gameRecordId}`), {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: getHeaders(),
         body: JSON.stringify({
           gameId, 
           scheduleId, 
@@ -132,11 +130,9 @@ const updateGameScheduleByGameId = async (gameId, scheduleId, sport, season, gam
 
 const createGameSchedule = async (gameId, scheduleId, sport, season, gameStart, gameDate, venue, opponent, isFinalized, crewedMembers) => {
   try {   
-    const response = await fetch(BASE_URL, {
+    const response = await fetch(getApiUrl('/gameSchedule'), {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: getHeaders(),
         body: JSON.stringify({
           gameId, 
           scheduleId, 

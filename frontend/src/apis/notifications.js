@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/notification'
+import { getApiUrl, getHeaders } from './config.js'
 
 /**
  * POST /notifications
@@ -7,11 +7,9 @@ const BASE_URL = 'http://localhost:3000/notification'
  */
 const submitNotification = async ({ userId, userIdCreatedNotification,  message, read, date }) => {   
     try {
-        const response = await fetch(BASE_URL, {
+        const response = await fetch(getApiUrl('/notification'), {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getHeaders(),
             body: JSON.stringify({
                 userId,
                 userIdCreatedNotification,
@@ -40,7 +38,7 @@ const submitNotification = async ({ userId, userIdCreatedNotification,  message,
  */
 const getNotificationsById = async (userId) => {
     try {
-        const response = await fetch(`${BASE_URL}?userId=${userId}`)
+        const response = await fetch(getApiUrl(`/notification?userId=${userId}`))
         
         if (!response.ok) {
             throw new Error(`Error fetching crew member: ${response.statusText}`)
@@ -62,11 +60,9 @@ const getNotificationsById = async (userId) => {
  */
 const markNotificationAsRead = async (id, userId, userIdCreatedNotification, message, read, date) => {
     try {
-        const response = await fetch(`${BASE_URL}/${id}`, {
+        const response = await fetch(getApiUrl(`/notification/${id}`), {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getHeaders(),
             body: JSON.stringify({
                 userId,
                 userIdCreatedNotification,

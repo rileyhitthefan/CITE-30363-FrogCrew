@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/scheduledGames'
+import { getApiUrl, getHeaders } from './config.js'
 
 /**
  * POST /scheduledGames/drop
@@ -8,11 +8,9 @@ const BASE_URL = 'http://localhost:3000/scheduledGames'
 
 const addShiftToTradeBoard = async ({ tradeId, dropperId, gameId, position, status, receiverId }) => {   
     try {
-        const response = await fetch(BASE_URL, {
+        const response = await fetch(getApiUrl('/scheduledGames'), {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getHeaders(),
             body: JSON.stringify({
                 tradeId,
                 dropperId,
@@ -42,7 +40,7 @@ const addShiftToTradeBoard = async ({ tradeId, dropperId, gameId, position, stat
 
 const findAllTradeBoard = async () => {
     try {
-        const response = await fetch(BASE_URL)
+        const response = await fetch(getApiUrl('/scheduledGames'))
         if (!response.ok) {
             throw new Error(`Error fetching crew members: ${response.statusText}`)
         }
@@ -62,7 +60,7 @@ const findAllTradeBoard = async () => {
 const deleteTradeBoardPost = async (tradeId) => {
     try {
         // Step 1: GET the existing trade post by tradeId
-        const getResponse = await fetch(`${BASE_URL}?tradeId=${tradeId}`);
+        const getResponse = await fetch(getApiUrl(`/scheduledGames?tradeId=${tradeId}`));
 
         if (!getResponse.ok) throw new Error('Failed to fetch trade post');
 
@@ -75,7 +73,7 @@ const deleteTradeBoardPost = async (tradeId) => {
         const tradeRecordId = existingTradePost.id;
 
         // Step 2: DELETE the trade post using its ID
-        const deleteResponse = await fetch(`${BASE_URL}/${tradeRecordId}`, {
+        const deleteResponse = await fetch(getApiUrl(`/scheduledGames/${tradeRecordId}`), {
             method: 'DELETE',
         });
 
