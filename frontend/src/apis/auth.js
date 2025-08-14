@@ -1,8 +1,5 @@
-const BASE_URL = 'http://localhost:3000/crewMembers'
-//Real API: POST /auth/login
-
-
 import { ref } from "vue"
+import { getApiUrl, getHeaders } from './config.js'
 
 const isAuthenticated = ref(false) //Global state that tracks whether the user is logged in
 const userRole = ref('') //Stores 'CREW' or 'ADMIN
@@ -13,7 +10,11 @@ const token = ref(null) //Stores JWT token
 //Login
 const login = async (email, password) => {
     try {
-        const response = await fetch(`${BASE_URL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`)
+        const response = await fetch(getApiUrl('/auth/login'), {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify({ email, password })
+        })
 
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`)
@@ -21,21 +22,22 @@ const login = async (email, password) => {
 
         const data = await response.json()
 
-        if (data.length > 0) {
-            // Successful login
-            const user = data[0]
+        if (data.success) {
+            // Successful login - backend returns { userId, role, token }
+            const userInfo = data.data
             isAuthenticated.value = true
-            userRole.value = user.role || 'CREW' // If role missing, default to CREW
-            userId.value = user
-            fullName.value = user.fullName || '' // Store the full name of the user
+            userRole.value = userInfo.role || 'CREW' // If role missing, default to CREW
+            userId.value = userInfo.userId
+            fullName.value = '' // We'll need to fetch this separately or add it to the response
+            token.value = userInfo.token || null
             return true
         } else {
-        // Wrong email or password
-        isAuthenticated.value = false
-        userRole.value = ''
-        userId.value = null
-        fullName.value = ''
-        return false
+            // Wrong email or password
+            isAuthenticated.value = false
+            userRole.value = ''
+            userId.value = null
+            fullName.value = ''
+            return false
         }
     } catch (error) {
         console.error(error)
@@ -70,4 +72,9 @@ const getUserFullName = () => {
     return fullName.value
 }
 
-export { isAuthenticated, login, logout, getUserRole, userRole, getUserId, getUserFullName }
+// Get token
+const getToken = () => {
+    return token.value
+}
+
+export { isAuthenticated, login, logout, getUserRole, userRole, getUserId, getUserFullName, getToken }

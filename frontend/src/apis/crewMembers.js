@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/crewMembers'
+import { getApiUrl, getHeaders } from './config.js'
 
 /**
  * Fetch all crew members from the API
@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:3000/crewMembers'
  */
 const findAllCrewMembers = async () => {
     try {
-        const response = await fetch(BASE_URL)
+        const response = await fetch(getApiUrl('/crewMember'))
         if (!response.ok) {
             throw new Error(`Error fetching crew members: ${response.statusText}`)
         }
@@ -24,7 +24,7 @@ const findAllCrewMembers = async () => {
  */
 const findMemberById = async (id) => {
     try {
-        const response = await fetch(`${BASE_URL}/${id}`)
+        const response = await fetch(getApiUrl(`/crewMember/${id}`))
         
         if (!response.ok) {
             throw new Error(`Error fetching crew member: ${response.statusText}`)
@@ -45,11 +45,9 @@ const findMemberById = async (id) => {
  */
 const updateMemberById = async (id, updatedData) => {
     try {
-        const response = await fetch(`${BASE_URL}/${id}`, {
+        const response = await fetch(getApiUrl(`/crewMember/${id}`), {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getHeaders(),
             body: JSON.stringify(updatedData),
         });
         
@@ -72,11 +70,9 @@ const updateMemberById = async (id, updatedData) => {
  */
 const inviteCrewMembers = async (emails) => {
     try {
-        const response = await fetch(BASE_URL, {
+        const response = await fetch(getApiUrl('/invite'), {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getHeaders(),
             body: JSON.stringify({ emails }),
             })
 
@@ -98,7 +94,7 @@ const inviteCrewMembers = async (emails) => {
  */
 const deleteCrewMember = async (id) => {
     try {
-        const response = await fetch(`${BASE_URL}/${id}`, {
+        const response = await fetch(getApiUrl(`/crewMember/${id}`), {
             method: 'DELETE' })
     
         if (!response.ok) {
@@ -116,7 +112,7 @@ const deleteCrewMember = async (id) => {
  */
 const findMemberByUserId = async (userId) => {
     try {
-        const response = await fetch(`${BASE_URL}?userId=${userId}`)
+        const response = await fetch(getApiUrl(`/crewMember?userId=${userId}`))
         
         if (!response.ok) {
             throw new Error(`Error fetching crew member: ${response.statusText}`)
