@@ -34,9 +34,14 @@ public class AuthService {
         // jwt
         String token = this.jwtProvider.createToken(authentication);
         Map<String, Object> loginInfo = new HashMap<>();
-        loginInfo.put("userId", loginDTO.userId());
-        loginInfo.put("role", loginDTO.role());
-        loginInfo.put("token", token);
+
+        if (loginDTO.userId() != null) {
+            loginInfo.put("userId", loginDTO.userId());
+            loginInfo.put("role", loginDTO.role());
+            loginInfo.put("token", token);
+        } else {
+            loginInfo.put("userId", null);
+        }
 
         return loginInfo;
     }

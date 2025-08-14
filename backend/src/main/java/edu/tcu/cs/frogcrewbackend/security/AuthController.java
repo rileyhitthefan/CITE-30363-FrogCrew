@@ -1,9 +1,5 @@
 package edu.tcu.cs.frogcrewbackend.security;
 
-import edu.tcu.cs.frogcrewbackend.member.Member;
-import edu.tcu.cs.frogcrewbackend.member.MyUserPrincipal;
-import edu.tcu.cs.frogcrewbackend.member.converter.UserToLoginDTOConverter;
-import edu.tcu.cs.frogcrewbackend.member.dto.LoginDTO;
 import edu.tcu.cs.frogcrewbackend.system.Result;
 import edu.tcu.cs.frogcrewbackend.system.StatusCode;
 import org.slf4j.Logger;
@@ -12,9 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
